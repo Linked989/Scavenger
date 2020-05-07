@@ -7,7 +7,8 @@ import os
 import httplib2
 import requests
 import classes.utility
-import json
+#import json
+from colorama import Fore, Back, Style, init
 
 tools = classes.utility.ScavUtility()
 iterator = 1
@@ -59,9 +60,9 @@ while 1:
 
 		for apiPaste in result: # Iterate over the json file to find Paste URLs
 			if  os.path.exists("data/raw_pastes/" + apiPaste["key"]):
-				print("[-] " + apiPaste["key"] + " already exists. Skipping...")
+				print("[" + Fore.RED + "-" + Style.RESET_ALL + "] " + Style.BRIGHT + Fore.BLACK + apiPaste["key"] + " already exists. Skipping..." + Style.RESET_ALL)
 				continue
-			print("[*] Crawling " + apiPaste["key"])
+			print("[" + Fore.GREEN + "-" + Style.RESET_ALL + "]" + Fore.GREEN + " Crawling " + apiPaste["key"] + Style.RESET_ALL)
 			binStatus, binResponse = http.request(apiPaste["scrape_url"])
 			try:
 				foundPasswords = 0
@@ -128,40 +129,41 @@ while 1:
 					tools.statisticsaddpoint()
 				elif foundPasswords == 1:
 					foundPasswords = 0
-					print("Found credentials. Posting on Twitter...")
+					print(Fore.GREEN + "Found credentials. Posting on Twitter...")
 					if useTwitter: api.update_status()  # TWITTER
 					tools.statisticsaddpoint()
+					os.system("cp data/raw_pastes/" + apiPaste["key"] + " data/files_with_passwords/.")
 				elif curPasteAPIKey != "":
-					print("Found API key. Posting on Twitter...")
+					print(Fore.GREEN + "Found API key. Posting on Twitter...")
 					if useTwitter: api.update_status()  # TWITTER
 					os.system("cp data/raw_pastes/" + apiPaste["key"] + " data/api_leaks/.")
 				elif curPasteMailContent != "":
-					print("Found email content. Posting on Twitter...")
+					print(Fore.GREEN + "Found email content. Posting on Twitter...")
 					if useTwitter: api.update_status()  # TWITTER
 					os.system("cp data/raw_pastes/" + apiPaste["key"] + " data/mails_leaks/.")
 				elif curPasteRSA != "":
-					print("Found RSA key. Posting on Twitter...")
+					print(Fore.GREEN + "Found RSA key. Posting on Twitter...")
 					if useTwitter: api.update_status()  # TWITTER
 					tools.statisticsaddpoint()
 					os.system("cp data/raw_pastes/" + apiPaste["key"] + " data/rsa_leaks/.")
 				elif curPasteWP != "":
-					print("Found Wordpress configuration file. Posting on Twitter...")
+					print(Fore.GREEN + "Found Wordpress configuration file. Posting on Twitter...")
 					if useTwitter: api.update_status()  # TWITTER
 					tools.statisticsaddpoint()
 					os.system("cp data/raw_pastes/" + apiPaste["key"] + " data/wordpress_leaks/.")
 				elif curPasteMySQLi != "":
-					print("Found MySQL connect string. Posting on Twitter...")
+					print(Fore.GREEN + "Found MySQL connect string. Posting on Twitter...")
 					if useTwitter: api.update_status()  # TWITTER
 					tools.statisticsaddpoint()
 					os.system("cp data/raw_pastes/" + apiPaste["key"] + " data/mysql_leaks/.")
 				elif containsOnion == 1:
 					if containsDocument == 1:
-						print("Found .onion link to a document. Posting on Twitter...")
+						print(Fore.GREEN + "Found .onion link to a document. Posting on Twitter...")
 						if useTwitter: api.update_status()  # TWITTER
 						tools.statisticsaddpoint()
 						os.system("cp data/raw_pastes/" + apiPaste["key"] + " data/onion_docs/.")
 					else:
-						print("Found .onion link. Posting on Twitter...")
+						print(Fore.GREEN + "Found .onion link. Posting on Twitter...")
 						if useTwitter: api.update_status()  # TWITTER
 						tools.statisticsaddpoint()
 						os.system("cp data/raw_pastes/" + apiPaste["key"] + " data/onion/.")

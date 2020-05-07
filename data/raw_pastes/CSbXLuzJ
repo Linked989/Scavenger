@@ -1,0 +1,84 @@
+import java.util.Scanner;
+
+public class GradeWeight {
+
+   public static void main(String[] args) {
+      Scanner input = new Scanner(System.in);
+   
+      int numberOfTests, numberOfQuizzes, numberOfAssignments, attendanceGrade, participation;
+      String message = "";
+   
+      System.out.println("How many assignments were given? ");
+      numberOfAssignments = input.nextInt();
+      System.out.println("How many quizzes were given? ");
+      numberOfQuizzes = input.nextInt();
+      System.out.println("How many tests were administered?");
+      numberOfTests = input.nextInt();
+   
+      int[] testGrades = new int[numberOfTests];
+      int[] quizGrades = new int[numberOfQuizzes];
+      int[] assignmentGrades = new int[numberOfAssignments];
+   
+      for (int i = 0; i < numberOfAssignments; i++) {
+         System.out.println("What was your grade for assignment " + (i+1) + "? ");
+         assignmentGrades[i] = input.nextInt();
+      }//end for
+      
+      for (int i = 0; i < numberOfQuizzes; i++) { 
+         System.out.println("What was you grade for quiz " + (i+1) + "? ");
+         quizGrades[i] = input.nextInt();
+      }//end for
+      
+      for (int i = 0; i < numberOfTests; i++) {
+         System.out.println("What was your grade for test " + (i+1) + "? ");
+         testGrades[i] = input.nextInt();
+      }//end for
+      
+      System.out.println("What is your participation grade?");
+      participation = input.nextInt();
+      
+      int assignmentAverage = findTheAverage(assignmentGrades);
+      System.out.println("Assignment grade average is: " + assignmentAverage);
+      int quizAverage = findTheAverage(quizGrades);
+      System.out.println("Quiz grade average is: " + quizAverage);
+      int testAverage = findTheAverage(testGrades);
+      System.out.println("Test grade average is: " + testAverage);
+      double finalGrade = jMillerWeightedGrade(participation, assignmentAverage, quizAverage, testAverage);
+      
+      if (finalGrade >= 90) {
+      message = "Wow, you got an A!";
+      }
+      else if (finalGrade >=80) {
+      message = "Nice job, you got a B!";
+      }
+      else if (finalGrade >= 70) {
+      message = "At least you learned something?";
+      }
+      else {
+      message = "That was an expensive way to spend your time.";
+      }
+      System.out.println("Your final grade for the semester is: " + finalGrade + "\n" + message);
+         
+   //Grade = P(.05) + A(.30) + Q(.15) + T(.5)          
+   
+   
+   }//end main
+   
+   public static int findTheAverage(int[] x) {
+      int total = 0;
+      int average;
+      for (int i = 0; i < x.length; i++) {
+         total = total + x[i];
+      }//end for
+      average = (total / x.length);
+      return average;
+   }//end findTheAverage
+   
+   public static double jMillerWeightedGrade(int p, int a, int q, int t) {
+      double totalGrade = (p * .05) + (a * .3) + (q * .15) + (t * .5);
+      return totalGrade;
+         
+   }//end jMillerWeightedGrade 
+
+
+}//end class

@@ -1,0 +1,13 @@
+bool check_pal(std::vector<int> vec) 
+{ 
+    if (vec.empty()) 
+        return false;
+        
+    for (size_t i = 0; i <= vec.size() / 2; i++) { 
+        if (vec.at(i) != vec.at(vec.size() - i - 1)) { 
+            return false;
+        }
+    } 
+
+    return true;
+}

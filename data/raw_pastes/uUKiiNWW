@@ -1,0 +1,181 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+
+struct Item {
+    struct Item* left;
+    struct Item* right;
+    char* key;
+};
+
+typedef struct Item Node;
+
+
+Node* newNode(char* word) {
+    Node* node = (Node*)malloc(sizeof(Node));
+    node->right = node->left = NULL;
+    node->key = (char*)malloc(strlen(word) + 1);
+    strcpy(node->key, word);
+    return node;
+}
+
+Node* insert(Node* node, char* val) {
+
+    if (!node)
+        return newNode(val);
+
+    if (strcasecmp(val, node->key) > 0)
+        node->right = insert(node->right, val);
+
+    if (strcasecmp(val, node->key) < 0)
+        node->left = insert(node->left, val);
+
+    return node;
+}
+
+void insertMany(Node* node, char* vals[], int size)
+{
+    for (int i = 0; i < size; i++)
+        insert(node, vals[i]);
+
+}
+
+Node* search(Node* node, char* val) {
+
+    if (!node) return NULL;
+
+    if (!strcasecmp(val, node->key))
+        return node;
+
+    return strcasecmp(val, node->key) > 0 ? search(node->right, val) : search(node->left, val);
+
+}
+
+Node* getParentNode(Node* root, Node* child){
+    if(root == NULL) return NULL;
+
+    Node* parent = root;
+    Node* n;
+    int cmp = strcasecmp(root->key,child->key);
+    if(!cmp) return root;
+    else if(cmp == 1)
+        n= parent->left;
+    else
+        n= parent->right;
+
+    while(n){
+        cmp = strcasecmp(n->key,child->key);
+        if(!cmp) return parent;
+        else if(cmp == 1){
+            parent = n;
+            n= parent->left;
+        }
+        else{
+            parent = n;
+            n= parent->right;
+        }
+
+    }
+    return NULL;
+}
+
+Node * minValueNode(Node* node)
+{
+    Node* current = node;
+
+    while (current->left != NULL)
+        current = current->left;
+
+    return current;
+}
+
+
+void freeNode(Node *node){
+    free(node->key);
+    free(node);
+}
+
+
+Node* delete(Node* root, char* data){
+    if(root == NULL) return NULL;
+
+    if(strcasecmp(data,root->key) < 0)
+        root->left = delete(root->left,data);
+
+    else if(strcasecmp(data,root->key) > 0)
+        root->right = delete(root->right,data);
+
+    else{
+        if(root->left == NULL&& root->right == NULL){
+            freeNode(root);
+            return NULL;
+        }
+        if(root->left == NULL){
+            Node* temp = root->right;
+            freeNode(root);
+            return temp;
+        }
+        else if (root->right == NULL){
+            Node* temp = root->left;
+            freeNode(root);
+            return temp;
+        }
+        Node* temp = minValueNode(root->right);
+
+        free(root->key);
+        root->key= malloc(strlen(temp->key)+1);
+        strcpy(root->key,temp->key);
+
+        root->right = delete(root->right,temp->key);
+
+    }
+    return root;
+}
+
+void printNode(Node* node) {
+    if(node == NULL){
+        printf("NULL\n");
+        return;
+    }
+    printf("%s\n", node->key);
+}
+
+void traversePreOrder(Node* node) {
+    printNode(node);
+    if (node->left) traversePreOrder(node->left);
+    if (node->right) traversePreOrder(node->right);
+}
+
+void traverseInOrder(Node* node) {
+    if (node->left) traverseInOrder(node->left);
+    printNode(node);
+    if (node->right) traverseInOrder(node->right);
+}
+
+void traversePostOrder(Node* node) {
+    if (node->left) traversePostOrder(node->left);
+    if (node->right) traversePostOrder(node->right);
+    printNode(node);
+}
+
+
+int main() {
+    Node* node = newNode("5");
+    char* vals[] = { "omar", "zzzzzzzzz", "aaaaa", "babababa", "marcopolo", "bbbbb"};
+    insertMany(node, vals, 6);
+    Node* n = search(node, "marcopolo");
+    printf("--------------------\n");
+    printNode(n);
+    printf("\n--------------------\n");
+    Node* parent = getParentNode(node,n);
+    printNode(parent);
+    node = delete(node,n->key);
+    n= search(node,"marcopolo");
+    printNode(n);
+    printf("----------------\n");
+    printNode(minValueNode(node));
+    node = delete(node,minValueNode(node)->key);
+    printNode(minValueNode(node));
+    return 0;
+}

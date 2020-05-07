@@ -1,0 +1,7 @@
+.product-single__prices>*:last-child {
+    font-weight: 100;
+}
+
+.product__price {
+    font-size: 24.4px;
+}

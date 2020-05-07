@@ -1,0 +1,33 @@
+import re
+
+def replace(item):
+
+  diacrit = {'a':'ãáaàảạ','A':'ÃÁAÀẢẠ','â': 'ẫấâầẩậ','ẪẤÂẦẨẬ', 
+    'e': 'ẽéeèẻẹ', 'E': 'ẼÉEÈẺẸ', 'i': 'ĩíiìỉị', 'I':'ĨÍIÌỈỊ', 
+    'o': 'õóoòỏọ', 'O': 'ÕÓOÒỎỌ', 'ơ': 'ỡớơờởợ', 'O':'ỠỚƠỜỞỢ', 
+    'u': 'ũúuùủụ', 'U': 'ŨÚUÙỦỤ', 'ư': 'ữứưừửự', 'Ư':'ỮỨƯỪỬỰ'}
+
+  consonant = "" if item.group(1) is None else item.group(1). # consonant of the word
+    replace("ng", "ŋ").replce("Ng","Ŋ"). # establishing a new character
+    replace("j","y").replace("J","Y") # converting Jyutping to Yưtpiŋ 
+  vowel = item.group(2). # main vowel of the word
+    replace("aa", "â").replace("Aa", "Â"). # long A sound
+    replace("eo","ơ").replace("oe","ơ").replace("Eo","Ơ").replace("Oe","Ơ"). # simplified
+    replace("yu", "ư").replace("Yu", "Ư") # "sixth vowel of Mandarin" in Cantonese
+  ending = "" if item.group(3) is None else item.group(3). # trailing consonant or vowel
+    replace("ng", "ŋ") # we don't need capital letters since it is at the end
+  tone = int(item.group(4)) # tones 1~6
+
+  vowel_tone = diacrit[vowel][tone-1] # combine main vowel with tones
+
+  return consonant + vowel_tone + ending
+
+def detect(string):
+
+  regex = re.compile("([bpmfdtnlgkhwzcsj]|ng|[gk]w)?([aeiou]|aa|oe|eo|yu)([iumnptk]|ng)?([1-6])")
+
+  return regex.sub(replace, string)
+
+test_string = "jan4jan4 saang1ceot1lai4 zau6hai6 zi6jau4 ge3, hai2 zyun1jim4 tung4 kyun4lei5 soeng6 jat1leot6 ping4dang2. Keoi5dei6 geoi6jau5 lei5sing3 tung4 loeng4sam1, ji4ce3 jing1goi1 jung6 hing1dai6gaan1 ge3 gwaan1hai6 lai6 wu6soeng1 deoi3doi6."
+
+print(test_string)

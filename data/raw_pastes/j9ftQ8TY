@@ -1,0 +1,31 @@
+// Sort pairs in decreasing order by strength of victory
+void sort_pairs(void)
+{
+
+    // bubble sort
+
+    int swapCounter = -1;
+    while (swapCounter != 0) {
+        // reset swapCounter
+        swapCounter = 0;
+
+        // look at each adjacent pair
+        for (int i = 0; i < pair_count - 1; i++) {
+            pair pair1 = pairs[i];
+            pair pair2 = pairs[i + 1];
+
+            // order in array: pair1, pair2
+
+            int strength1 = preferences[pair1.winner][pair1.loser];
+            int strength2 = preferences[pair2.winner][pair2.loser];
+
+            if (strength1 > strength2) {
+                // swap
+                pairs[i] = pair2;
+                pairs[i + 1] = pair1;
+
+                swapCounter++;
+            }
+        }
+    }
+}

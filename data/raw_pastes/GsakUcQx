@@ -1,0 +1,16 @@
+--OBS: status_id das solicitações aprovadas é a seguinte-> 1-Aprovado automaticamente 2-Aprovado automaticamente e enviado para a loja 5-Aprovado manualmente 6-Aprovado manualmente e enviado para a loja
+
+-- Big (NÃO PLANTONISTA)
+select * from solicitacoes s
+where status_id in (1,2,5,6) and loja='' and data_inicial='' and data_vencimento=''
+and cod_categoria in () and isActive=true -- A lista de cod_categoria depende das categorias permitidas pra o usuário logado
+
+-- Big (É PLANTONISTA)
+select * from solicitacoes s
+where status_id in (1,2,5,6) and data_inicial='' and data_vencimento='' and loja='' -- Esses são os filtros
+and isActive=true 
+
+-- Loja: status_id= 1-Aprovada 2-Aprovada 5-Aprovada 6-Aprovada
+select * from solicitacoes s
+where ean='' and data_inicial='' and data_vencimento='' and status_id in (1,2,5,6) -- Esses são os filtros da pesquisa
+and isActive=true and loja='' -- A loja é a do usuário logado

@@ -1,0 +1,93 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+int main(void)
+{
+	// Seed srand to generate PRNG
+	srand(time(0));
+
+	// User interface
+	printf("I'm thinking of number between 1 and 100\n\n");
+
+	printf("You have 7 turns left!\n\n");
+
+	// Declare variables for our guessing game
+	int guess = 0;
+	int random = (rand() % 100) + 1;
+	int guess_count = 7;
+
+	// Ask user to guess the right number.
+	while (guess != random)
+	{
+		printf("What is your guess? ");
+		scanf("%d", &guess);
+
+		// Guess is too high
+		if (guess > random)
+		{
+			printf("Your guess of %d is too high.\n", guess);
+			guess_count--;
+
+			// Check if out of guesses
+			if (guess_count < 1)
+			{
+				printf("\nYou could not guess my number! It was %d.\n", random);
+				break;
+			}
+
+			// 1 turn left
+			if (guess_count == 1)
+			{
+				printf("You have %d turn left!\n\n", guess_count);
+			}
+			// More than 1 turn left
+			else
+			{
+				printf("You have %d turns left!\n\n", guess_count);
+			}
+		}
+		// Guess is too low
+		else if (guess < random)
+		{
+			printf("Your guess of %d is too low.\n", guess);
+			guess_count--;
+
+			// Check if out of guesses
+			if (guess_count < 1)
+			{
+				printf("\nYou could not guess my number! It was %d.\n", random);
+				break;
+			}
+
+			// 1 turn left
+			if (guess_count == 1)
+			{
+				printf("You have %d turn left!\n\n", guess_count);
+			}
+			// More than 1 turn left
+			else
+			{
+				printf("You have %d turns left!\n\n", guess_count);
+			}
+		}
+		// Guessed it right
+		else
+		{
+			if ((8 - guess_count) == 1)
+			{
+				printf("You guessed it in %d turn.\n\n", 8 - guess_count);
+			}
+			else
+			{ 
+				printf("You guessed it in %d turns.\n\n", 8 - guess_count);
+			}
+
+			printf("Well done!\n");
+			break;
+		}
+
+	}
+
+	return 0;
+}

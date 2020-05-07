@@ -1,0 +1,552 @@
+# V0.004 pass2 for plasmac - slowdown for holes and other small (<= minDiameter) profiles
+#  long non-recursive version with queue to fake look ahead (no rewinding input with tell/seek due to exising file mode)
+#  Notes: Python queue library qsize() returns incorrect queue size. LNct is used at some point to determine remaining queue entries. 
+import re, queue, math
+
+LINESTRING = '{0}'
+HOLESTRING = '{0} ({1})'
+PROFILEQUEUESIZE = 1024 #probably excessive as its # lines (DRAM?)
+EXTRALINEQUEUESIZE = 10 #extra line(s) to finish cut (overcut, etc)
+ZCOMMENTS = True # add or append removed Z move to line's comment
+
+#precision at which traverse around profile closes to be considered "closed" profile (bad CAM or intended undercut)
+#overcut coasting must continue along current/last segment and (if necessary) onto (the first) next segment
+KP_PROFILEPRECISION = 0.001 #get from plasmac or LinuxCNC?
+
+#remove
+KP_KEEPEMPTYLINES = False #don't supress empty lines
+KP_ADDEMPTYLINES = True #empty line after every STOPCUT
+KP_PIERCE1 = 1 # CIP pierce
+KP_PIERCE0 = 0 # normal pierce
+#remove
+
+# gcodes
+STARTCUT = 'm3'
+STOPCUT = 'm5'
+ENDJOB1 = 'm30'
+ENDJOB2 = 'm2'
+ENDJOB3 = '%'
+METRICUNITS = 'g21'
+IMPERIALUNITS = 'g20'
+G00MOVE = 'g0'
+G01MOVE = 'g1'
+G02MOVE = 'g2'
+G03MOVE = 'g3'
+TEMPHOLESTART ='M67 E3 Q60'
+HOLEEND = 'M67 E3 Q0'
+
+PC_IMPERIAL = 1
+PC_METRIC  = 2
+PC_DEFAULTMATERIAL = 0 # plasmac default material number
+PC_HOLES0 = 0 # plasmac hole - normal, as coded
+PC_HOLES1 = 1 # plasmac hole - auto slowdown
+PC_HOLES2 = 2 # plasmac hole - auto slowdown and overcut (coast)
+PC_HOLEMODE = '#<holes>'
+PC_OVERCUT = '#<oclength>'
+PC_MDIA = '#<m_diameter>'
+PC_IDIA = '#<i_diameter>'
+#remove
+KP_PIERCE = "#<pierce>"
+KP_POST = "#<post>" #direcly modify CONSTANTS for easier/faster testing
+#remove
+DEBUG = True #verbose debugging text (as comments)
+
+measuremode = PC_IMPERIAL
+minDiameter = 1.25 #from plasmac
+precision = 6 #from plasmac - check this in original code
+scale = 0
+holeEnable = overCut = False
+ocLength = 0.157
+line = rawline = commenttext =''
+lastG = G00MOVE #fix this!!!! and ismove() - first line should be rapid, but maybe not - catch CAM modal errors
+lastXmove = lastYmove = 0
+ 
+firstmaterial = PC_DEFAULTMATERIAL
+infile = 'job5.ngc' #exising RO file in plasmac
+fRead = open(infile, 'r') #open input RO
+line = fRead.readline() #read first line
+pierceonlyComments = False # comment lines unnecessary for piercing that normally don't appear
+Zcomments = False 
+pierceonly = False
+pierceMode = KP_PIERCE0
+
+def errorout(line, ErrorOutput):
+    print('ERROR: {0}'.format(line))
+    print('ERROR: {0}'.format(ErrorOutput))
+    fRead.close()
+    exit() #is this a thing in python?
+
+def removeZword(line): #move Z axis motion to (a new) comment
+    line = line.strip()
+    if 'z' in line: 
+        try: zword = re.search(r'(([Zz]) *(-?\d+.?\d*))',line).group(1)
+        except: return line
+        line = re.sub(zword,'',line)
+        if (ZCOMMENTS):
+            if ((')' in line) and (' (' in line)):
+                line = line[:line.index(')')] + ' *Z removed: ' + zword + '*' + line[line.index(')'):]
+            else:
+                line = line + ' (*Z removed ' + zword + '*)'
+            line = line.strip()
+    return line
+
+#removes N word from line
+# must return line
+def removeNword(line): #remove line number if present
+    line = line.strip()
+    if (line[0:1] == 'n'): 
+       nword = re.search(r'(^([Nn]\d+) *)',line).group(1)
+       line = re.sub(nword,'',line).strip()
+    return line
+
+
+#cleans up G and M words
+# must return line
+def cleanupGandMwords(line): #remove leading zeros in G and M
+    if ('g0' in line[:3]):
+        line = re.sub(r'([g]0?[4])','g4',line) #fix this!!!! general regex for all Gx Mx etc.
+        line = re.sub(r'([g]0?[3])','g3',line)
+        line = re.sub(r'([g]0?[2])','g2',line)
+        line = re.sub(r'([g]0?[1])','g1',line)
+        line = re.sub(r'([g]0?[0])','g0',line)
+    if ('m0' in line[:3]):
+        line = re.sub(r'([m]0?[2])','m2',line)
+        line = re.sub(r'([m]0?[3])','m3',line)
+        line = re.sub(r'([m]0?[5])','m5',line)
+    return line
+
+
+# decide if line is a comment staring at first column
+def iscomment(line): #find comment - assumes it begins the line #fix this!!!! 
+    line = line.strip()
+    if (len(line) > 0):
+        if (line[:1] == '('): 
+            return True 
+        else: 
+            return False
+    return False
+#    try:
+#        if (line.index('(') < 2): #weird python error suddenly appeared with valid commented gcode line...
+#            return True
+#    except:
+#        return False
+#    return False
+
+# determine "size" of profile that will be cut (simple now)
+def apxSize(minX,maxX,minY,maxY): #pick or add method for profile vs. minDiameter
+    #return math.sqrt((maxX - minX)**2 + (maxY - minY)**2) #diagonal line across extents of 'hole' profile
+    return (max(maxX-minX,maxY-minY)) #longest side of 'hole' profile
+
+# checks to see if line is a move, adding correct(last) G0x if it is a modal move
+# modal lines saved us a lot of punch/mag tape/cards/keypresses and ought to have gone away by now...
+def ismove(lastG): # if modal motion append it to the last G0x
+    global line
+    if (('x' in line) or ('y' in line)) and (not iscomment(line) and (not '#<' in line)): # fix a modal line first (global result)
+        if (len(lastG) > 0):
+            if((not G00MOVE in line[:3]) and (not G01MOVE in line[:3]) and (not G02MOVE in line[:3]) and (not G03MOVE in line[:3])):
+                line = lastG + line
+        else:
+            return False #fix this!!!! should result in plasmac error (modal before non-modal move)
+    if((G00MOVE in line[:3]) or (G01MOVE in line[:3]) or (G02MOVE in line[:3]) or (G03MOVE in line[:3])): # then test for motion
+        return True
+    return False
+
+
+#update min/max through current profile processing (to check its "size" latter)
+def getminmaxXY(minX, maxX, minY, maxY, firstX, firstY):
+    global line, lastG
+    x, y, lastG = getXY(line)
+    if ((x != 0) and (y != 0)):
+        maxX = max(x,maxX); maxY = max(y,maxY)
+        minX = min(x,minX); minY = min(y,minY)
+        if (firstX == 9999): firstX = x
+        if (firstY == 9999): firstY = y
+    return minX, maxX, minY, maxY, firstX, firstY
+
+
+# Get G0x and numeric X and Y from current line - fix this!!!! (can do lots better)
+def getXY(line): #get G0x, X, and Y from motion line
+    global lastG
+    
+    def getXYval(selection, line): #eliminate a couple of individual fuctions with similar standalone regex
+        if ((selection == 'x') and (selection in line)): 
+            try: x = float(re.search(r'(x) *(-?\d+.?\d*)',line).group(2))
+            except: return 0
+            return x
+        if ((selection == 'y') and (selection in line)): 
+            try: y = float(re.search(r'(y) *(-?\d+.?\d*)',line).group(2))
+            except: return 0
+            return y
+        return 0
+
+    x = y = 0
+    if ismove(lastG):
+        x = getXYval('x',line)
+        y = getXYval('y',line)
+        if ('g' in line[:3]): 
+            try: lastG = re.search(r'([Gg]0?[01]?)',line).group(1) # return any form of the Gxx motion command
+            except: x = y = 0
+        if ((x+y) == 0): #fix this - add error/null checks
+            return x,y,''
+    return x, y, lastG
+
+#def getXYZIJval(selection, line):
+#    if (selection in line):
+#        return float(re.search(r"(' + selection + ') *(-?\d+.?\d*)",line).group(2))
+
+
+#get numeric I value from In.n string
+def getI(line):
+    if (('i') in line):
+        I = float(re.search(r'(i) *(-?\d+.?\d*)',line).group(2))
+    return I
+
+#get numeric J value from Jn.n string
+def getJ(line):
+    if (('j') in line):
+        J = float(re.search(r'(j) *(-?\d+.?\d*)',line).group(2))
+    return J
+
+
+#get numeric X value from Xn.n string
+def getX(line):
+    x , nothing1, nothing2 = getXY(line)
+    return x
+
+
+#get numeric Y value from Yn.n string
+def getY(line):
+    nothing1 , y, nothing2 = getXY(line)
+    return y
+
+# determine profile type from segment counts - does nothing now except set text for comment
+# returns True if there were cut segments, returns comment text in global variable (fix)
+def identifyProfiles(G0ct,G1ct,G2ct,G3ct,LNct): #tests and exceptions for profile pre/post processing will go here
+    global commenttext
+    commenttext = 'Start Profile Process'
+    if ((G0ct < 1) and (G1ct+G2ct+G3ct > 0)): #success if legal cut motion was counted
+        return True
+    return False
+
+
+#comment out line, removing existing comment delimiters
+# must return line
+def commentoutline(line): #make line a comment
+    if (('(' in line) and (')' in line) and len(line.strip()) > 2 ):
+        line = line.replace('(','') #fix this!!!! - regex
+        line = line.replace(')','') 
+    if (len(line.strip()) > 0):
+        line = '( ' + line.strip() + ' )'
+        return line
+    else: # empty line
+        return ''
+
+
+# fixes/cleans individual line for processing that follows.
+# Modifications to the line are 'in memory' and are not written to input file.
+def preprocessline(line): #fixup lines prior to processing - modifies lines
+    global rawline
+    rawline = line #keep original available JIC
+    line = line.lower().strip() #to lower
+    line = removeNword(line) #remove line numbers
+    if (not iscomment(line)):
+        line = removeZword(line) #moves any Z to new comment or appends to old one
+        line = cleanupGandMwords(line) #remove leading zeros
+    return line #return fixedup line
+
+
+# simple pierce
+# x and y for debug purposes only
+#returns nothing
+def doPierce(x,y,pierceMode):
+    if pierceMode == (KP_PIERCE0): #fixed pierce (normal)
+        if (DEBUG): print('( pierce only at X{0} Y{1} )'.format(x,y))
+        print('m3 $0 s1')
+        print('g91')
+        print('g1 X.000001')
+        print('g90')
+        print('m5')
+        if (KP_ADDEMPTYLINES):
+            print('')
+#remove
+    elif pierceMode == (KP_PIERCE1): #CIP pierce
+        return
+#remove
+    return
+
+
+#detect and count any G00 move(s) in processProfile
+def ProcessProfileCountMoves(G0ct,G1ct, G2ct, G3ct,LNct):
+    global lastG
+    if (G00MOVE in line[:3]): G0ct += 1; lastG = G00MOVE 
+    if (G01MOVE in line[:3]): G1ct += 1; lastG = G01MOVE
+    if (G02MOVE in line[:3]): G2ct += 1; lastG = G02MOVE
+    if (G03MOVE in line[:3]): G3ct += 1; lastG = G03MOVE
+    LNct += 1
+    return G0ct,G1ct, G2ct, G3ct,LNct
+
+#process cuts, ignoring anything not between M03 and M05
+#not as long as it looks - many hooks in place for adding current plasmac features and more
+def processProfile(lastXmove, lastYmove): 
+    global lastG, line, rawline, pierceonly, pierceonlyComments, pierceMode
+    linequeue = queue.Queue(PROFILEQUEUESIZE) #FIFO
+    extralinequeue = queue.Queue(EXTRALINEQUEUESIZE)
+    postlinequeue = queue.Queue(EXTRALINEQUEUESIZE)
+    G0ct = G1ct = G2ct = G3ct = 0
+    LNct = 1
+    LNclose = 0
+    ishole = closedprofile = False
+    maxX = maxY = -9999
+    minX = minY = firstX = firstY = 9999
+    firstLNct = 0
+    dummy1 = '' #nothing
+    firstline = secondline = lastline = closingline= ''
+
+    while ((line) and (not ENDJOB1 in line[:3]) and (not ENDJOB2 in line[:3]) and (not ENDJOB3 in line[:3])):
+        if ismove(lastG): #also inserts lastG before modal move
+            minX, maxX, minY, maxY, firstX, firstY = getminmaxXY(minX, maxX, minY, maxY, firstX, firstY) # update position from current move
+        if (STOPCUT in line[:3]):
+            linequeue.put(line) #push last (M05) line
+            if (pierceonly): # pierce only mode
+                doPierce(lastXmove, lastYmove, pierceMode) #pierce routine
+                while(not linequeue.empty()): #empty the queue
+                    line = linequeue.get(0)
+                    if (pierceonlyComments): print(LINESTRING.format(commentoutline(line)))
+            else: # Normal cut mode
+                #if inside profle processing
+#remove
+                if (KP_ADDEMPTYLINES):
+                    print('')
+#remove
+                ishole = identifyProfiles(G0ct,G1ct,G2ct,G3ct,LNct) #doesn do anything yet except check for some cutting action
+                if ((ishole and (apxSize(minX,maxX,minY,maxY) <= minDiameter)) and holeEnable and closedprofile): #start inside profile processing
+                    print(HOLESTRING.format(TEMPHOLESTART,commenttext))
+                else:
+                    ishole = False
+                firstLNct = LNct
+                while(not linequeue.empty()): #sequentially pop all saved lines
+                    line = linequeue.get(0); LNct -= 1
+                    if (LNct == (firstLNct -2)): # profile's first move after M03 - add any tests and processing here
+                        firstline = line
+                    if (LNct == (firstLNct -3)): # profile's second move after M03 - in event first was a lead
+                        secondline = line
+                    if ((LNct == 1)): # profile's last move before M05 - add any tests and processing here
+                        lastline = line
+                        while(not extralinequeue.empty()): #sequentially pop all saved extra lines before M05 line (extension, etc.)
+                            extraline = extralinequeue.get(0)
+                            print(LINESTRING.format(extraline))
+                    print(LINESTRING.format(line))
+                while(not postlinequeue.empty()): #sequentially pop all saved post lines after M05 line (overcut, etc.)
+                        postline = postlinequeue.get(0)
+                        print(LINESTRING.format(postline))
+                if (overCut and holeEnable and closedprofile and (ocLength > 0)): # do overcut along first line
+                    pass #coming soon - overcut here or in queue above
+                if (ishole and holeEnable and closedprofile): #end inside profile processing
+                    print(HOLESTRING.format(HOLEEND,'End Profile Process'))
+#remove
+                if (KP_ADDEMPTYLINES):
+                    print('')
+#remove
+        if (LNct > 2): #check for closed profile - based on destination of all moves - which won't detect loop/CAM errors
+            testX, testY, dummy1 = getXY(line)
+            if ((abs(float(testX-firstX)) <= KP_PROFILEPRECISION) and (abs(float(testY - firstY)) <= KP_PROFILEPRECISION)): 
+                closedprofile = True #above tests every line for profile closure, which won't detect CAM error (profile/lead-out)
+                closingline = line # move that closed profile (should be first line, excluding lead)
+                LNclose = LNct #move detected to have closed profile
+
+        # check for funky gcode here - fix before queue to enable queuing fixes in sequence
+        # fixes here can be pushed into queue before/after/instead of the orginal line
+        if (False): # 360 degree G02 and G03 arcs and split for dequeue processing
+            pass # coming soon
+        if (False): # 360 degree G02 and G03 arcs and split for dequeue processing
+            pass # coming soon
+        linequeue.put(line) #push current line
+        #count moves in lines to guess profile type latter - save last move type to address modal lines
+        G0ct,G1ct, G2ct, G3ct, LNct = ProcessProfileCountMoves(G0ct,G1ct, G2ct, G3ct,LNct)
+        
+        line = fRead.readline() #get next line
+        line = preprocessline(line)
+
+
+#gets and attempts to set #<holes> mode
+#correct overcut length and hole diameter should be set first, but not checking here yet
+# must return line
+def ProcessOtherLines_HoleMode(line):
+    global holeEnable, overCut, ocLength
+    try: holeval = int(re.search(r'^\#\< *holes *\> *\= *(\d*)',line).group(1))
+    except: holeval = PC_HOLES0
+    if (holeval == PC_HOLES0): 
+        line = line + ' (disable hole sensing)' 
+        holeEnable = overCut = False
+    if (holeval == PC_HOLES1): 
+        line = line + ' (hole sensing - velocity reduction)' 
+        holeEnable = True ; overCut = False
+    if (holeval == PC_HOLES2): 
+        if (ocLength > 0):
+            holeEnable = overCut = True
+            line = line + ' (hole sensing - velocity reduction - overcut)'
+        else:
+            holeEnable = True ; overCut = False
+            line = line + ' (hole sensing - velocity reduction - overcut length = 0)'
+    if ((holeval > PC_HOLES2) or (holeval < 0)): #error here?
+        line = line + ' (no hole sensing - unknown hole mode: ' + str(holeval) + ')'
+        holeEnable = overCut = False
+    return line
+
+
+#gets and attempts to set overcut length for #<holes> processing
+#unlike metric/inch hole diameter, this sets units in current units of measurement mode
+# must return line
+def ProcessOtherLines_OverCutLength(line):
+    global ocLength, overCut
+    try: ocLength = float(re.search(r'^\#\< *oclength *\> *\= *(\d*\.\d*)',line).group(1))
+    except: ocLength = 0
+    if (ocLength <= 0): 
+        line = line + ' (overcut value for hole mode 2 must be larger than zero)'
+        ocLength = 0 ; overCut = False
+    else: line = line + ' (overcut value - active with hole mode 2 only)'
+    return line
+
+
+#remove
+#test stuff, will be removed, ignore
+# must return line
+def ProcessOtherLines_Post(line): #process testing directives from post processor
+    global ZCOMMENTS, KP_KEEPEMPTYLINES, KP_ADDEMPTYLINES, pierceonly
+    if ('zcomments off' in line): ZCOMMENTS = False
+    if ('zcomments on' in line): ZCOMMENTS = True
+
+    if ('keepemptylines off' in line): KP_KEEPEMPTYLINES = False
+    if ('keepemptylines on' in line): KP_KEEPEMPTYLINES = True
+
+    if ('addemptylines off' in line): KP_ADDEMPTYLINES = False
+    if ('addemptylines on' in line): KP_ADDEMPTYLINES = True
+
+    if ('pierce only off' in line): pierceonly = False
+    if ('pierce only on' in line): pierceonly = True
+    return line
+#remove
+
+
+#get metric diameter for #<holes> mode processing
+# must return line
+def ProcessOtherLines_MDIA(line):
+    global minDiameter, holeEnable, overCut
+    try: minDiameter = float(re.search(r'^\#\< *m_diameter *\> *\= *(\d*\.\d*)',line).group(1))
+    except: minDiameter = 0
+    if (minDiameter <= 0): 
+        line = line + ' (metric diameter = 0 - no hole sensing)'
+        minDiameter = 0 ; holeEnable = overCut = False
+    else: line = line + ' (metric diameter set for hole sensing)'
+    return line
+
+
+#get inch diameter for #<holes> mode processing
+# must return line
+def ProcessOtherLines_IDIA(line):
+    global minDiameter, holeEnable, overCut
+    try: minDiameter = float(re.search(r'^\#\< *i_diameter *\> *\= *(\d*\.\d*)',line).group(1))
+    except: minDiameter = 0
+    if (minDiameter <= 0): 
+        line = line + ' (imperial diameter = 0 - no hole sensing)'
+        minDiameter = 0 ; holeEnable = overCut = False
+    else: line = line + ' (imperial diameter set for hole sensing)'
+    return line
+
+
+# detected M190. Get material for plasmac to match to identical material number in its
+# material file. All of your materials should be added to and match plasmac materials.
+# Materials in CAM can thus synced to plasmac, with CAM inserting material you've selected
+# after M190 (ie:M190 P150). 
+# must return line
+def ProcessOtherLines_M190(line):
+    global firstmaterial
+    try: material = int(re.match(r'm190 *p *(\d*)',line).group(1)) #accept M190 Pn
+    #try: material = int(re.match(r'm190 ? *[a-z =]* *(\d*)',line).group(1)) #accept standard and semi-conforming
+
+    except: material = int(PC_DEFAULTMATERIAL)
+    if (firstmaterial < 1):
+        firstmaterial = material
+    line = line + ' (' + str(material) + ' selected)'
+        #Popen('halcmd setp plasmac_run.first-material {}'.format(material), stdout = PIPE, shell = True)
+        #select the default material here if no material so kerf value is available before processing (first) profile
+    return line
+
+
+#remove
+# This is for alternate piercing methods and will go away (better implimented directly in CAM).
+# Use of alternate piercing methods can damage machine, cause it to walk across the floor,
+# cause bearings and motors to fail prematurely, dislodge torch from breakaway connection,
+# and result in a 360 degree shower of sparks and molten material. Alternate pierces
+# can be effective in thick material or for spectacular videos and photographs (like
+# those found on manufacturer's websites and YouTube). You have been warned.
+# must return line
+def ProcessOtherLines_Pierce(line):
+    global pierceMode
+    try: pierceMode = int(re.search(r'^\#\< *pierce *\> *\= *(\d*)',line).group(1))
+    except: pierceMode = KP_PIERCE0
+    if (pierceMode == KP_PIERCE0): line = line + ' (standard pierce)'
+    if (pierceMode == KP_PIERCE1): line = line + ' (dynamic cip pierce)'
+    return line
+#remove
+
+def getG(line):
+    thisG = ''
+    if ((line[:1]) == 'g'):
+        try :thisG = re.search(r'([g][\d]*)',line).group(1)
+        except: thisG = ''
+    return thisG
+
+# Processes 'other' lines that do not appear between M03 and M05 (cuts). The only motion
+# that is valid here is G00, which must be tracked in order to determine pierce locations.
+# Lines may be modified (comments added, etc.), but if they've gotten this far there are
+# propably no issues. Errors that are detected here are most likely the result of a 
+# misbehaving or misconfigured CAM or post.
+# must return line
+def ProcessOtherLines(line): 
+    global lastG, lastXmove, lastYmove, pierceMode, measuremode  #function modifies lines (adds comments)
+
+    #non-G00 motion should have reached this point (without a CAM error)
+    thisG = getG(line)
+    if (len(thisG) > 0):
+         if (thisG in 'g1 g2 g3'): errorout(line, 'G1, G2, or G3 motion while processing other lines')
+
+    #if G00 current position (destination) is maintained in case next action is M03
+    if ismove(lastG): #track position (ie: G00 moves) 
+        lastXmove, lastYmove, lastG = getXY(line)
+        return line #since it was move, nothing that follows below applies
+
+    #process everything that isn't motion, return line as it may have been modified (comments)
+    if ('g91' in line): errorout('G91') #catch unsupported mode
+    if ('g90.1' in line): errorout('g91.1') #catch unsupported mode
+    if ('m190' in line[:4]): line = ProcessOtherLines_M190(line) #material line
+    if (IMPERIALUNITS in line): measuremode = PC_IMPERIAL #freedom units mode
+    if (METRICUNITS in line): measuremode = PC_METRIC #metric units mode
+    if (PC_HOLEMODE in line): line = ProcessOtherLines_HoleMode(line) #<holes> = n
+    if (PC_OVERCUT in line): line = ProcessOtherLines_OverCutLength(line) #fix this!!!! scale
+    if (PC_MDIA in line): line = ProcessOtherLines_MDIA(line)  #fix this!!!! scale
+    if (PC_IDIA in line): line = ProcessOtherLines_IDIA(line) #fix this!!!! scale
+#remove
+    #standard (default) and alternate pierces
+    if (KP_PIERCE in line): line = ProcessOtherLines_Pierce(line) #<pierce> = n
+    #temporay bridge from program to generate test gcode - MODIFIES CONSTANTS AND VARS
+    if (KP_POST in line): line = ProcessOtherLines_Post(line) #proecess post directives
+#remove
+    return line #returned line may have been modified (comments)
+
+
+# Process a gcode text file, line by line, in one pass. Anything between M03 and M05 (ie: cutting)
+# is processed by one function and everything else by another (directives, G00 motion, and noise).
+# The input file is opened 'read only' and is not modified in any way.
+while line:
+    line = preprocessline(line) #modifies line (moves Z, removes n-word, removes leading zeros, etc.)
+    if (STARTCUT in line[:3]): #process  everything between M03 and M05
+        processProfile(lastXmove, lastYmove)
+    else: #process everything else
+        line = ProcessOtherLines(line) #modifies line (adds comments)
+#remove
+        if ((len(line) > 0) or (KP_KEEPEMPTYLINES)):
+#remove
+            print(LINESTRING.format(line)) #output all non-cut lines
+    line = fRead.readline() #get next line
+fRead.close()

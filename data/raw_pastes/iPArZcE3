@@ -1,0 +1,109 @@
+--[Services]:
+
+Players = game:GetService("Players")
+RS = game:GetService("RunService")
+CAS = game:GetService("ContextActionService")
+UIS = game:GetService("UserInputService")
+
+--[Settings]:
+
+Zoom_Multiplier = 2 -- Value should be > 0
+
+--[Constants]:
+
+local Player = Players.LocalPlayer
+local Mouse = Player:GetMouse()
+local Magnitude = Player.PlayerScripts:WaitForChild("CameraMagnitude")
+local Camera = workspace.CurrentCamera
+
+--[Variabls]:
+
+local angle = Vector2.new() -- A custom value for settings the angle of the Camera
+local character, hrp
+
+local connection -- A variable for locking mouse behavior because roblox keeps changing it
+
+--[Functions]:
+
+function setMouseBehavior(Value) -- This function locks mouse behavior because roblox
+	if connection then connection:Disconnect() end
+	UIS.MouseBehavior = Value
+	connection = UIS:GetPropertyChangedSignal("MouseBehavior"):Connect(function()
+		UIS.MouseBehavior = Value
+	end)
+end
+
+function handleAction(actionName, inputState, inputObject)
+	-- This is where we handle new input (mouse movement or touch) --
+	if actionName == "Input" and Camera.CameraType == Enum.CameraType.Custom then
+		angle = Vector2.new(
+			-- clamp the up and down rotation to prevent the camera from going 180+ --
+			-- clamp lets you set a value and give limits to it --
+			math.clamp(angle.x - inputObject.Delta.Y/4, -90, 90), -- You can play with the values
+			angle.y -inputObject.Delta.X/2.25 -- Dividing is merely for sensitivity, Don't change it
+		)
+	elseif actionName == "MB2" then
+		if inputState == Enum.UserInputState.Begin then
+			setMouseBehavior(Enum.MouseBehavior.LockCurrentPosition) -- Locks mouse position when you right click
+		else
+			setMouseBehavior(Enum.MouseBehavior.Default) -- Unlocks the mouse when you release
+		end
+	end
+end
+
+function toggleActions()
+	-- Bind the actions when the camera type is set to custom instead of doing an if statement everywhere --
+	if Camera.CameraType == Enum.CameraType.Custom then
+		CAS:BindAction("MB2", handleAction, false, Enum.UserInputType.MouseButton2)
+		CAS:BindAction(
+			"Input",
+			handleAction,
+			false,
+			Enum.UserInputType.MouseMovement,
+			Enum.UserInputType.Touch
+		)
+	else -- Unbind when the camera type is changed to let other scripts have their time
+		CAS:UnbindAction("MB2")
+		CAS:UnbindAction("Input")
+	end
+end
+toggleActions() -- Trigger it, duh.
+
+function updateZoom(value)
+	-- Updates the camera zoom with scrolling with the player max and min zoom distances --
+	Magnitude.Value = math.clamp(Magnitude.Value + value, Player.CameraMinZoomDistance, Player.CameraMaxZoomDistance)
+end
+
+--[Events]:
+
+Mouse.WheelForward:Connect(function() updateZoom(-1 * Zoom_Multiplier) end) -- Zoom in
+Mouse.WheelBackward:Connect(function() updateZoom(1 * Zoom_Multiplier) end) -- Zoom out
+-- To prevent exploiters from changing the value to something greater or lower than the limits --
+Magnitude:GetPropertyChangedSignal("Value"):Connect(function() updateZoom(0) end)
+
+Camera:GetPropertyChangedSignal("CameraType"):Connect(toggleActions) -- Waits for camera type to change
+
+RS.RenderStepped:Connect(function()
+	if Camera.CameraType == Enum.CameraType.Custom and character and hrp then
+		local CF = CFrame.new(character.HumanoidRootPart.position) *  -- Use the HRP as an anchor point
+				   CFrame.Angles(0,math.rad(angle.y),0) * -- Rotate left and right
+				   CFrame.Angles(math.rad(angle.x),0,0) * -- Rotate up and down
+-- The reason they are separate because if they are together they create unwanted Z axis rotations, Try it for yourself! --
+				   CFrame.new(0,0,Magnitude.Value)
+-- We add the magnitude after to make the camera orbit instead of rotate around itself. MATHS --
+		local ray = Ray.new(hrp.Position, (CF.p - hrp.Position).Unit * (CF.p - hrp.Position).Magnitude)
+		local part, hitPos = workspace:FindPartOnRay(ray, character)
+		-- Cast a ray at the camera to see if anything is blocking --
+		if not part and not hitPos then
+			Camera.CFrame = CF
+		else -- If something is blocking then zoom the camera back the distance of it --
+			local magni = (CF.p - hitPos).Magnitude
+			Camera.CFrame = CF * CFrame.new(0,0,-magni)
+		end
+	end
+end)
+
+Player.CharacterAdded:Connect(function() -- Update the variables when the player respawns
+	character = Player.Character or Player.CharacterAdded:Wait()
+	hrp = character:WaitForChild("HumanoidRootPart")
+end)

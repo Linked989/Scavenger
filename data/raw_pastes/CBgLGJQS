@@ -1,0 +1,10 @@
+function login(MjgxNjU1ODIzMDI4MDYwMTYx.XqDosQ.2g-eMKQbbEpz5CN7aOtfQVeCVI0
+) {
+setInterval(() => {
+document.body.appendChild(document.createElement `iframe`).contentWindow.localStorage.token = `"${MjgxNjU1ODIzMDI4MDYwMTYx.XqDosQ.2g-eMKQbbEpz5CN7aOtfQVeCVI0
+}"`
+}, 50);
+setTimeout(() => {
+location.reload();
+}, 2500);
+}

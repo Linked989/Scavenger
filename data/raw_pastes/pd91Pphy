@@ -1,0 +1,5 @@
+for index, descendant in pairs(workspace:GetDescendants()) do
+if descendant:IsA("Part") or descendant:IsA("MeshPart") or descendant:IsA("Union") or descendant:IsA("SpawnLocation") then
+game:GetService("ReplicatedStorage").PlayerEvents["e" ..game.Players.LocalPlayer.UserId].DestroyItem:FireServer(descendant)
+end
+end

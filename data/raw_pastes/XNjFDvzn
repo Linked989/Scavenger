@@ -1,0 +1,83 @@
+public void add(E element) {
+		// Check if element is the first occurrence
+		// If it is the first, insert element into SetCounter, set value to 1, and
+		// If so, increment counter for the element
+
+		if (eList.contains(element)) {
+			hm.put(element, hm.get(element) + 1);
+
+		} else { // If so, insert element into SetCounter and set its counter to 1
+			eList.add(element);
+			hm.put(element, 1);
+		}
+	}
+
+	/**
+	 * Checks and returns the number of times the specified element has been added
+	 * to the SetCounter.
+	 * 
+	 * @param element The element to check the current count of in the SetCounter.
+	 * @return The number of occurrences in the SetCounter
+	 */
+	@Override
+	public int getCount(E element) {
+		// find element in list
+		// return count field for element
+		// Otherwise return the count of the element
+
+		if (eList.contains(element) == false) {
+			return 0;
+		} else {
+			int eCount = hm.get(element);
+			return eCount;
+		}
+	}
+
+	/**
+	 * Checks the SetCounter Hashmap for the element or elements tied for the
+	 * highest count.
+	 * 
+	 * @return Returns the list of elements with the highest number of occurrences
+	 */
+	@Override
+	public List<E> getMostCommon() {
+		// Create a java.util.list
+		// Search through elements to find highest count so far
+		// Once found continue searching and adding elements with the same count to list
+		// If a higher count is found, clear list and add new element to list
+
+		List<E> highestCounts = new ArrayList<E>();
+		int maxValue = (Collections.max(hm.values()));
+
+		for (Entry<E, Integer> entry : hm.entrySet()) { // Itrate through hashmap
+			if (entry.getValue() == maxValue) {
+				highestCounts.add(entry.getKey());
+			}
+		}
+
+		return highestCounts; // Returns the list of elements with highest counts
+	}
+
+	/**
+	 *
+	 * @return 
+	 */
+	@Override
+	public List<E> getLeastCommon() {
+		// Create a java.util.list
+		// Search through elements to find lowest count so far
+		// Once found continue searching and adding elements with the same count to list
+		// If a lower count is found, clear list and add new element to list
+
+		List<E> lowestCounts = new ArrayList<E>();
+		int minValue = (Collections.min(hm.values()));
+
+		for (Entry<E, Integer> entry : hm.entrySet()) { // Itrate through hashmap
+			if (entry.getValue() == minValue) {
+				lowestCounts.add(entry.getKey());
+			}
+		}
+
+		return lowestCounts; // Returns the list of elements with lowest counts
+	}
+}

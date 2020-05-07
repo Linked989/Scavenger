@@ -1,0 +1,51 @@
+#viewer .property-panel {
+  background-color: #ccc;
+  left: 20px;
+  opacity: 0.85;
+  position: absolute;
+  top: 35px;
+  width: 250px;
+  height: 300px;
+  z-index: 10;
+}
+
+#viewer .property-panel-titlebar {
+  width: 250px;
+  height: 40px;
+  background-color: black;
+}
+
+.property-panel-titlebar div {
+  color: white;
+  font-size: 10pt;
+  margin: 0 auto;
+  overflow-x: scroll;
+ }
+
+ .property-panel-titlebar p {
+  text-overflow: ellipsis;
+
+  /* Required for text-overflow to do anything */
+  white-space: nowrap;
+  overflow: hidden;
+ }
+
+#viewer .property-panel-scroll-container {
+  overflow-y: scroll;
+  font-size: 10pt;
+  position: absolute;
+  top: 40px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+#viewer .property-panel-content-table {
+  width: 100%;
+  height: 100%;
+  border-collapse: collapse;
+}
+
+.property-panel-content-table, .property-panel-content-table th, .property-panel-content-table td {
+  border: 1px solid black;
+}

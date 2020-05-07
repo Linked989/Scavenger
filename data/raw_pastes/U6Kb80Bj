@@ -1,0 +1,6 @@
+print("Hello, this is python bot 0.0.0.1..")
+print("I will ask you the number that you want to add.")
+input_1 = input("Number 1: ")
+input_2 = input("Number 2: ")
+result = input_1 + input_2
+print(result)

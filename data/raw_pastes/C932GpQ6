@@ -1,0 +1,446 @@
+--[[
+Known Issues:
+	Also, allow this to work with fuel, though this was originally
+	built with fuel disabled, if it runs in a world that requires fuel
+	it may get stuck if its not fueled properly.
+
+]]
+
+local dn = 15 -- Distance notification, basically tells you how far the turtle has dug in increments
+local length, walk = ...
+local delay = 0.25 -- This is to accomodate Sand falling, or obsidian forming
+local wallMaterial="minecraft:stonebrick"
+
+if length == nil then
+	print("No length argument was given")
+	return false -- Closes Program
+end
+
+if walk == 'true' then
+	walk = true
+else
+	walk = false
+end
+
+
+--These variables keep track of the Turtles position and
+--orientation relative to the turtles Starting Position
+X = 0
+Y = 0
+Z = 0
+O = 0
+
+--[[
+Orientation List
+Forward = 0
+Right = 1
+Back = 2
+Left = 3
+]]--
+
+
+-- These functions are used to keep track of
+-- The Turtles Position Relative to its
+-- Starting Point
+
+function left(q)
+	if q == nil then q = 1 end
+	for i=1,q do
+		turtle.turnLeft()
+		if O == 0 then
+			O = 3
+		else
+			O = O - 1
+		end
+	end
+    return true
+end
+
+function right(q)
+	if q == nil then q = 1 end
+	for i=1,q do
+		turtle.turnRight()
+		if O == 3 then
+			O = 0
+		else
+			O = O + 1
+		end
+	end
+    return true
+end
+
+function up(q)
+	if q == nil then q = 1 end
+	for i=1,q do
+		while not turtle.up() do
+			digUp()
+			turtle.up()
+			sleep(delay)
+		end
+		Y = Y + 1
+	end
+    return true
+end
+
+function down(q)
+	if q == nil then q = 1 end
+	for i=1,q do
+		while not turtle.down() do
+			digDown()
+			turtle.attackDown()
+			sleep(delay)
+		end
+		Y = Y - 1
+	end
+    return true
+end
+
+function forward(q)
+	if q == nil then q = 1 end
+	for i=1,q do
+		while not turtle.forward() do
+			turtle.dig()
+			turtle.attack()
+			sleep(delay)
+		end
+		if O == 0 then
+			X = X + 1
+		elseif O == 1 then
+			Z = Z + 1
+		elseif O == 2 then
+			X = X - 1
+		elseif O == 3 then
+			Z = Z - 1
+		end
+	end
+    return true
+end
+
+function back()
+	right()
+	right()
+	forward()
+	left()
+	left()
+	return true
+end
+
+function orient(arg1)
+    while arg1 ~= O do
+            right()
+    end
+	return true
+end
+
+function dig()
+	while turtle.detect() do
+		turtle.dig()
+		sleep(delay)
+	end
+	return true
+end
+
+function digUp()
+	while turtle.detectUp() do
+		turtle.digUp()
+		sleep(delay)
+	end
+	return true
+end
+
+function digDown()
+	while turtle.detectDown() do
+		turtle.digDown()
+		sleep(delay)
+	end
+	return true
+end
+
+--[[ Tells turtle where to go for longer movements,
+ such as going to and from the chest.
+ This may error if theres blocks in the way, but
+ Given the way we will have the turtle move in this
+ program, it will be fine. How ever if I were to
+ copy this function over to another program, I'd
+ probably fix this issue.]]
+function go(lx,ly,lz)
+    if X < lx then
+		orient(0)
+		for i=1,(lx-X) do
+			forward()
+		end
+	end
+	
+	if X > lx then
+		orient(2)
+		for i=1,X-lx do
+			forward()
+		end
+	end
+	
+	if Y < ly then
+		for i=1,ly-Y do
+			up()
+		end
+	end
+	
+	if Y > ly then
+		for i=1,Y-ly do
+			down()
+		end
+	end
+	
+	if Z < lz then
+		orient(1)
+		for i=1,lz-Z do
+			forward()
+		end
+	end
+	
+	if Z > lz then
+		orient(3)
+		for i=1,Z-lz do
+			forward()
+		end
+	end
+end
+
+
+
+-- Deposits Items into a chest
+-- Warning! This may error if
+-- the chest is full, so make sure
+-- its emptied
+function deposit()
+	for i=1,16 do
+		turtle.select(i)
+		while turtle.drop() == false and turtle.getItemCount() ~= 0 do -- Waits until turtle can deposit item
+			sleep(1)
+		end
+		turtle.drop()
+	end
+	turtle.select(1)
+	return true
+end
+
+
+function checkInvHelper(slot_arg)
+	turtle.select(slot_arg)
+	local data = turtle.getItemDetail()
+	if data then
+		if data.name == wallMaterial then
+			return data.count
+		else
+			return -1
+		end
+	else
+		return -1
+	end
+end
+
+-- Check to make sure that stone bricks are still available
+-- These will take up slots 1-4
+function checkInv()
+	if checkInvHelper(1) > 0 then
+		return 1
+	elseif checkInvHelper(2) > 0 then
+		return 2
+	elseif checkInvHelper(3) > 0 then
+		return 3
+	elseif checkInvHelper(4) > 0 then
+		return 4
+	else
+		return -1
+	end
+end
+
+-- Directions:
+-- 	1 - FORWARD
+-- 	2 - UP
+--	3 - DOWN
+function placeDirection(dir)
+	local dirName=""
+	if dir == nil then dir=1 end
+	if dir > 3 or dir < 1 then dir=1 end
+	if dir == 1 then
+		dirName="FORWARD"
+	elseif dir==2 then
+		dirName="UP"
+	elseif dir==3 then
+		dirName="DOWN"
+	else
+		dirName="INVALID"
+	end
+	
+	local slot = checkInv()
+	if slot > 0 then 
+		turtle.select(slot)
+		if			dir==1 then turtle.place()
+			elseif	dir==2 then turtle.placeUp()
+			elseif	dir==3 then turtle.placeDown()
+			else				turtle.place()
+		end
+	else
+		print("ERROR: NO \""..wallMaterial.."\" IN SLOTS 1-4")
+		print("   CANNOT PLACE BLOCK IN DIRECTION "..dirName)
+		return false
+	end
+end
+
+function place()
+	placeDirection(1)
+end
+function placeUp()
+	placeDirection(2)
+end
+function placeDown()
+	placeDirection(3)
+end
+
+--[[
+This function is what tells the
+turtle to mine and when to go back
+to empty its inventory
+]]--
+function mine()
+  dig()
+  forward()
+  digUp()
+  digDown()
+  left()
+  dig()
+  forward()
+  digUp()
+  digDown()
+  dig()
+  forward()
+  digUp()
+  digDown()
+  right(2)
+  forward(2)
+  dig()
+  forward()
+  digUp()
+  digDown()
+  dig()
+  forward()
+  digUp()
+  digDown()
+  down()
+  right(2)
+  digDown()
+  placeDown()
+  forward()
+  digDown()
+  placeDown()
+  forward()
+  digDown()
+  placeDown()
+  forward()
+  digDown()
+  placeDown()
+  forward()
+  digDown()
+  placeDown()
+  right(2)
+  up(2)
+  digUp()
+  placeUp()
+  forward()
+  digUp()
+  placeUp()
+  forward()
+  digUp()
+  placeUp()
+  forward()
+  digUp()
+  placeUp()
+  forward()
+  digUp()
+  placeUp()
+  right(2)
+  forward(3)
+  up()
+  place()
+  down()
+  place()
+  down()
+  place()
+  right(2)
+  forward(3)
+  place()
+  up()
+  place()
+  up()
+  place()
+  left(2)
+  forward()
+  down()
+  right()
+  
+--	dig()
+--	forward()
+--	digUp()
+--	digDown()
+--	up()
+--	left()
+--	dig()
+--	right(2)
+--	dig()
+--	down()
+--	dig()
+--	left(2)
+--	dig()
+--	down()
+--	dig()
+--	right(2)
+--	dig()
+--	left()
+--	up()
+end
+
+
+-- Checks if turtle is full
+function check()
+	if turtle.getItemCount(15) == 0 then -- Checks second last slot. I'd like to leave 2 slots empty just to be safe
+		return false
+	else
+		return true
+	end
+end
+
+function notify(include)
+	if X % dn == 0 and X ~= 0 then
+		print("The turtle has traveled "..X.."/"..length+include.." blocks so far")
+	end
+	return true
+end
+
+local dni = 0 -- Blocks for distance notification to include in length, from the walk program 
+if walk then
+	while turtle.detect() == false do
+		forward()
+		dni = dni + 1
+		notify(dni) -- Notifies Distance
+	end
+end
+
+for i=1,length do
+	mine()
+	notify(dni) -- Notifies Distance
+	if check() then -- Checks if turtle should deposit items
+		local lx,ly,lz = X,Y,Z
+		go(0,0,0)
+		orient(2) -- Faces Chest
+		deposit()
+		orient(0)
+		go(lx,ly,lz)
+	end
+end
+
+-- Returns to chest and deposits items before ending program
+go(0,0,0)
+orient(2) -- Faces Chest
+deposit()
+orient(0)
+print("Program Ended, thank's for using BowWhalley's Digging Program")

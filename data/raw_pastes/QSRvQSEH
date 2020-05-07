@@ -1,0 +1,215 @@
+struct CPPSPMD_MAKE_NAME(spmd_huffman_decoder1W) : CPPSPMD::spmd_kernel
+{
+	enum { N = 16 };
+
+	int16_t *m_pTables;
+	int m_fast_bits;
+	int m_table_size;
+
+	CPPSPMD_MAKE_NAME(spmd_huffman_decoder1W)() :
+		m_pTables(nullptr),
+		m_fast_bits(0),
+		m_table_size(0)
+	{
+	}
+
+	~CPPSPMD_MAKE_NAME(spmd_huffman_decoder1W)()
+	{
+		deinit();
+	}
+
+	void deinit()
+	{
+		free(m_pTables);
+		m_pTables = nullptr;
+	}
+
+	void init(basist::huffman_decoding_table *pTable, int fast_bits)
+	{
+		assert(fast_bits == 6);
+
+		CPPSPMD::spmd_kernel::init(exec_mask::all_on());
+
+		deinit();
+
+		m_fast_bits = fast_bits;
+		m_table_size = 1 << fast_bits;
+
+		m_pTables = (int16_t *)malloc(m_table_size * sizeof(int16_t) * N);
+
+		for (int j = 0; j < m_table_size; j++)
+		{
+			int k = pTable->get_lookup()[j];
+			int sym = k & 0xFF;
+			int codesize = k >> 16;
+			m_pTables[j] = (int16_t)(sym | (codesize << 8));
+		}
+	}
+
+	static CPPSPMD_FORCE_INLINE  vint table_lookup4_8(const vint &a, const vint &table)
+	{
+		return vint{ _mm256_shuffle_epi8(table.m_value, a.m_value) };
+	}
+
+	static CPPSPMD_FORCE_INLINE  vint table_lookup5_8(const vint &a, const vint &table_0, const vint &table_1)
+	{
+		__m256i l = _mm256_shuffle_epi8(table_0.m_value, a.m_value);
+		__m256i h = _mm256_shuffle_epi8(table_1.m_value, a.m_value);
+
+		__m256i m = _mm256_slli_epi32(a.m_value, 31 - 4);
+
+		__m256 v = _mm256_blendv_ps(_mm256_castsi256_ps(l), _mm256_castsi256_ps(h), _mm256_castsi256_ps(m));
+
+		return vint{ _mm256_castps_si256(v) };
+	}
+
+	static CPPSPMD_FORCE_INLINE vint table_lookup6_8(const vint &a, const vint &table_0, const vint &table_1, const vint &table_2, const vint &table_3)
+	{
+		__m256i m01 = _mm256_slli_epi32(a.m_value, 31 - 4);
+
+		__m256i l0 = _mm256_shuffle_epi8(table_0.m_value, a.m_value);
+		__m256i h0 = _mm256_shuffle_epi8(table_1.m_value, a.m_value);
+		__m256 v0 = _mm256_blendv_ps(_mm256_castsi256_ps(l0), _mm256_castsi256_ps(h0), _mm256_castsi256_ps(m01));
+
+		__m256i l1 = _mm256_shuffle_epi8(table_2.m_value, a.m_value);
+		__m256i h1 = _mm256_shuffle_epi8(table_3.m_value, a.m_value);
+		__m256 v1 = _mm256_blendv_ps(_mm256_castsi256_ps(l1), _mm256_castsi256_ps(h1), _mm256_castsi256_ps(m01));
+
+		__m256i m2 = _mm256_slli_epi32(a.m_value, 31 - 5);
+		__m256 v2 = _mm256_blendv_ps(v0, v1, _mm256_castsi256_ps(m2));
+
+		return vint{ _mm256_castps_si256(v2) };
+	}
+
+	void decode(
+		uint32_t n, int *pDest,
+		const int *pBitstreams, int bitstream_offsets[N])
+	{
+		assert(n && (n % 4) == 0);
+		assert(m_fast_bits == 6);
+
+		vint bit_ofs0 = VINT_SHIFT_LEFT(loadu_linear(bitstream_offsets), 3);
+		vint bit_ofs1 = VINT_SHIFT_LEFT(loadu_linear(bitstream_offsets + 8), 3);
+
+		vint fast_bits_mask = m_table_size - 1;
+
+		CPPSPMD_ALIGN(32) uint8_t tab_bytes[32];
+		for (int i = 0; i < 16; i++)
+		{
+			int s = m_pTables[i];
+			int k = (s & 0x1F) | ((s >> 8) << 5);
+			tab_bytes[i] = (uint8_t)k;
+			tab_bytes[i + 16] = (uint8_t)k;
+		}
+		vint table_0 = loadu_linear_all((int *)tab_bytes);
+
+		for (int i = 0; i < 16; i++)
+		{
+			int s = m_pTables[i + 16];
+			int k = (s & 0x1F) | ((s >> 8) << 5);
+			tab_bytes[i] = (uint8_t)k;
+			tab_bytes[i + 16] = (uint8_t)k;
+		}
+		vint table_1 = loadu_linear_all((int *)tab_bytes);
+
+		for (int i = 0; i < 16; i++)
+		{
+			int s = m_pTables[i + 32];
+			int k = (s & 0x1F) | ((s >> 8) << 5);
+			tab_bytes[i] = (uint8_t)k;
+			tab_bytes[i + 16] = (uint8_t)k;
+		}
+		vint table_2 = loadu_linear_all((int *)tab_bytes);
+
+		for (int i = 0; i < 16; i++)
+		{
+			int s = m_pTables[i + 48];
+			int k = (s & 0x1F) | ((s >> 8) << 5);
+			tab_bytes[i] = (uint8_t)k;
+			tab_bytes[i + 16] = (uint8_t)k;
+		}
+		vint table_3 = loadu_linear_all((int *)tab_bytes);
+
+		int *pDest_end = pDest + n * N;
+		while (pDest < pDest_end)
+		{
+			vint bit_buf0 = load_bytes_all(VINT_SHIFT_RIGHT(bit_ofs0, 3)[pBitstreams]);
+			
+			vint fetched_bits_to_skip0 = bit_ofs0 & 7;
+
+			store_all(bit_buf0, bit_buf0 >> fetched_bits_to_skip0);
+
+			vint bitsA0 = bit_buf0 & fast_bits_mask;
+			vint fasttabA0 = table_lookup6_8(bitsA0, table_0, table_1, table_2, table_3);
+			vint symA0 = fasttabA0 & 0x1F;
+			vint codesizeA0 = VINT_SHIFT_RIGHT(fasttabA0, 5) & 0x7;
+			storeu_linear_all(pDest, symA0);
+			vint ofs0 = codesizeA0;
+			
+			vint bit_buf1 = load_bytes_all(VINT_SHIFT_RIGHT(bit_ofs1, 3)[pBitstreams]);
+
+			vint bitsB0 = (bit_buf0 >> ofs0) & fast_bits_mask;
+			vint fasttabB0 = table_lookup6_8(bitsB0, table_0, table_1, table_2, table_3);
+			vint symB0 = fasttabB0 & 0x1F;
+			vint codesizeB0 = VINT_SHIFT_RIGHT(fasttabB0, 5) & 0x7;
+			storeu_linear_all(pDest + 8 * 2, symB0);
+			store_all(ofs0, ofs0 + codesizeB0);
+						
+			vint bitsC0 = (bit_buf0 >> ofs0) & fast_bits_mask;
+			vint fasttabC0 = table_lookup6_8(bitsC0, table_0, table_1, table_2, table_3);
+			vint symC0 = fasttabC0 & 0x1F;
+			vint codesizeC0 = VINT_SHIFT_RIGHT(fasttabC0, 5) & 0x7;
+			storeu_linear_all(pDest + 8 * 4, symC0);
+			store_all(ofs0, ofs0 + codesizeC0);
+						
+			vint bitsD0 = (bit_buf0 >> ofs0) & fast_bits_mask;
+			vint fasttabD0 = table_lookup6_8(bitsD0, table_0, table_1, table_2, table_3);
+			vint symD0 = fasttabD0 & 0x1F;
+			vint codesizeD0 = VINT_SHIFT_RIGHT(fasttabD0, 5) & 0x7;
+			storeu_linear_all(pDest + 8 * 6, symD0);
+			store_all(ofs0, ofs0 + codesizeD0);
+
+			store_all(bit_ofs0, bit_ofs0 + ofs0);
+
+			//----
+			vint fetched_bits_to_skip1 = bit_ofs1 & 7;
+
+			store_all(bit_buf1, bit_buf1 >> fetched_bits_to_skip1);
+
+			vint bitsA1 = bit_buf1 & fast_bits_mask;
+			vint fasttabA1 = table_lookup6_8(bitsA1, table_0, table_1, table_2, table_3);
+			vint symA1 = fasttabA1 & 0x1F;
+			vint codesizeA1 = VINT_SHIFT_RIGHT(fasttabA1, 5) & 0x7;
+			storeu_linear_all(pDest + 8, symA1);
+			vint ofs1 = codesizeA1;
+
+			vint bitsB1 = (bit_buf1 >> ofs1) & fast_bits_mask;
+			vint fasttabB1 = table_lookup6_8(bitsB1, table_0, table_1, table_2, table_3);
+			vint symB1 = fasttabB1 & 0x1F;
+			vint codesizeB1 = VINT_SHIFT_RIGHT(fasttabB1, 5) & 0x7;
+			storeu_linear_all(pDest + 8 + 8 * 2, symB1);
+			store_all(ofs1, ofs1 + codesizeB1);
+
+			vint bitsC1 = (bit_buf1 >> ofs1) & fast_bits_mask;
+			vint fasttabC1 = table_lookup6_8(bitsC1, table_0, table_1, table_2, table_3);
+			vint symC1 = fasttabC1 & 0x1F;
+			vint codesizeC1 = VINT_SHIFT_RIGHT(fasttabC1, 5) & 0x7;
+			storeu_linear_all(pDest + 8 + 8 * 4, symC1);
+			store_all(ofs1, ofs1 + codesizeC1);
+
+			vint bitsD1 = (bit_buf1 >> ofs1) & fast_bits_mask;
+			vint fasttabD1 = table_lookup6_8(bitsD1, table_0, table_1, table_2, table_3);
+			vint symD1 = fasttabD1 & 0x1F;
+			vint codesizeD1 = VINT_SHIFT_RIGHT(fasttabD1, 5) & 0x7;
+			storeu_linear_all(pDest + 8 + 8 * 6, symD1);
+			store_all(ofs1, ofs1 + codesizeD1);
+						
+			store_all(bit_ofs1, bit_ofs1 + ofs1);
+
+			pDest += 8 * 8;
+		}
+
+		storeu_linear_all(bitstream_offsets, bit_ofs0);
+		storeu_linear_all(bitstream_offsets + 8, bit_ofs1);
+	}
+};

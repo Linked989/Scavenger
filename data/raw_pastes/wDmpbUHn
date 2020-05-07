@@ -1,0 +1,69 @@
+/**
+ * Write a description of class recursion here.
+ *
+ * Yasmin Sufiah binti Ya'acob
+ * Last modified:7/5/2020)
+ *Status:1
+ */
+public class Recursion
+{
+    public static void main(String[]args)
+    {
+        Recursion rc = new Recursion();
+        rc.recur(5);
+        System.out.print ("\n");
+        rc.recur1(5);
+        System.out.print ("\n");
+        rc.recur2(5);
+        System.out.print ("\n");
+        rc.recur3(5);
+    }
+   
+    public void recur(int n)
+    {
+        if (n > 1)
+        {
+            System.out.print(n);
+            recur(n - 1);
+        }
+       
+        else
+        {
+           System.out.print("1");
+        }  
+    }
+   
+    private void recur1(int n)
+     {
+        if (n > 1)
+        {
+            recur1(n - 1);
+            System.out.print(n);
+        }
+       
+        else
+        {
+           System.out.print ("1");
+        }
+     }
+     
+     private void recur2(int n)
+     {
+        if (n > 1)
+        {
+            System.out.print(n);
+            recur2(n - 1);
+        }
+        System.out.print ("1");
+     }
+     
+     private void recur3(int n)
+     {
+        if (n > 1)
+        {
+            recur3(n - 1);
+            System.out.print(n);
+        }
+        System.out.print ("1");
+     }
+}
