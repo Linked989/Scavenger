@@ -1,0 +1,33 @@
+#lang racket
+
+(define (word-split word)
+  (let ([target (quotient (string-length word) 2)])
+    (list (substring word 0 target)
+          (substring word target (string-length word)))))
+
+(define (move-in lst)
+  (cdr (reverse (cdr (reverse lst)))))
+
+(define (list-insert x i xs)
+  (define-values (before after) (split-at xs i))
+  (append before x after))
+
+(define (word-swap word1 word2)
+  (let ([word1A (car (word-split word1))]
+        [word1B (last (word-split word1))]
+        [word2A (car (word-split word2))]
+        [word2B (last (word-split word2))])
+    (list (string-append word1A word2B)
+          (string-append word2A word1B))))
+
+(define (mutate lst)
+  (let loop ([c_lst lst] [m_lst '()])
+    (if (= 0 (length c_lst))
+        m_lst
+        (let* ([c_word1 (car c_lst)]
+               [c_word2 (last c_lst)]
+               [m_words (word-swap c_word1 c_word2)])
+          (loop (move-in c_lst)
+                (list-insert m_words
+                             (/ (length m_lst) 2)
+                             m_lst))))))

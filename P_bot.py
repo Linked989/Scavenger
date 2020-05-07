@@ -5,6 +5,7 @@
 import time
 import os
 import httplib2
+import requests
 import classes.utility
 import json
 
@@ -38,7 +39,7 @@ def initTwitter():
 while 1:
 	# test if ready to archive
 	archivepath = "data/raw_pastes"
-	archiveit = tools.testifreadytoarchive(archivepath)
+	archiveit = tools.testifreadytoarchive(archivepath) #classes.utility.ScavUtility()
 	if archiveit == 1:
 		print("[*] Get all the pastes with credentials...")
 		tools.getthejuicythings(archivepath, "pastebincom")
@@ -49,12 +50,14 @@ while 1:
 	iterator += 1
 	http = httplib2.Http()
 	try:
-		status, response = http.request(f"https://scrape.pastebin.com/api_scraping.php?limit={pastebinLimit}")
-		result =  json.loads(response.decode('utf-8'))
+		r = requests.post(f"https://scrape.pastebin.com/api_scraping.php?limit={pastebinLimit}")
+		#status, response = http.request(f"https://scrape.pastebin.com/api_scraping.php?limit={pastebinLimit}")
+		#result =  json.loads(response.decode('utf-8'))
+		result = r.json()
 		print(f"[#] Pastebin limit set to: {pastebinLimit}\n[#] Gathering Tasty Pastes...")
-		time.sleep(300)
+		time.sleep(20)
 
-		for apiPaste in result:
+		for apiPaste in result: # Iterate over the json file to find Paste URLs
 			if  os.path.exists("data/raw_pastes/" + apiPaste["key"]):
 				print("[-] " + apiPaste["key"] + " already exists. Skipping...")
 				continue
@@ -74,12 +77,13 @@ while 1:
 						with open("data/raw_pastes/" + apiPaste["key"]) as f:
 							pasteContent = f.readlines()
 						skip = 0
-						for line in pasteContent:
-							curLine = line.strip()
-							if (":" in curLine or ";" in curLine or "," in curLine) and "://" not in curLine and len(curLine) <=100 and "android:" not in curLine and "#EXTINF" not in curLine:
-								tools.checknotificationtargets(notificationtargets, curLine, apiPaste["key"])
-							else:
-								skip = 1
+						if useTwitter:
+							for line in pasteContent:
+								curLine = line.strip()
+								if (":" in curLine or ";" in curLine or "," in curLine) and "://" not in curLine and len(curLine) <=100 and "android:" not in curLine and "#EXTINF" not in curLine:
+									tools.checknotificationtargets(notificationtargets, curLine, apiPaste["key"]) #classes.utility.ScavUtility()
+								else:
+									skip = 1
 						if skip == 0:
 							foundPasswords = 1
 

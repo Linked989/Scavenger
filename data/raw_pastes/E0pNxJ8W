@@ -1,0 +1,52 @@
+/**
+ * Write a description of class recursion here.
+ *
+ * Maizatul Izzalina bt Bahari
+ * @version (a version number or a date:7/5/2020)
+ */
+public class q2
+{
+    public void recur5(char n)
+    {if(n=='k')
+        {System.out.println(n);
+         recur5('j');
+        }
+     else System.out.println(1);
+    }
+    
+    public void recur6(char n)
+    {if(n=='k')
+        {recur6('j');
+         System.out.println(n);
+        }
+     else System.out.println(1);
+    }
+    
+    public void recur7(char n)
+    {if(n=='k')
+        {System.out.println(n);
+         recur7('j');
+        }
+     System.out.println(1);
+    }
+    
+    public void recur8(char n)
+    {if(n=='k')
+        {recur8('j');
+         System.out.println(n);
+        }
+     System.out.println(1);
+    }
+    
+    public static void main()
+    {q2 d = new q2();
+        System.out.println("recur5");
+        d.recur5('k');
+        System.out.println("\nrecur6");
+        d.recur6('k');
+        System.out.println("\nrecur7");
+        d.recur7('k');
+        System.out.println("\nrecur8");
+        d.recur8('k');} 
+    
+}

@@ -1,0 +1,9 @@
+class PropertyPanel {
+  constructor( parentContainer ) {}
+
+  init() {}
+
+  setTitle( title ) {}
+
+  setProperties( props ) {}
+}

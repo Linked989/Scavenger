@@ -1,0 +1,77 @@
+{
+    "embed": {
+        "title": "In game Rules | Class Setup",
+        "fields": [
+            {
+                "name": "> **__Banned Operator Skills__** ** (All banned)**",
+                "value": "**•** H.I.V.E.\n**•** Tempest\n**•** Annhilator \n**•** Gravity Spikes\n**•** Sparrow\n**•** Warmachine \n**•** Purifier\n**•** Transform Shield\n**•** Death Machine\n\n",
+                "inline": false
+            },
+            {
+                "name": "> **__Banned Scorestreaks__** ",
+                "value": "**•** Molotov Cocktail \n**•** Shock RC\n**•** UAV\n**•** Hunter Killer Drone\n**•** Care Package\n**•** Counter-UAV\n**•** MQ-27 Dragonfire\n**•** Sentry Gun \n**•** SAM Turret\n**•** XS1 Goliath\n**•** Stealth Chopper\n**•** VTOL\n\n*Predator missile is exclusively allowed in Hardpoint Gamemode*",
+                "inline": false
+            },
+            {
+                "name": "> **__Banned Guns__** ",
+                "value": "All Legendary(Orange) & Epic(Purple) Primary guns are banned\nLegendary(Orange) & Epic(Purple) Secondary guns + throwables are allowed. \n",
+                "inline": false
+            },
+            {
+                "name": "Shotguns (All banned)",
+                "value": "**•** BY15\n**•** Striker\n**•** HS2126\n**•** HS0405",
+                "inline": true
+            },
+            {
+                "name": "LMGs (All banned)",
+                "value": "**•** RPD\n**•** S36\n**•** M4LMG\n**•** UL736",
+                "inline": true
+            },
+            {
+                "name": "Snipers",
+                "value": "**•** Arctic .50\n**•** M21 EBR\n**•** XPR-50\n",
+                "inline": true
+            },
+            {
+                "name": "Assault Rifle",
+                "value": "-",
+                "inline": true
+            },
+            {
+                "name": "Sub Machine Guns",
+                "value": "-",
+                "inline": true
+            },
+            {
+                "name": "Launchers ",
+                "value": "**•** SRMS\n**•** FHJ-18",
+                "inline": true
+            },
+            {
+                "name": "> **__Banned Equipment__**",
+                "value": "**•** Tactical Scope - SR\n**•** Tripmine",
+                "inline": false
+            },
+            {
+                "name": "> **__Banned Perks__**",
+                "value": "*some perks rendered useless by other rules are not mentioned*",
+                "inline": false
+            },
+            {
+                "name": "Red",
+                "value": "**•** Persistence \n",
+                "inline": true
+            },
+            {
+                "name": "Green",
+                "value": "**•** Tracker\n**•** Hardwired\n",
+                "inline": true
+            },
+            {
+                "name": "Blue",
+                "value": "**•** Demo Expert \n**•** Alert \n**•** Engineer",
+                "inline": true
+            }
+        ]
+    }
+}

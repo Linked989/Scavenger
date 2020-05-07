@@ -1,0 +1,13 @@
+render() {
+  // ... other code snippet
+
+  //don't let renderer erase canvas
+  this.renderer.autoClear = false;
+  this.renderer.render( this.selectionScene, this.camera );
+
+  //let renderer clean next time
+  // (next time is when we render scene1 again)
+  this.renderer.autoClear = true;
+
+  // ... other code snippet
+}

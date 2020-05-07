@@ -1,0 +1,39 @@
+kali@kali:~$ ip a
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 08:00:27:1f:30:76 brd ff:ff:ff:ff:ff:ff
+    inet 10.0.2.15/24 brd 10.0.2.255 scope global dynamic noprefixroute eth0
+       valid_lft 84620sec preferred_lft 84620sec
+    inet6 fe80::a00:27ff:fe1f:3076/64 scope link noprefixroute 
+       valid_lft forever preferred_lft forever
+3: tun0: <POINTOPOINT,MULTICAST,NOARP,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UNKNOWN group default qlen 100
+    link/none 
+    inet 10.10.14.96/23 brd 10.10.15.255 scope global tun0
+       valid_lft forever preferred_lft forever
+    inet6 dead:beef:2::105e/64 scope global 
+       valid_lft forever preferred_lft forever
+    inet6 fe80::edc1:e98f:e338:3d9a/64 scope link stable-privacy 
+       valid_lft forever preferred_lft forever
+kali@kali:~$ ping 10.10.14.96
+PING 10.10.14.96 (10.10.14.96) 56(84) bytes of data.
+64 bytes from 10.10.14.96: icmp_seq=1 ttl=64 time=0.023 ms
+64 bytes from 10.10.14.96: icmp_seq=2 ttl=64 time=0.038 ms
+64 bytes from 10.10.14.96: icmp_seq=3 ttl=64 time=0.065 ms
+64 bytes from 10.10.14.96: icmp_seq=4 ttl=64 time=0.158 ms
+64 bytes from 10.10.14.96: icmp_seq=5 ttl=64 time=0.036 ms
+64 bytes from 10.10.14.96: icmp_seq=6 ttl=64 time=0.042 ms
+64 bytes from 10.10.14.96: icmp_seq=7 ttl=64 time=0.034 ms
+^C
+--- 10.10.14.96 ping statistics ---
+7 packets transmitted, 7 received, 0% packet loss, time 6299ms
+rtt min/avg/max/mdev = 0.023/0.056/0.158/0.043 ms
+kali@kali:~$ ports=$(nmap -p- --min-rate=1000 -T4 10.10.14.96 | grep ^[0-9] | cut -d '/' -f 1 | tr '\n' ',' | sed s/,$//)
+kali@kali:~$ nmap -sC -sV --verbose -p$ports 10.10.14.96
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-05-06 22:06 EDT
+Error #487: Your port specifications are illegal.  Example of proper form: "-100,200-1024,T:3000-4000,U:60000-"
+QUITTING!

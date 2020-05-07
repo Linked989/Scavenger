@@ -1,0 +1,46 @@
+class Solution {
+public:
+
+    string n;
+    long tar;
+    vector<string> ans;
+    map<pair<int, int>, string> subStrs;
+
+    void func(int idx, long lastNum, long currSum, string path){
+        if(idx == n.size()){
+            if(currSum == tar){
+                ans.push_back(path);
+            }
+        }else{
+            for(int i = idx; i < n.size(); i++){
+                string numSubStr = subStrs[make_pair(idx, i - idx + 1)];
+                if(numSubStr[0] == '0' && numSubStr.size() > 1) break;
+
+                long currentNumber = stol(numSubStr);
+
+                if(idx == 0) {
+                    func(i+1, currentNumber, currentNumber, numSubStr);
+                } else {
+                    func(i+1, currentNumber, currSum + currentNumber, path + "+" + numSubStr);
+                    func(i+1, -currentNumber, currSum - currentNumber, path + "-" + numSubStr);
+                    func(i+1, currentNumber * lastNum, currSum - lastNum + currentNumber * lastNum, path + "*" + numSubStr);
+                }
+            }
+        }
+    }
+
+    vector<string> addOperators(string num, int target) {
+        n = num;
+        tar = target;
+
+        for(int i = 1; i <= num.size(); i++) {
+            for(int j = 0; j + i <= num.size(); j++) {
+                subStrs[make_pair(j, i)] = num.substr(j, i);
+            }
+        }
+        if(num.size() > 0){
+            func(0,0,0, "");
+        }
+        return ans;
+    }
+};

@@ -1,0 +1,49 @@
+
+/**
+ * Write a description of class miniexercise here.
+ *
+ * @author (your name)
+ * @version (a version number or a date)
+ */
+import java.util.*;
+
+public class miniexercise
+{
+    void recur(char n)
+    {
+        if(n>'a')
+        {
+            System.out.print(n);
+            recur(n-=1);
+        }
+        else{System.out.print('a');}
+    }
+    
+    void recur2(char n)
+    {
+        if(n>'a')
+        {
+            System.out.print(n);
+            recur2(n-=1);
+        }
+        else{System.out.print('a');}
+    }
+    
+    void recur3(char n)
+    {
+        if(n>'a')
+        {
+            System.out.print(n);
+            recur3(n-=1);
+        }
+    }
+    
+    void recur4(char n)
+    {
+        if(n>'a')
+        {
+            System.out.print(n);
+            recur4(n-=1);
+        }
+    }
+}

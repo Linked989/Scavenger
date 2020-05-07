@@ -1,0 +1,16 @@
+import urllib.request as urlopen
+import urllib.parse as urlencode
+import urllib.request as request
+import json
+
+tree_related_ids = [58544, 58542, 58549, 58546, 58541, 58888, 58548, 58543, 58545, 58887, 58547, 58550]
+
+for attachment_id in tree_related_ids:
+    layer_id = attachment_id
+    url_attachments = f'https://gis.veolia.com.co/arcgisserver/rest/services/ValleGis/Arboles_Valle/FeatureServer/3/{layer_id}/attachments'
+    attachments_params = urlencode.urlencode({'f': 'pjson'}).encode('UTF-8')
+    req = request.Request(url_attachments, attachments_params)
+    response = urlopen.urlopen(req)
+    response_bytes = response.read()
+    json_data = json.loads(response_bytes.decode('UTF-8'))
+    print(json_data)

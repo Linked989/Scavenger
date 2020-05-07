@@ -1,0 +1,27 @@
+init() {
+
+  // Add Scene
+
+  // ... other code snippet
+
+  this.selectionScene = new THREE.Scene();
+  this.selectionMaterial = new THREE.MeshBasicMaterial({
+      color: 'blue',
+      side: THREE.DoubleSide,
+      opacity: 0.5,
+      transparent: true,
+      depthWrite: false,
+      depthTest: false
+  });
+
+  // ... other code snippet
+}
+
+buildEvents() {
+  // ... other code snippet
+
+  this.renderer.domElement.addEventListener(
+    'click',
+    ( event ) => this.onMouseClicked( event )
+  );
+}

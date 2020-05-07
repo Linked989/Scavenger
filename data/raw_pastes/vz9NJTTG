@@ -1,0 +1,60 @@
+
+public class Libro {
+	private String Titulo;
+	private String Autor;
+	private String Editorial;
+	private String AñoPublicacion;
+	private float Precio;
+	
+	public Libro() {
+	
+	}
+	public Libro(String Titulo, String Autor, String Editorial, String AñoPublicacion, float Precio) {
+		this.Titulo=Titulo;
+		this.Autor=Autor;
+		this.Editorial=Editorial;
+		this.AñoPublicacion=AñoPublicacion;
+		this.Precio=Precio;
+		
+	}
+	
+	
+	
+	@Override
+	public String toString() {
+		return "Libro [Titulo=" + Titulo + ", Autor=" + Autor + ", Editorial=" + Editorial + ", AñoPublicacion="
+				+ AñoPublicacion + ", Precio=" + Precio + "]";
+	}
+	public String getTitulo() {
+		return Titulo;
+	}
+	public void setTitulo(String titulo) {
+		Titulo = titulo;
+	}
+	public String getAutor() {
+		return Autor;
+	}
+	public void setAutor(String autor) {
+		Autor = autor;
+	}
+	public String getEditorial() {
+		return Editorial;
+	}
+	public void setEditorial(String editorial) {
+		Editorial = editorial;
+	}
+	public String getAñoPublicacion() {
+		return AñoPublicacion;
+	}
+	public void setAñoPublicacion(String añoPublicacion) {
+		AñoPublicacion = añoPublicacion;
+	}
+	public float getPrecio() {
+		return Precio;
+	}
+	public void setPrecio(float precio) {
+		Precio = precio;
+	}
+
+	
+}

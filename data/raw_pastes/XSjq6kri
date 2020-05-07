@@ -1,0 +1,294 @@
+// Implements a dictionary's functionality
+
+
+
+#include "dictionary.h"
+
+// Represents a node in a hash table
+typedef struct node
+{
+    char word[LENGTH + 1];
+    struct node *next;
+}
+node;
+
+// Number of buckets in hash table
+const unsigned int N = 500;
+
+// Hash table
+node *table[N];
+
+int sizes[N];
+
+
+// Returns true if word is in dictionary else false
+bool check(const char *word)
+{
+
+
+    char *words = malloc(LENGTH * sizeof(char));
+    strcpy(words, word);
+    for (int n = 0; n < strlen(words); n++)
+    {
+        words[n] = tolower(words[n]);
+    }
+
+    node *q = table[hash(words)] -> next;
+
+    if (sizes[hash(words)] != 0)
+    {
+        for (int i = 0; i < sizes[hash(words)]; i++)
+        {
+            for (int n = 0; n < strlen(q -> word); n++)
+            {
+                q -> word[n] = tolower(q -> word[n]);
+            }
+            if (strcmp(q -> word , words) == 0)
+            {
+                free(words);
+                return true;
+            }
+            else {
+                if (q -> word[0] != '\0')
+                {
+                    q = q-> next;
+                }
+                else
+                {
+                    free(words);
+                    return false;
+                }
+            }
+        }
+    }    
+    free(words);
+    return false;
+
+    /*
+     for (int i = 0; i < sizes[hash(word)]; i++)
+    {
+        if (strcmp(q -> word, word) == true)
+        {
+            return true;
+        }
+        else
+        {
+            if (q -> word[0] == '\0')
+            {
+                return false;
+            }
+            else {
+                q = q -> next;
+            }
+        }
+    }
+
+    */
+    /*
+    int i = 0;
+    while  (q -> word[0] != '\0')
+    {
+        if (i < sizes[hash(word)] - 1)
+        {
+            if (strcmp(q -> word, word) == true)
+            {
+                return true;
+            }
+            else {
+                q = q-> next;
+            }
+            i++;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    */
+    /*
+    int i = 0;
+    while  (q -> word[0] != '\0')
+    {
+        if (i < size())
+        {
+            if (strcmp(q -> word, word) == 0)
+            {
+                return true;
+            }
+            else {
+                if (q -> next != NULL)
+                {
+                    q = q-> next;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            i++;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    */
+    for (int i = 0; i < sizes[hash(words)]; i++)
+    {
+        for (int n = 0; n < strlen(q -> word); n++)
+        {
+            q -> word[n] = tolower(q -> word[n]);
+        }
+        if (strcmp(q -> word , words) == 0)
+        {
+            return true;
+        }
+        else {
+            if (q -> word[0] != '\0')
+            {
+                q = q-> next;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
+
+    return false;
+
+
+}
+
+
+// Hashes word to a number
+//from CS50 hashttable walkthrough
+unsigned int hash(const char *word)
+{
+
+    int sum = 0;
+    int word_size = 0;
+    for (int j = 0; word[j] != '\0'; j++)
+    {
+        sum += word[j];
+        word_size++;
+    }
+
+    return sum % N;
+}
+
+int dict_size = 0;
+bool yes = false;
+// Loads dictionary into memory, returning true if successful else false
+bool load(const char *dict) {
+    for (int i = 0; i < N; i++) {
+        node * s = malloc(sizeof(node));
+        s -> next = NULL;
+        s -> word[0] = '\0';
+        table[i] = malloc(sizeof(node));
+        table[i] -> next = s;
+        strcpy(table[i] -> word, "abcdefg");
+        
+        sizes[i] = 0;
+    }
+
+    FILE* dictionary = fopen(dict, "r");
+    char * temp = malloc((LENGTH  + 2 )* sizeof(char));
+    if (dictionary != NULL) {
+
+
+        while (fgets(temp, LENGTH + 2, dictionary) != NULL){
+            node* temp1 = malloc(sizeof(node));
+            temp1 -> word[0] = '\0'; 
+            strncpy(temp1 -> word, temp, strlen(temp) - 1);
+            temp1 -> next = table[hash(temp1 -> word)] -> next;
+            table[hash(temp1 -> word)] -> next = temp1;
+            sizes[hash(temp1 -> word)]++;
+            dict_size++;
+        }
+
+        yes = true;
+        free(temp);
+        fclose(dictionary);
+        return true;
+    }
+    else {
+        printf("fail");
+
+    }
+    yes = false;
+    free(temp);
+    fclose(dictionary);
+    return false;
+
+
+}
+
+// Returns number of words in dictionary if loaded else 0 if not yet loaded
+unsigned int size(void)
+{
+
+    if (yes == true)
+    {
+
+        return dict_size;
+    }
+    else {
+
+        return 0;
+    }
+}
+
+// Unloads dictionary from memory, returning true if successful else false
+bool unload(void)
+{
+
+    for (int n = 0; n < N; n++)
+    {
+
+        for (int i = 0; i <= sizes[n]; i++)
+        {
+            node *k = table[n];
+            for (int j = 0; j <= (sizes[n] - i); j++)
+            {
+                k = k -> next;
+            }
+            free(k);
+
+        }
+        free(table[n]);
+    }
+    /*
+    for (int q = 0; q < N; q++)
+    {
+        if (strcmp(table[q] -> word, "abcdefg") == 0)
+        {
+            return false;
+        }
+    }
+    */
+    /*
+    for (int n = 0; n < N; n++)
+    {
+        while (table[n] -> next != NULL)
+        {
+            node* j = table[n] -> next;
+            while (j -> next -> next != NULL ||)
+            {
+                j = j -> next;
+            }
+            free(j -> next);
+        }
+    }
+    for (int i = 0; i < N; i++)
+    {
+        if (table[i] != NULL)
+        {
+
+            return false;
+        }
+    }
+    */
+
+    return true;
+}

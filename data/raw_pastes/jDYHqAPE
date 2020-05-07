@@ -1,0 +1,28 @@
+class Solution {
+public:
+    vector<string> ans;
+    int T;
+    void func(long w, int idx, long lastNum, string e, string& num) {
+        if(idx == (int)num.size()) {
+            if(w == T) ans.push_back(e);
+            return; 
+        }
+        for(int i=0;(idx+i)<(int)num.size();i++){
+            if(i == 1 && num[idx] == '0') break;
+            string currS = num.substr(idx,i+1);
+            long curr = stol(currS);
+            if(idx == 0) {
+                func(curr,i+1,curr,currS,num);                
+            } else {
+                func(w+curr,idx+i+1,curr,e + '+' + currS,num);
+                func(w-curr,idx+i+1,-curr,e + '-' + currS,num);
+                func(w - lastNum + lastNum * curr,idx+i+1,lastNum * curr,e + '*' + currS,num);
+            }
+        }   
+    }
+    vector<string> addOperators(string num, int target) {
+        T = target;
+        func(0L,0,0L,"",num);
+        return ans;
+    }
+};

@@ -1,0 +1,24 @@
+import std.stdio;
+import std.traits;
+
+alias FooFn = void function(int) nothrow;
+
+void callFoo(FooFn fooFn)
+{
+    fooFn(42);
+}
+
+void foo(int x)
+{
+    writeln(x);
+}
+
+void bar(string s)
+{
+    writeln(s);
+}
+
+void main(string [] args) {
+    FooFn fooFn = cast(SetFunctionAttributes!(FooFn, functionLinkage!FooFn, FunctionAttribute.nothrow_))&bar;
+    callFoo(fooFn);
+}

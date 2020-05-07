@@ -1,0 +1,10 @@
+select u.nome as userName, 
+u.email as userEmail, 
+count(p.pedidoId) as qtdPedidos, 
+sum(p.valor) totalPedidos, 
+totalPedidos/qtdPedidos 
+from Usuario as u
+left join Pedido as p on p.usuarioId = u.usuarioId
+left join Transacao as t on t.pedidoId = p.pedidoId
+where t.statusTransacaoId = 3
+group by u.nome, u.email

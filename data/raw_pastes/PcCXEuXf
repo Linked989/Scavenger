@@ -1,0 +1,37 @@
+#include "doubly_linked_list.hpp"
+#include "simpleclass.hpp"
+#include <iostream>
+
+int main()
+{
+    // ints
+    DoublyLinkedList<int> listInt;
+    listInt.add(4);
+    listInt.add(6);
+    listInt.add(8);
+    listInt.removeAt(1);
+    listInt[1] = listInt[0];
+    listInt[0] = 2;
+    listInt.add(listInt[0] + listInt[1]);
+    std::cout << listInt[0] << " " << listInt[1] << " " << listInt[2] << std::endl;
+
+    // strings
+    DoublyLinkedList<std::string> listString;
+    listString.add("second");
+    listString.add("third");
+    listString.add("fourth");
+    listString.removeAt(2);
+    listString[0] = "first";
+    listString[1] = "second";
+    std::cout << listString[0] << " " << listString[1] << std::endl;
+
+    // custom classes
+    DoublyLinkedList<SimpleClass> listClass;
+    listClass.add(SimpleClass(1, "one"));
+    listClass.add(SimpleClass(2, "two"));
+    listClass[1] = listClass[0];
+    listClass.removeAt(0);
+    std::cout << listClass[0] << std::endl;
+
+    return 0;
+}

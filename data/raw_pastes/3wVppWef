@@ -1,0 +1,19 @@
+var  Years = ["2017-18","2016-17","2015-16","2014-15","2013-14","2012-13","2011-12","2010-11","2009-10","2008-09","2007-08","2006-07","2005-06"];
+
+var States = ["35","28","12","18","10","04","22","26","25","07","30","24","06","02","01","20","29","32","31","23","27","14","17","15","13","21","34","03","08","11","33","36","16","09","05","19"]
+
+function getBasicData() {
+  years.forEach(yr => {
+    states.forEach(st => {
+      var Request = {
+        WhereClause: ` Where S.AC_YEAR = '${yr}' AND  S.STATCD in ('${st}')`,
+        TableName: 'SCHDATA4NET',
+        AcademicYear: `${yr}`,
+        ExcelVersion: '2007',
+        DataFormat: '1',
+        Method: 4
+      };
+      SendContentToServer(JSON.stringify(Request), "");
+    });
+  })
+}

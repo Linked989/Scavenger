@@ -1,0 +1,56 @@
+
+/**
+ * Write a description of class recursion here.
+ *
+ * @author (Nur Ibrahtul Afifah binti Ibrahim  2018801604)
+ * Function: to run recursive that have multiple method
+ * Status code: 4
+ * because it not the correct output.
+ * @modified date (7/5/2020)
+ */
+public class ChRecursion
+{
+    char recur5(char n)
+    {if(n=='k')
+        {System.out.println(n);
+        }
+     else System.out.println('a');
+     return n;
+    }
+    
+    char recur6(char n)
+    {if(n=='k')
+        {System.out.println(n);
+        }
+     else System.out.println('a');
+     return n;
+    }
+    
+    char recur7(char n)
+    {if(n=='k')
+        {System.out.println(n);
+        }
+     System.out.println('a');
+     return n;
+    }
+    
+    char recur8(char n)
+    {if(n=='k')
+        {System.out.println(n);
+        }
+     System.out.println('a');
+     return n;
+    }
+    
+    public static void main()
+    {ChRecursion d = new ChRecursion();
+        System.out.println("recur1");
+        d.recur5('k');
+        System.out.println("\nrecur2");
+        d.recur6('k');
+        System.out.println("\nrecur3");
+        d.recur7('k');
+        System.out.println("\nrecur4");
+        d.recur8('k');} 
+    
+}

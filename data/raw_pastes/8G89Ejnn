@@ -1,0 +1,1117 @@
+--、ヽ｀ヽ｀、ヽ｀｀、ヽ｀、ヽ｀ヽ｀
+--、ヽ｀ヽ｀、ヽ｀｀、ヽ｀、ヽ｀ヽ｀
+--、ヽ｀ヽ ｀𝘿𝙚𝙘𝙧𝙮𝙥𝙩𝙚𝙙 𝘽𝙮 ｀、ヽ｀ヽ
+--、、ヽ｀ヽ｀、ヽ｀｀、ヽ｀☂ヽ｀｀
+--｀、、ヽ｀ヽ｀、ヽ｀｀、ヽ｀、ヽ｀
+--ヽ｀ヽ｀、ヽ𝙕𝙞𝙡𝙡𝙞𝙤𝙣ヽ｀、ヽ｀｀
+--、ヽ｀ヽ｀、☂｀｀、ヽ｀、ヽ｀ヽ｀
+--、ヽ｀ヽ｀、ヽ｀｀、ヽ｀、ヽ｀ヽ｀
+--、ヽ｀ヽ｀、ヽ｀｀、ヽ｀、ヽ｀ヽ｀
+--、ヽ｀ヽ｀、ヽ｀｀、ヽ｀、ヽ｀ヽ｀
+--███████╗██╗⠀⠀⠀██╗████████╗
+--╚════██║╚██╗⠀██╔╝╚══██╔══╝
+--⠀⠀███╔═╝⠀╚████╔╝⠀⠀⠀⠀██║
+--██╔══╝⠀⠀⠀⠀╚██╔╝⠀⠀⠀⠀⠀██║
+--███████╗⠀⠀⠀██║⠀⠀⠀⠀⠀⠀██║
+--╚══════╝⠀⠀⠀╚═╝⠀⠀⠀⠀⠀⠀╚═╝
+
+local PASS = '12344321'-- write what do you want to be passord here .
+local PS = gg.prompt({'🔒 Input password: '},{[1]=''},{[1]='number'})
+if not PS the﻿n os.exit() 
+end 
+if PS[1] == "" then gg.alert("Password Can Not Be Empty ❕") end
+if PS[1] == PASS then 
+gg.toast('✔️ Password correct❕')
+else
+gg.alert('❌ Wr﻿ong Password ❕') return end
+
+gg.alert("For buy 🔥VIP ACCESS🔥 DM Telegram:@Raham_r2")
+gg.alert("لطفا از VPN استفاده کنید")
+
+
+
+on = "✅ ON -"
+off = "✅ OFF -"
+string1 = off
+function main()
+  menu = gg.choice({
+    string1 .. " 🛡️[BYPASS™] ᴍᴇᴍᴏʀʏ [restart script after run]🛡",
+    " ❗ᴡᴀʟʟʜᴀᴄᴋ & ᴄᴏʟᴏʀ [Beta]",
+    " ✅ ʜᴀᴄᴋꜱ ᴍᴇɴᴜ ɢᴀᴍᴇ",
+    " ✅ ᴀᴜᴛᴏ ᴄʟᴇᴀʀʟᴏɢꜱ",
+    "❌Exit❌"
+  }, nil, "🔥Script by RAHMAN🔥                           📱Telegram ID : @Raham_r2📱_________________________By Rahman™___________________________ ")
+  if menu == 1 then
+    if string1 == off then
+      string1 = on
+    else
+      string1 = off
+    end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+    hack1()
+  elseif menu == 2 then
+    hack4()
+  elseif menu == 3 then
+    hack5()
+  elseif menu == 4 then
+    clearlogs()
+  elseif menu == 5 then
+    print("Telegram : 📱@Raham_r2📱")
+    os.exit()
+  end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+
+function hack1()
+  if string1 == on then
+    os.remove("/storage/emulated/0/Android/data/com.tencent.ig/cache")
+    os.remove("/storage/emulated/0/tencent")
+    os.remove("/storage/emulated/0/MidasOverse")
+    os.remove("/storage/emulated/0/Android/data/com.tencent.ig/files/tbslog")
+    os.remove("/storage/emulated/0/Android/data/com.tencent.ig/files/login-identifier.txt")
+    os.remove("/storage/emulated/0/Android/data/com.tencent.ig/files/cacheFile.txt")
+    os.remove("/storage/emulated/0/Android/data/com.tencent.ig/files/vmpcloudconfig.json")
+    os.remove("/storage/emulated/0/Android/data/com.tencent.ig/files/UE4Game/ShadowTrackerExtra/ShadowTrackerExtra/Saved/Logs")
+    os.remove("/storage/emulated/0/Android/data/com.tencent.ig/files/UE4Game/ShadowTrackerExtra/ShadowTrackerExtra/Saved/GameErrorNoRecords")
+    os.remove("/storage/emulated/0/Android/data/com.tencent.ig/files/UE4Game/ShadowTrackerExtra/ShadowTrackerExtra/Saved/Config/Android/AntiCheat.ini")
+    os.remove("/storage/emulated/0/Android/data/com.tencent.ig/files/UE4Game/ShadowTrackerExtra/ShadowTrackerExtra/Saved/Config/Android/IGH5CachePluginConfig.ini")
+    os.remove("/storage/emulated/0/Android/data/com.pubg.krmobile/cache")
+    os.remove("/storage/emulated/0/tencent")
+    os.remove("/storage/emulated/0/MidasOverse")
+    os.remove("/storage/emulated/0/Android/data/com.pubg.krmobile/files/tbslog")
+    os.remove("/storage/emulated/0/Android/data/com.pubg.krmobile/files/login-identifier.txt")
+    os.remove("/storage/emulated/0/Android/data/com.pubg.krmobile/files/cacheFile.txt")
+    os.remove("/storage/emulated/0/Android/data/com.pubg.krmobile/files/vmpcloudconfig.json")
+    os.remove("/storage/emulated/0/Android/data/com.pubg.krmobile/files/UE4Game/ShadowTrackerExtra/ShadowTrackerExtra/Saved/Logs")
+    os.remove("/storage/emulated/0/Android/data/com.pubg.krmobile/files/UE4Game/ShadowTrackerExtra/ShadowTrackerExtra/Saved/GameErrorNoRecords")
+    os.remove("/storage/emulated/0/Android/data/com.pubg.krmobile/files/UE4Game/ShadowTrackerExtra/ShadowTrackerExtra/Saved/Config/Android/AntiCheat.ini")
+    os.remove("/storage/emulated/0/Android/data/com.pubg.krmobile/files/UE4Game/ShadowTrackerExtra/ShadowTrackerExtra/Saved/Config/Android/IGH5CachePluginConfig.ini")
+    os.remove("/storage/emulated/0/Android/data/com.vng.pubgmobile/cache")
+    os.remove("/storage/emulated/0/tencent")
+    os.remove("/storage/emulated/0/MidasOverse")
+    os.remove("/storage/emulated/0/Android/data/com.vng.pubgmobile/files/tbslog")
+    os.remove("/storage/emulated/0/Android/data/com.vng.pubgmobile/files/login-identifier.txt")
+    os.remove("/storage/emulated/0/Android/data/com.vng.pubgmobile/files/cacheFile.txt")
+    os.remove("/storage/emulated/0/Android/data/com.vng.pubgmobile/files/vmpcloudconfig.json")
+    os.remove("/storage/emulated/0/Android/data/com.vng.pubgmobile/files/UE4Game/ShadowTrackerExtra/ShadowTrackerExtra/Saved/Logs")
+    os.remove("/storage/emulated/0/Android/data/com.vng.pubgmobile/files/UE4Game/ShadowTrackerExtra/ShadowTrackerExtra/Saved/GameErrorNoRecords")
+    os.remove("/storage/emulated/0/Android/data/com.vng.pubgmobile/files/UE4Game/ShadowTrackerExtra/ShadowTrackerExtra/Saved/Config/Android/AntiCheat.ini")
+    os.remove("/storage/emulated/0/Android/data/com.vng.pubgmobile/files/UE4Game/ShadowTrackerExtra/ShadowTrackerExtra/Saved/Config/Android/IGH5CachePluginConfig.ini")
+    gg.toast("Logs...")
+    gg.clearResults()
+    gg.setRanges(gg.REGION_C_ALLOC)
+    gg.searchNumber("2.2958874e-41;16384D;16384D;16384D;16384D;16384D::24", gg.TYPE_FLOAT, false, gg.SIGN_EQUAL, 0, -1)
+    if gg.getResultCount() == 0 then
+      gg.alert([[
+Bypass Success.
+Anonymous_gaming PUBG Mobile.]])
+      os.exit()
+    else
+      gg.searchNumber("2.2958874e-41", gg.TYPE_FLOAT, false, gg.SIGN_EQUAL, 0, -1)
+      resultsCount = gg.getResultCount()
+      results = gg.getResults(resultsCount)
+      do
+        for i = 1, resultsCount do
+          gg.addListItems({
+            [1] = {
+              flags = 4,
+              freeze = true,
+              value = 0
+            }
+          })
+          gg.addListItems({
+            [1] = {
+              flags = 4,
+              freeze = true,
+              value = 0
+            }
+          })
+          gg.addListItems({
+            [1] = {
+              flags = 4,
+              freeze = true,
+              value = 0
+            }
+          })
+          gg.addListItems({
+            [1] = {
+              flags = 4,
+              freeze = true,
+              value = 0
+            }
+          })
+          gg.addListItems({
+            [1] = {
+              flags = 4,
+              freeze = true,
+              value = 0
+            }
+          })
+          gg.addListItems({
+            [1] = {
+              flags = 4,
+              freeze = true,
+              value = 0
+            }
+          })
+          gg.addListItems({
+            [1] = {
+              flags = 4,
+              freeze = true,
+              value = 0
+            }
+          })
+        end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+      end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+    end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+    gg.clearResults()
+    gg.setRanges(gg.REGION_C_ALLOC)
+    gg.searchNumber("4449", gg.TYPE_DWORD, false, gg.SIGN_EQUAL, 0, -1)
+    do
+      do
+        for i, i in ipairs((gg.getResults(100))) do
+          if i.flags == gg.TYPE_DWORD then
+            i.value = "0"
+            i.freeze = true
+          end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+        end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+      end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+    end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+    gg.addListItems((gg.getResults(100)))
+    gg.clearResults()
+    gg.clearResults()
+    gg.setRanges(gg.REGION_C_DATA)
+    gg.searchNumber("4449", gg.TYPE_DWORD, false, gg.SIGN_EQUAL, 0, -1)
+    do
+      do
+        for i, i in ipairs((gg.getResults(100))) do
+          if i.flags == gg.TYPE_DWORD then
+            i.value = "0"
+            i.freeze = true
+          end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+        end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+      end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+    end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+    gg.addListItems((gg.getResults(100)))
+    gg.toast("Bypass success...")
+    gg.clearResults()
+  else
+    os.remove("/data/data/com.tencent.ig/files")
+    os.remove("/data/data/com.tencent.ig/app_crashrecord")
+    os.remove("/data/data/com.vng.pubgmobile/files")
+    os.remove("/data/data/com.vng.pubgmobile/app_crashrecord")
+    os.remove("/data/data/com.pubg.krmobile/files")
+    os.remove("/data/data/com.pubg.krmobile/app_crashrecord")
+    gg.toast("Bypass Complete...")
+  end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+
+function hack4()
+  wallhackcolor()
+end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+
+function hack5()
+  hacksmenu()
+end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+
+mxp1 = off
+mxp2 = off
+mxp3 = off
+mxp4 = off
+mxp5 = off
+mxp6 = off
+function wallhackcolor()
+  menu = gg.choice({
+    mxp1 .. " WH+BC Snapdragon Universal",
+    mxp2 .. " WH+BC Snapdragon 665",
+    mxp3 .. " WH+BC Snapdragon 710",
+    mxp4 .. " WH+BC Snapdragon 845",
+    mxp5 .. " WH+BC Snapdragon 855",
+    mxp6 .. " WH+BC Mediatek P22",
+    "↶ Back"
+  }, nil, "SCRIPT POWERED BY RAHAMN™") 
+  if menu == 1 then
+    if mxp1 == off then
+      mxp1 = on
+    else
+      mxp1 = off
+    end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+    whbc1()
+  elseif menu == 2 then
+    if mxp2 == off then
+      mxp2 = on
+    else
+      mxp2 = off
+    end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+    whbc2()
+  elseif menu == 3 then
+    if mxp3 == off then
+      mxp3 = on
+    else
+      mxp3 = off
+    end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+    whbc3()
+  elseif menu == 4 then
+    if mxp4 == off then
+      mxp4 = on
+    else
+      mxp4 = off
+    end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+    whbc4()
+  elseif menu == 5 then
+    if mxp5 == off then
+      mxp5 = on
+    else
+      mxp5 = off
+    end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+    whbc5()
+  elseif menu == 6 then
+    if mxp6 == off then
+      mxp6 = on
+    else
+      mxp6 = off
+    end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+    whbc6()
+  elseif menu == 7 then
+    main()
+  end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+
+function whbc1()
+  if mxp1 == on then
+    gg.clearResults()
+    gg.setRanges(gg.REGION_BAD | gg.REGION_VIDEO)
+    gg.searchNumber("5.8013756e-42F;-5.5695588e-40F;2.0F::100", gg.TYPE_FLOAT, false, gg.SIGN_EQUAL, 0, -1)
+    gg.searchNumber("2", gg.TYPE_FLOAT, false, gg.SIGN_EQUAL, 0, -1)
+    wh1off = gg.getResults(30)
+    gg.editAll("120", gg.TYPE_FLOAT)
+    wh1on = gg.getResults(30)
+    gg.clearResults()
+    gg.setRanges(gg.REGION_BAD | gg.REGION_VIDEO)
+    gg.searchNumber("2.718519e-43F;3.7615819e-37F;2.0F;-1.0F;-127.0F::520", gg.TYPE_FLOAT, false, gg.SIGN_EQUAL, 0, -1)
+    gg.searchNumber("2", gg.TYPE_FLOAT, false, gg.SIGN_EQUAL, 0, -1)
+    wh2off = gg.getResults(20)
+    gg.editAll("120", gg.TYPE_FLOAT)
+    wh2on = gg.getResults(20)
+    gg.clearResults()
+    gg.toast("Wallhack done...")
+    gg.setRanges(gg.REGION_BAD | gg.REGION_VIDEO)
+    gg.searchNumber("1.661.304.844D;8.200D;1.194.380.045D:9", gg.TYPE_DWORD, false, gg.SIGN_EQUAL, 0, -1)
+    gg.searchNumber("8200", gg.TYPE_DWORD, false, gg.SIGN_EQUAL, 0, -1)
+    gg.refineAddress("0B0", -1, gg.TYPE_DWORD, gg.SIGN_EQUAL, 0, -1)
+    coloroff = gg.getResults(100)
+    gg.editAll("6", gg.TYPE_DWORD)
+    coloron = gg.getResults(100)
+    gg.clearResults()
+    gg.toast("Body Color done...")
+  else
+    gg.setValues(wh1off)
+    gg.setValues(wh2off)
+    gg.setValues(coloroff)
+    gg.toast("WH+BC done...")
+  end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+
+function whbc2()
+  if mxp2 == on then
+    gg.clearResults()
+    gg.setRanges(gg.REGION_BAD | gg.REGION_VIDEO)
+    gg.searchNumber("95D;2;9.2194229e-41::100", gg.TYPE_FLOAT, false, gg.SIGN_EQUAL, 0, -1)
+    gg.refineNumber("2", gg.TYPE_FLOAT, false, gg.SIGN_EQUAL, 0, -1)
+    wh6651off = gg.getResults(999)
+    gg.editAll("120", gg.TYPE_FLOAT)
+    gg.clearResults()
+    gg.searchNumber("2;-1;0;1;-127;0.24022650719;0.69314718246;0.00999999978::30", gg.TYPE_FLOAT, false, gg.SIGN_EQUAL, 0, -1)
+    gg.refineNumber("2", gg.TYPE_FLOAT, false, gg.SIGN_EQUAL, 0, -1)
+    wh6652off = gg.getResults(999)
+    gg.editAll("120", gg.TYPE_FLOAT)
+    gg.clearResults()
+    gg.toast("Wallhack done...")
+    gg.clearResults()
+    gg.setRanges(gg.REGION_BAD | gg.REGION_VIDEO)
+    gg.searchNumber("8,196D;8,192D;8,200D::", gg.TYPE_DWORD, false, gg.SIGN_EQUAL, 0, -1)
+    gg.searchNumber("8200", gg.TYPE_DWORD, false, gg.SIGN_EQUAL, 0, -1)
+    color665off = gg.getResults(10)
+    gg.editAll("7", gg.TYPE_DWORD)
+    gg.clearResults()
+    gg.toast("Body color done...")
+  else
+    gg.setValues(wh6651off)
+    gg.setValues(wh6652off)
+    gg.setValues(color665off)
+    gg.toast("WH+BC done...")
+  end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+
+function whbc3()
+  if mxp3 == on then
+    gg.clearResults()
+    gg.setRanges(gg.REGION_BAD | gg.REGION_VIDEO)
+    gg.searchNumber("2", gg.TYPE_FLOAT, false, gg.SIGN_EQUAL, 0, -1)
+    gg.refineAddress("200", -1, gg.TYPE_FLOAT, gg.SIGN_EQUAL, 0, -1)
+    wh7101off = gg.getResults(10)
+    gg.editAll("120", gg.TYPE_FLOAT)
+    gg.clearResults()
+    gg.setRanges(gg.REGION_BAD | gg.REGION_VIDEO)
+    gg.searchNumber("2", gg.TYPE_FLOAT, false, gg.SIGN_EQUAL, 0, -1)
+    gg.refineAddress("930", -1, gg.TYPE_FLOAT, gg.SIGN_EQUAL, 0, -1)
+    wh7102off = gg.getResults(10)
+    gg.editAll("120", gg.TYPE_FLOAT)
+    gg.clearResults()
+    gg.toast("WallHack 710 done...")
+    gg.setRanges(gg.REGION_BAD | gg.REGION_VIDEO)
+    gg.searchNumber("8201", gg.TYPE_DWORD, false, gg.SIGN_EQUAL, 0, -1)
+    color710off = gg.getResults(12)
+    gg.editAll("8199", gg.TYPE_DWORD)
+    gg.clearResults()
+    gg.toast("Body color done...")
+  else
+    gg.setValues(wh7101off)
+    gg.setValues(wh7102off)
+    gg.setValues(color710off)
+    gg.toast("WH+BC done...")
+  end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+
+function whbc4()
+  if mxp4 == on then
+    gg.clearResults()
+    gg.setRanges(gg.REGION_BAD | gg.REGION_VIDEO)
+    gg.searchNumber("95D;2;9.2194229e-41::100", gg.TYPE_FLOAT, false, gg.SIGN_EQUAL, 0, -1)
+    gg.searchNumber("2", gg.TYPE_FLOAT, false, gg.SIGN_EQUAL, 0, -1)
+    wh8451off = gg.getResults(6)
+    gg.editAll("120", gg.TYPE_FLOAT)
+    gg.clearResults()
+    gg.searchNumber("5.201992e21;2.25000452995;2;1.6623054e-19", gg.TYPE_FLOAT, false, gg.SIGN_EQUAL, 0, -1)
+    gg.searchNumber("2", gg.TYPE_FLOAT, false, gg.SIGN_EQUAL, 0, -1)
+    wh8452off = gg.getResults(4)
+    gg.editAll("120", gg.TYPE_FLOAT)
+    gg.clearResults()
+    gg.searchNumber("2;-1;0;1;-127;0.24022650719;0.69314718246;0.00999999978::30", gg.TYPE_FLOAT, false, gg.SIGN_EQUAL, 0, -1)
+    gg.searchNumber("2", gg.TYPE_FLOAT, false, gg.SIGN_EQUAL, 0, -1)
+    wh8453off = gg.getResults(10)
+    gg.editAll("120", gg.TYPE_FLOAT)
+    gg.clearResults()
+    gg.toast("Wallhack SD845 done...")
+    gg.clearResults()
+    gg.setRanges(gg.REGION_BAD | gg.REGION_VIDEO)
+    gg.searchNumber("8,196D;8,192D;8,200D::", gg.TYPE_DWORD, false, gg.SIGN_EQUAL, 0, -1)
+    gg.searchNumber("8200", gg.TYPE_DWORD, false, gg.SIGN_EQUAL, 0, -1)
+    color845off = gg.getResults(10)
+    gg.editAll("7", gg.TYPE_DWORD)
+    gg.clearResults()
+    gg.toast("Body color done...")
+  else
+    gg.setValues(wh8451off)
+    gg.setValues(wh8452off)
+    gg.setValues(wh8453off)
+    gg.setValues(color845off)
+    gg.toast("WH+BC done...")
+  end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+
+function whbc5()
+  if mxp5 == on then
+    gg.clearResults()
+    gg.setRanges(gg.REGION_VIDEO)
+    gg.searchNumber("-2145644340", 4, false, 536870912, 0, -1)
+    wh845off1 = gg.getResults(100)
+    gg.editAll("1168777216", 4)
+    gg.searchNumber("-2147483636", 4, false, 536870912, 0, -1)
+    wh845off2 = gg.getResults(100)
+    gg.editAll("1168777216", 4)
+    gg.searchNumber("2", 16, false, 536870912, 0, -1)
+    wh845off3 = gg.getResults(100)
+    gg.editAll("120", 16)
+    gg.searchNumber("1168777216", 4, false, 536870912, 0, -1)
+    wh845off4 = gg.getResults(100)
+    gg.editAll("-2147483636", 4)
+    gg.clearResults()
+    gg.toast("Wallhack done...")
+    gg.clearResults()
+    gg.setRanges(gg.REGION_VIDEO)
+    gg.searchNumber("8201", 4, false, 536870912, 0, -1)
+    color845off = gg.getResults(100)
+    gg.editAll("8198", 4)
+    gg.clearResults()
+    gg.toast("Body color done...")
+  else
+    gg.setValues(wh845off1)
+    gg.setValues(wh845off2)
+    gg.setValues(wh845off3)
+    gg.setValues(wh845off4)
+    gg.setValues(color845off)
+    gg.toast("WH+BC done...")
+  end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+
+function whbc6()
+  if mxp6 == on then
+    gg.clearResults()
+    gg.setRanges(gg.REGION_C_ALLOC)
+    gg.searchNumber("4;4;2;6;5;5;1;1;1;3::769", gg.TYPE_FLOAT, false, gg.SIGN_FUZZY_EQUAL, 0, -1)
+    gg.searchNumber("3", gg.TYPE_FLOAT, false, gg.SIGN_FUZZY_EQUAL, 0, -1)
+    var = gg.getResults(1)
+    gg.editAll("140", gg.TYPE_FLOAT)
+    var = gg.getResults(100)
+    var[1].value = 140
+    var[1].freeze = true
+    gg.addListItems(var)
+    gg.toast("Wallhack done...")
+    gg.clearResults()
+    gg.setRanges(gg.REGION_C_ALLOC)
+    gg.searchNumber("2D;56D;4D;4D;12D;3D;8D;0D;16D;0D:237", gg.TYPE_DWORD, false, gg.SIGN_EQUAL, 0, -1)
+    gg.refineNumber("56", gg.TYPE_DWORD, false, gg.SIGN_EQUAL, 0, -1)
+    gg.getResults(100, nil, nil, nil, nil, nil, nil, nil, nil)
+    gg.editAll("33", gg.TYPE_DWORD)
+    gg.toast("Body Color done...")
+    gg.clearResults()
+  else
+    gg.toast("WH+BC Mediatek done...")
+  end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+
+
+
+
+
+--███████╗██╗⠀⠀⠀██╗████████╗
+--╚════██║╚██╗⠀██╔╝╚══██╔══╝
+--⠀⠀███╔═╝⠀╚████╔╝⠀⠀⠀⠀██║
+--██╔══╝⠀⠀⠀⠀╚██╔╝⠀⠀⠀⠀⠀██║
+--███████╗⠀⠀⠀██║⠀⠀⠀⠀⠀⠀██║
+--╚══════╝⠀⠀⠀╚═╝⠀⠀⠀⠀⠀⠀╚═╝
+
+
+
+
+risa1 = off
+risa2 = off
+risa3 = off
+risa4 = off
+risa5 = off
+risa6 = off
+risa7 = off
+risa8 = off
+risa9 = off
+risa10 = off
+risa11 = off
+risa12 = off
+function hacksmenu()
+  menu = gg.choice({
+    risa1 .. " ʟᴇꜱꜱ ʀᴇᴄᴏɪʟ [ʟᴏʙʙʏ]",
+    risa2 .. " ɴᴏ ꜱʜᴀᴋᴇ [ʟᴏʙʙʏ]",
+    risa3 .. " ᴀᴜᴛᴏ ᴀɪᴍ [ʟᴏʙʙʏ]",
+    risa4 .. " ʀᴀɴɢᴇ ᴅᴀᴍᴀɢᴇ ʜᴇᴀᴅ [𝚒𝚗𝙶𝚊𝚖𝚎]",
+    risa5 .. " ᴀɴᴛᴇɴᴀ BETA [𝚒𝚗𝙶𝚊𝚖𝚎]",
+    risa6 .. " ʙʟᴀᴄᴋ ꜱᴋʏ [𝚒𝚗𝙶𝚊𝚖𝚎]",
+    risa7 .. " ᴡɪᴅᴇ ᴠɪᴇᴡ [𝚒𝚗𝙶𝚊𝚖??]",
+    risa8 .. " ɴᴏ ɢʀᴀꜱꜱ & ᴛʀᴇᴇꜱ [𝚒𝚗𝙶𝚊𝚖𝚎]",
+    risa9 .. " ᴇꜱᴘ + ᴀɪᴍʙᴏᴛ ʟᴏᴄᴋ [𝚒𝚗𝙶𝚊𝚖𝚎]",
+    risa10 .. " ʙʏᴘᴀꜱꜱ ꜰʟᴀꜱʜ ꜱᴘᴇᴇᴅ [𝚒𝚗𝙶𝚊𝚖𝚎]",
+    risa11 .. " ꜰʟᴀꜱʜ ꜱᴘᴇᴇᴅ [𝚒𝚗𝙶𝚊𝚖𝚎]",
+    risa12 .. " ꜰɪx ᴅᴀᴍᴀɢᴇ  [𝚒𝚗𝙶𝚊𝚖𝚎]",
+    "↶ Back"
+  }, nil, " Telegram : @Raham_r2 \n")
+  if menu == 1 then
+    if risa1 == off then
+      risa1 = on
+    else
+      risa1 = off
+    end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+    lessrecoil()
+  elseif menu == 2 then
+    if risa2 == off then
+      risa2 = on
+    else
+      risa2 = off
+    end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+    noshake()
+  elseif menu == 3 then
+    if risa3 == off then
+      risa3 = on
+    else
+      risa3 = off
+    end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+    autoaim()
+  elseif menu == 4 then
+    if risa4 == off then
+      risa4 = on
+    else
+      risa4 = off
+    end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+    rangedamage()
+  elseif menu == 5 then
+    if risa5 == off then
+      risa5 = on
+    else
+      risa5 = off
+    end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+    antena()
+  elseif menu == 6 then
+    if risa6 == off then
+      risa6 = on
+    else
+      risa6 = off
+    end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+    blacksky()
+  elseif menu == 7 then
+    if risa7 == off then
+      risa7 = on
+    else
+      risa7 = off
+    end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+    wideview()
+  elseif menu == 8 then
+    if risa8 == off then
+      risa8 = on
+    else
+      risa8 = off
+    end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+    nograss()
+  elseif menu == 9 then
+    if risa9 == off then
+      risa9 = on
+    else
+      risa9 = off
+    end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+    esp()
+  elseif menu == 10 then
+    if risa10 == off then
+      risa10 = on
+    else
+      risa10 = off
+    end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+    bflash()
+  elseif menu == 11 then
+    if risa11 == off then
+      risa11 = on
+    else
+      risa11 = off
+    end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+    flash()
+  elseif menu == 12 then
+    if risa12 == off then
+      risa12 = on
+    else
+      risa12 = off
+    end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+    fdamage()
+  elseif menu == 13 then
+    main()
+  end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+
+function lessrecoil()
+  if risa1 == on then
+    gg.clearResults()
+    gg.setRanges(gg.REGION_C_DATA)
+    gg.searchNumber("-1903895931231645695", gg.TYPE_QWORD, false, gg.SIGN_EQUAL, 0, -1)
+    gg.refineNumber("-1903895931231645695", gg.TYPE_QWORD, false, gg.SIGN_EQUAL, 0, -1)
+    gg.refineAddress("E40", -1, gg.TYPE_QWORD, gg.SIGN_EQUAL, 0, -1)
+    gg.refineNumber("-1903895931231645695", gg.TYPE_QWORD, false, gg.SIGN_EQUAL, 0, -1)
+    recoiloff = gg.getResults(300)
+    gg.editAll("-1903895931231645396", gg.TYPE_QWORD)
+    gg.clearResults()
+    gg.toast("Less Recoil")
+    gg.clearResults()
+  else
+    gg.setValues(recoiloff)
+    gg.toast("Less Recoil")
+  end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+
+function noshake()
+  if risa2 == on then
+    gg.clearResults()
+    gg.setRanges(gg.REGION_C_DATA)
+    gg.searchNumber("-2.8111605e28;-3.7444097e28;-1.1144502e28;128.0::", gg.TYPE_FLOAT, false, gg.SIGN_EQUAL, 0, -1)
+    gg.searchNumber("-1.1144502e28", gg.TYPE_FLOAT, false, gg.SIGN_EQUAL, 0, -1)
+    noshake1 = gg.getResults(5)
+    gg.editAll("0", gg.TYPE_FLOAT)
+    gg.clearResults()
+    gg.setRanges(gg.REGION_C_DATA)
+    gg.searchNumber("-6.1549454e27;1.8638966e-20;-1.1144502e28;0::", gg.TYPE_FLOAT, false, gg.SIGN_EQUAL, 0, -1)
+    gg.searchNumber("-1.1144502e28", gg.TYPE_FLOAT, false, gg.SIGN_EQUAL, 0, -1)
+    noshake2 = gg.getResults(5)
+    gg.editAll("0", gg.TYPE_FLOAT)
+    gg.clearResults()
+    gg.toast("No Shake Recoil")
+  else
+    gg.setValues(noshake1)
+    gg.setValues(noshake2)
+    gg.toast("No Shake Recoil")
+  end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+
+function autoaim()
+  if risa3 == on then
+    gg.clearResults()
+    gg.setRanges(gg.REGION_C_DATA)
+    gg.searchNumber("2015175168", 16, false, 536870912, 0, -1)
+    autoaimoff = gg.getResults(10)
+    gg.editAll("0", 16)
+    gg.toast("Auto Aim")
+  else
+    gg.setValues(autoaimoff)
+    gg.toast("Auto Aim ")
+  end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+
+function rangedamage()
+  if risa4 == on then
+    gg.clearResults()
+    gg.setRanges(gg.REGION_ANONYMOUS)
+    gg.searchNumber("9.201618;30.5;25", gg.POINTER_WRITABLE, false, gg.SIGN_FUZZY_EQUAL, 0, -1)
+    gg.searchNumber("30.5;25", gg.POINTER_WRITABLE, false, gg.SIGN_FUZZY_EQUAL, 0, -1)
+    rangedamagesoff = gg.getResults(10)
+    gg.editAll("293", gg.POINTER_WRITABLE)
+    gg.clearResults()
+    gg.toast("Range Damage")
+  else
+    gg.setValues(rangedamagesoff)
+    gg.toast("Range Damage")
+  end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+
+function antena()
+  if risa5 == on then
+    gg.clearResults()
+    gg.setRanges(32)
+    gg.searchNumber("88.50576019287F;87.27782440186F;-100.91194152832F;1F::13", 16, false, 536870912, 0, -1)
+    gg.searchNumber("88.50576019287F;87.27782440186F;1F", 16, false, 536870912, 0, -1)
+    antenaoff = gg.getResults(6)
+    gg.editAll("1.96875;1.96875;999;1.96875;1.96875;999", 16)
+    gg.clearResults()
+    gg.toast("Antenna ")
+  else
+    gg.setValues(antenaoff)
+    gg.toast("Antenna ")
+  end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+
+function blacksky()
+  if risa6 == on then
+    gg.clearResults()
+    gg.setRanges(gg.REGION_VIDEO)
+    gg.searchNumber("100", gg.TYPE_FLOAT, false, gg.SIGN_EQUAL, 0, -1)
+    gg.refineAddress("000", -1, gg.TYPE_FLOAT, gg.SIGN_EQUAL, 0, -1)
+    blackskyoff = gg.getResults(100)
+    gg.editAll("-90", gg.TYPE_FLOAT)
+    gg.clearResults()
+    gg.toast("Black Sky ")
+  else
+    gg.setValues(blackskyoff)
+    gg.toast("Black Sky")
+  end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+
+function wideview()
+  if risa7 == on then
+    gg.clearResults()
+    gg.setRanges(gg.REGION_ANONYMOUS)
+    gg.clearResults()
+    gg.searchNumber("220;178;15 ", gg.TYPE_FLOAT, false, gg.SIGN_EQUAL, 0, -1)
+    gg.searchNumber("220", gg.TYPE_FLOAT, false, gg.SIGN_EQUAL, 0, -1)
+    wideviewoff = gg.getResults(300)
+    gg.editAll("438", gg.TYPE_FLOAT)
+    gg.clearResults()
+    gg.toast("Wide View ")
+  else
+    gg.setValues(wideviewoff)
+    gg.toast("Wide View ")
+  end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+
+function nograss()
+  if risa8 == on then
+    gg.clearResults()
+    gg.setRanges(gg.REGION_VIDEO)
+    gg.searchNumber("0.00390625;1;0.99900001287;2", gg.TYPE_FLOAT, false)
+    gg.searchNumber("1", gg.TYPE_FLOAT, false)
+    nograssoff = gg.getResults(30)
+    gg.editAll("0", gg.TYPE_FLOAT)
+    gg.clearResults()
+    gg.toast("No Grass & Trees")
+  else
+    gg.setValues(nograssoff)
+    gg.toast("No Grass & Trees")
+  end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+
+function esp()
+  if risa9 == on then
+    gg.clearResults()
+    gg.setRanges(gg.REGION_C_DATA)
+    gg.searchNumber("-476053504;-349478012:189", gg.TYPE_DWORD, false, gg.SIGN_EQUAL, 0, -1)
+    gg.searchNumber("-476053504", gg.TYPE_DWORD, false, gg.SIGN_EQUAL, 0, -1)
+    espoff1 = gg.getResults(100)
+    gg.editAll("-476053503;-476053504", gg.TYPE_DWORD)
+    gg.clearResults()
+    gg.setRanges(gg.REGION_C_DATA)
+    gg.searchNumber("324009984;-348261320:165", gg.TYPE_DWORD, false, gg.SIGN_EQUAL, 0, -1)
+    gg.searchNumber("324009984", gg.TYPE_DWORD, false, gg.SIGN_EQUAL, 0, -1)
+    espoff2 = gg.getResults(100)
+    gg.editAll("324009985", gg.TYPE_DWORD)
+    gg.clearResults()
+    gg.setRanges(gg.REGION_C_DATA)
+    gg.searchNumber("-336586203;-511702015:105", gg.TYPE_DWORD, false, gg.SIGN_EQUAL, 0, -1)
+    gg.searchNumber("-511702015", gg.TYPE_DWORD, false, gg.SIGN_EQUAL, 0, -1)
+    espoff3 = gg.getResults(100)
+    gg.editAll("0", gg.TYPE_DWORD)
+    gg.clearResults()
+    gg.setRanges(gg.REGION_C_DATA)
+    gg.searchNumber("-511633406;-352273285;-511633406:809", gg.TYPE_DWORD, false, gg.SIGN_EQUAL, 0, -1)
+    gg.searchNumber("-511633406", gg.TYPE_DWORD, false, gg.SIGN_EQUAL, 0, -1)
+    espoff4 = gg.getResults(100)
+    gg.editAll("0", gg.TYPE_DWORD)
+    gg.clearResults()
+    gg.setRanges(gg.REGION_C_DATA)
+    gg.searchNumber("-335545007;-511702015:85", gg.TYPE_DWORD, false, gg.SIGN_EQUAL, 0, -1)
+    gg.searchNumber("-511702015", gg.TYPE_DWORD, false, gg.SIGN_EQUAL, 0, -1)
+    espoff5 = gg.getResults(100)
+    gg.editAll("0", gg.TYPE_DWORD)
+    gg.clearResults()
+    gg.setRanges(gg.REGION_C_DATA)
+    gg.searchNumber("2046820354;-336587221:9", gg.TYPE_DWORD, false, gg.SIGN_EQUAL, 0, -1)
+    gg.searchNumber("2046820354", gg.TYPE_DWORD, false, gg.SIGN_EQUAL, 0, -1)
+    espoff6 = gg.getResults(100)
+    gg.editAll("2046820353", gg.TYPE_DWORD)
+    gg.clearResults()
+    gg.setRanges(gg.REGION_C_DATA)
+    gg.searchNumber("2015175168", gg.TYPE_FLOAT, false, gg.SIGN_EQUAL, 0, -1)
+    espoff7 = gg.getResults(6)
+    gg.editAll("0", gg.TYPE_FLOAT)
+    gg.clearResults()
+    gg.setRanges(gg.REGION_C_DATA)
+    gg.searchNumber("324009984;-348261320:165", gg.TYPE_DWORD, false, gg.SIGN_EQUAL, 0, -1)
+    gg.searchNumber("324009984", gg.TYPE_DWORD, false, gg.SIGN_EQUAL, 0, -1)
+    espoff8 = gg.getResults(100)
+    gg.editAll("324009985", gg.TYPE_DWORD)
+    gg.clearResults()
+    gg.setRanges(gg.REGION_C_DATA)
+    gg.searchNumber("-511,702,015;-301,463,024:5", gg.TYPE_DWORD, false, gg.SIGN_EQUAL, 0, -1)
+    gg.searchNumber("-511702015", gg.TYPE_DWORD, false, gg.SIGN_EQUAL, 0, -1)
+    espoff9 = gg.getResults(100)
+    gg.editAll("0", gg.TYPE_DWORD)
+    gg.clearResults()
+    gg.toast("ESP")
+  else
+    gg.setValues(espoff1)
+    gg.setValues(espoff2)
+    gg.setValues(espoff3)
+    gg.setValues(espoff4)
+    gg.setValues(espoff5)
+    gg.setValues(espoff6)
+    gg.setValues(espoff7)
+    gg.setValues(espoff8)
+    gg.setValues(espoff9)
+    gg.toast("ESP ")
+  end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+
+function bflash()
+  if risa10 == on then
+    function split(A0_2708, A1_2709)
+      local L2_2710, L3_2711, L4_2712
+      L2_2710 = 1
+      L3_2711 = 1
+      L4_2712 = {}
+      while true do
+        if not string.find(A0_2708, A1_2709, L2_2710) then
+          L4_2712[L3_2711] = string[L0_2693("9d9f8c")](A0_2708, L2_2710, string.len(A0_2708))
+          break
+        end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+        L4_2712[L3_2711] = string.sub(A0_2708, L2_2710, string.find(A0_2708, A1_2709, L2_2710) - 1)
+        L2_2710 = string.find(A0_2708, A1_2709, L2_2710) + string.len(A1_2709)
+        L3_2711 = L3_2711 + 1
+      end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+      return L4_2712
+    end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+    
+    function xgxc(A0_2713, A1_2714)
+      local L2_2715, L3_2716, L4_2717, L5_2718
+      L2_2715 = 1
+      L3_2716 = #A1_2714
+      do
+        do
+          for i = 1, #A1_2714 do
+            xgpy = A0_2713 + A1_2714[i].offset
+            xglx = A1_2714[i].type
+            xgsz = A1_2714[i].value
+            xgdj = A1_2714[i].freeze
+            if xgdj == nil or xgdj == "" then
+              gg.setValues({
+                [1] = {}
+              })
+            else
+              gg.addListItems({
+                [1] = {}
+              })
+            end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+            xgsl = xgsl + 1
+            xgjg = true
+          end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+        end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+      end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+    end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+    
+    function xqmnb(A0_2719)
+      gg.clearResults()
+      gg.setRanges(A0_2719[1].memory)
+      gg.searchNumber(A0_2719[3].value, A0_2719[3].type)
+      if gg.getResultCount() == 0 then
+        gg.toast(A0_2719[2].name .. " ")
+      else
+        gg.refineNumber(A0_2719[3].value, A0_2719[3].type)
+        gg.refineNumber(A0_2719[3].value, A0_2719[3].type)
+        gg.refineNumber(A0_2719[3].value, A0_2719[3].type)
+        if gg.getResultCount() == 0 then
+          gg.toast(A0_2719[2].name .. "开启失败")
+        else
+          sl = gg.getResults(999999)
+          sz = gg.getResultCount()
+          xgsl = 0
+          if 999999 < sz then
+            sz = 999999
+          end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+          do
+            do
+              for i = 1, sz do
+                pdsz = true
+                do
+                  do
+                    for i = 4, #A0_2719 do
+                      if pdsz == true then
+                        pysz = {}
+                        pysz[1] = {}
+                        szpy = gg.getValues(pysz)
+                        pdpd = A0_2719[i].lv .. ";" .. szpy[1].value
+                        szpd = split(pdpd, ";")
+                        tzszpd = szpd[1]
+                        pyszpd = szpd[2]
+                        if tzszpd == pyszpd then
+                          pdjg = true
+                          pdsz = true
+                        else
+                          pdjg = false
+                          pdsz = false
+                        end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+                      end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+                    end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+                  end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+                end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+                if pdjg == true then
+                  szpy = sl[i].address
+                  xgxc(szpy, qmxg)
+                end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+              end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+            end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+          end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+          if xgjg == true then
+            gg.toast(A0_2719[2].name .. "开启成功，一共修改" .. xgsl .. "条数据")
+          else
+            gg.toast(A0_2719[2].name .. "未搜索到数据，开启失败")
+          end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+        end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+      end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+    end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+    
+    function SearchWrite(A0_2720, A1_2721, A2_2722)
+      gg.clearResults()
+      gg.setVisible(false)
+      gg.searchNumber(A0_16[1][1], A2_18)
+      gg.clearResults()
+      if gg.getResultCount() > 0 then
+        do
+          for i, i in ipairs((gg.getResults((gg.getResultCount())))) do
+          end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+        end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+        do
+          do
+            for i = 2, #A0_16 do
+              do
+                for i, i in ipairs((gg.getResults((gg.getResultCount())))) do
+                end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+              end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+              do
+                for i, i in ipairs((gg.getValues({}))) do
+                  if tostring(i.value) ~= tostring(A0_16[i][1]) then
+                  end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+                end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+              end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+            end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+          end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+        end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+        do
+          for i, i in ipairs((gg.getResults((gg.getResultCount())))) do
+          end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+        end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+        if #{} > 0 then
+          do
+            do
+              for i = 1, #{} do
+                do
+                  for i, i in ipairs(A1_17) do
+                    offset = i[2] - A0_16[1][2]
+                    if i[3] == true then
+                      gg.addListItems({})
+                    end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+                  end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+                end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+              end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+            end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+          end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+          gg.setValues({})
+          gg.toast("开启成功，一共修改" .. #{} .. "条数据")
+          gg.addListItems({})
+        else
+          gg.toast("未搜索到数据，开启失败", false)
+          return false
+        end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+      else
+        gg.toast("Not Found")
+        return false
+      end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+    end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+    
+    qmnb = {
+      {},
+      {
+        name = "Please Wait..!!!"
+      },
+      {value = 5.2806111E-40},
+      {lv = 4.7592633E21, offset = -44},
+      {lv = 3.0230535E23, offset = 4},
+      {lv = 2.2963078E-41, offset = 8}
+    }
+    qmxg = {
+      {value = 99999, offset = 160}
+    }
+    xqmnb(qmnb)
+    qmnb = {
+      {},
+      {
+        name = "Bypass Flash"
+      },
+      {value = 6.50000238419},
+      {lv = 2.2960275E-41, offset = -4},
+      {lv = 4.7961557E21, offset = -8},
+      {lv = 5.8013756E-42, offset = -12}
+    }
+    qmxg = {
+      {value = 99999, offset = 148}
+    }
+    xqmnb(qmnb)
+  else
+    gg.toast("Bypass Flash ")
+  end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+
+function flash()
+  if risa11 == on then
+    gg.clearResults()
+    gg.setRanges(8)
+    gg.searchNumber("-1,296,744,149,883,614,555", 32, false, 536870912, 0, -1)
+    flashoff1 = gg.getResults(99)
+    gg.editAll("8,296,744,153,870,237,696", 32)
+    gg.clearResults()
+    gg.setRanges(8)
+    gg.searchNumber("-1, 904,987,454,    010, 553, 855", 32, false, 536870912, 0, -1)
+    flashoff2 = gg.getResults(99)
+    gg.editAll("-1, 904,987,454,        002, 165, 247", 32)
+    gg.clearResults()
+    gg.searchNumber("1.0F;0.6;0.1;0.125F::55", 16, false, 536870912, 0, -1)
+    gg.searchNumber("1", 16, false, 536870912, 0, -1)
+    flashoff3 = gg.getResults(100)
+    gg.editAll("2.55", 16)
+    gg.clearResults()
+    gg.toast("Flash Speed")
+  else
+    gg.setValues(flashoff1)
+    gg.setValues(flashoff2)
+    gg.setValues(flashoff3)
+    gg.toast("Flash Speed")
+  end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+
+function fdamage()
+  if risa12 == on then
+    gg.clearResults()
+    gg.setRanges(32)
+    gg.searchNumber("50000~100000;0;1;5D~100D::13", 16, false, 536870912, 0, -1)
+    gg.searchNumber("50000~100000", 16, false, 536870912, 0, -1)
+    fdamageoff = gg.getResults(210)
+    gg.editAll("35125", 16)
+    gg.clearResults()
+    gg.toast("Fix Damage ")
+  else
+    gg.setValues(fdamageoff)
+    gg.toast("Fix Damage")
+  end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+
+function clearlogs()
+  fxb = gg.alert([[
+Please Select :
+
+
+*••••••••••••Telegram:@Raham-r2••••••••••.]], "Back","Apply")
+  if fxb == 1 then
+    main()
+  end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+  if fxb == 2 then
+    while true do
+      os.remove("/storage/emulated/0/Android/data/com.tencent.ig/cache")
+      os.remove("/storage/emulated/0/tencent")
+      os.remove("/storage/emulated/0/MidasOverse")
+      os.remove("/storage/emulated/0/Android/data/com.tencent.ig/files/tbslog")
+      os.remove("/storage/emulated/0/Android/data/com.tencent.ig/files/login-identifier.txt")
+      os.remove("/storage/emulated/0/Android/data/com.tencent.ig/files/cacheFile.txt")
+      os.remove("/storage/emulated/0/Android/data/com.tencent.ig/files/vmpcloudconfig.json")
+      os.remove("/storage/emulated/0/Android/data/com.tencent.ig/files/UE4Game/ShadowTrackerExtra/ShadowTrackerExtra/Saved/Logs")
+      os.remove("/storage/emulated/0/Android/data/com.tencent.ig/files/UE4Game/ShadowTrackerExtra/ShadowTrackerExtra/Saved/GameErrorNoRecords")
+      os.remove("/storage/emulated/0/Android/data/com.tencent.ig/files/UE4Game/ShadowTrackerExtra/ShadowTrackerExtra/Saved/Config/Android/AntiCheat.ini")
+      os.remove("/storage/emulated/0/Android/data/com.tencent.ig/files/UE4Game/ShadowTrackerExtra/ShadowTrackerExtra/Saved/Config/Android/IGH5CachePluginConfig.ini")
+      os.remove("/storage/emulated/0/Android/data/com.pubg.krmobile/cache")
+      os.remove("/storage/emulated/0/tencent")
+      os.remove("/storage/emulated/0/MidasOverse")
+      os.remove("/storage/emulated/0/Android/data/com.pubg.krmobile/files/tbslog")
+      os.remove("/storage/emulated/0/Android/data/com.pubg.krmobile/files/login-identifier.txt")
+      os.remove("/storage/emulated/0/Android/data/com.pubg.krmobile/files/cacheFile.txt")
+      os.remove("/storage/emulated/0/Android/data/com.pubg.krmobile/files/vmpcloudconfig.json")
+      os.remove("/storage/emulated/0/Android/data/com.pubg.krmobile/files/UE4Game/ShadowTrackerExtra/ShadowTrackerExtra/Saved/Logs")
+      os.remove("/storage/emulated/0/Android/data/com.pubg.krmobile/files/UE4Game/ShadowTrackerExtra/ShadowTrackerExtra/Saved/GameErrorNoRecords")
+      os.remove("/storage/emulated/0/Android/data/com.pubg.krmobile/files/UE4Game/ShadowTrackerExtra/ShadowTrackerExtra/Saved/Config/Android/AntiCheat.ini")
+      os.remove("/storage/emulated/0/Android/data/com.pubg.krmobile/files/UE4Game/ShadowTrackerExtra/ShadowTrackerExtra/Saved/Config/Android/IGH5CachePluginConfig.ini")
+      os.remove("/storage/emulated/0/Android/data/com.vng.pubgmobile/cache")
+      os.remove("/storage/emulated/0/tencent")
+      os.remove("/storage/emulated/0/MidasOverse")
+      os.remove("/storage/emulated/0/Android/data/com.vng.pubgmobile/files/tbslog")
+      os.remove("/storage/emulated/0/Android/data/com.vng.pubgmobile/files/login-identifier.txt")
+      os.remove("/storage/emulated/0/Android/data/com.vng.pubgmobile/files/cacheFile.txt")
+      os.remove("/storage/emulated/0/Android/data/com.vng.pubgmobile/files/vmpcloudconfig.json")
+      os.remove("/storage/emulated/0/Android/data/com.vng.pubgmobile/files/UE4Game/ShadowTrackerExtra/ShadowTrackerExtra/Saved/Logs")
+      os.remove("/storage/emulated/0/Android/data/com.vng.pubgmobile/files/UE4Game/ShadowTrackerExtra/ShadowTrackerExtra/Saved/GameErrorNoRecords")
+      os.remove("/storage/emulated/0/Android/data/com.vng.pubgmobile/files/UE4Game/ShadowTrackerExtra/ShadowTrackerExtra/Saved/Config/Android/AntiCheat.ini")
+      os.remove("/storage/emulated/0/Android/data/com.vng.pubgmobile/files/UE4Game/ShadowTrackerExtra/ShadowTrackerExtra/Saved/Config/Android/IGH5CachePluginConfig.ini")
+      gg.toast("Logs Cleared")
+      gg.sleep(10000)
+    end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+  end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+
+while true do
+  if gg.isVisible() then
+    gg.setVisible(false)
+    main()
+  end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+end --꙰ ﴾ 𐌶𐍅𐍄 ꗃ ﴿ --꙰
+
+
+
+
+--███████╗██╗⠀⠀⠀██╗████████╗
+--╚════██║╚██╗⠀██╔╝╚══██╔══╝
+--⠀⠀███╔═╝⠀╚████╔╝⠀⠀⠀⠀██║
+--██╔══╝⠀⠀⠀⠀╚██╔╝⠀⠀⠀⠀⠀██║
+--███████╗⠀⠀⠀██║⠀⠀⠀⠀⠀⠀██║
+--╚══════╝⠀⠀⠀╚═╝⠀⠀⠀⠀⠀⠀╚═╝

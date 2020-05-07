@@ -1,0 +1,384 @@
+--Made by Steveybot06 aka Windows 8.1 User Pro on Youtube
+--Please do not skid this is not a real
+local ImGuiMenu = Instance.new("ScreenGui")
+local MainFrame = Instance.new("ImageLabel")
+local HeadingFrame = Instance.new("ImageLabel")
+local Part = Instance.new("ImageLabel")
+local exit = Instance.new("TextButton")
+local title = Instance.new("TextLabel")
+local espMenuButton = Instance.new("TextButton")
+local espText = Instance.new("TextLabel")
+local dropdownarrow = Instance.new("ImageLabel")
+local configMenuButton = Instance.new("TextButton")
+local aimbotText = Instance.new("TextLabel")
+local dropdownarrowaimbot = Instance.new("ImageLabel")
+local customizeMenuButton = Instance.new("TextButton")
+local customizeText = Instance.new("TextLabel")
+local dropdownarrowcustomize = Instance.new("ImageLabel")
+local espMenu = Instance.new("Frame")
+local esp = Instance.new("TextButton")
+local TextLabel = Instance.new("TextLabel")
+local espDispand = Instance.new("TextButton")
+local TextLabel_2 = Instance.new("TextLabel")
+local configMenu = Instance.new("Frame")
+local configDispand = Instance.new("TextButton")
+local TextLabel_3 = Instance.new("TextLabel")
+local legit = Instance.new("TextButton")
+local TextLabel_4 = Instance.new("TextLabel")
+local rage = Instance.new("TextButton")
+local TextLabel_5 = Instance.new("TextLabel")
+local customizeMenu = Instance.new("Frame")
+local red = Instance.new("TextButton")
+local TextLabel_6 = Instance.new("TextLabel")
+local green = Instance.new("TextButton")
+local TextLabel_7 = Instance.new("TextLabel")
+local blue = Instance.new("TextButton")
+local TextLabel_8 = Instance.new("TextLabel")
+local customizeDispand = Instance.new("TextButton")
+local TextLabel_9 = Instance.new("TextLabel")
+local bruh = game.Players.LocalPlayer:GetMouse()
+db = true
+bruh.KeyDown:connect(function(k)
+	k = k:lower()
+	if k == "p" then
+		if db == true then
+			MainFrame.Visible = true
+		end
+	end
+end)
+
+local cheese = game.Players.LocalPlayer:GetMouse()
+db = true
+bruh.KeyDown:connect(function(k)
+	k = k:lower()
+	if k == "m" then
+		if db == true then
+			MainFrame.Visible = false
+		end
+	end
+end)
+
+
+ImGuiMenu.Name = "ImGuiMenu"
+ImGuiMenu.Parent = game.CoreGui
+ImGuiMenu.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+
+
+
+MainFrame.Name = "MainFrame"
+MainFrame.Parent = ImGuiMenu
+MainFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+MainFrame.BackgroundTransparency = 1.000
+MainFrame.Position = UDim2.new(0.0376310907, 0, 0.0503685512, 0)
+MainFrame.Size = UDim2.new(0, 411, 0, 548)
+MainFrame.Visible = false
+MainFrame.Active = true
+MainFrame.Draggable = true
+MainFrame.Image = "rbxassetid://3570695787"
+MainFrame.ImageColor3 = Color3.fromRGB(6, 5, 1)
+MainFrame.ScaleType = Enum.ScaleType.Slice
+MainFrame.SliceCenter = Rect.new(100, 100, 100, 100)
+MainFrame.SliceScale = 0.120
+
+HeadingFrame.Name = "HeadingFrame"
+HeadingFrame.Parent = MainFrame
+HeadingFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+HeadingFrame.BackgroundTransparency = 1.000
+HeadingFrame.Size = UDim2.new(0, 411, 0, 20)
+HeadingFrame.Visible = true
+HeadingFrame.Active = true
+HeadingFrame.Draggable = false
+HeadingFrame.Image = "rbxassetid://3570695787"
+HeadingFrame.ImageColor3 = Color3.fromRGB(76, 81, 140)
+HeadingFrame.ScaleType = Enum.ScaleType.Slice
+HeadingFrame.SliceCenter = Rect.new(100, 100, 100, 100)
+HeadingFrame.SliceScale = 0.120
+
+Part.Name = "Part"
+Part.Parent = HeadingFrame
+Part.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Part.BackgroundTransparency = 1.000
+Part.Position = UDim2.new(0.941605806, 0, 0, 0)
+Part.Size = UDim2.new(0, 18, 0, 20)
+Part.Image = "rbxassetid://3570695787"
+Part.ImageColor3 = Color3.fromRGB(101, 101, 187)
+Part.ScaleType = Enum.ScaleType.Slice
+Part.SliceCenter = Rect.new(100, 100, 100, 100)
+Part.SliceScale = 0.120
+
+exit.Name = "exit"
+exit.Parent = Part
+exit.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+exit.BackgroundTransparency = 1.000
+exit.BorderSizePixel = 0
+exit.Size = UDim2.new(0, 18, 0, 20)
+exit.Font = Enum.Font.SourceSans
+exit.Text = ""
+exit.TextColor3 = Color3.fromRGB(0, 0, 0)
+exit.TextSize = 14.000
+exit.MouseButton1Down:connect(function()
+	MainFrame.Visible = false
+end)
+
+title.Name = "title"
+title.Parent = HeadingFrame
+title.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+title.BackgroundTransparency = 1.000
+title.BorderSizePixel = 0
+title.Position = UDim2.new(-0.0997566879, 0, 0, 0)
+title.Size = UDim2.new(0, 346, 0, 20)
+title.Font = Enum.Font.SourceSans
+title.Text = "IMGUI MM2 Cheat Menu Made by Steveybot06"
+title.TextColor3 = Color3.fromRGB(255, 255, 255)
+title.TextSize = 14.000
+title.TextWrapped = true
+
+espMenuButton.Name = "espMenuButton"
+espMenuButton.Parent = MainFrame
+espMenuButton.BackgroundColor3 = Color3.fromRGB(58, 58, 125)
+espMenuButton.BorderSizePixel = 0
+espMenuButton.Position = UDim2.new(0, 0, 0.0620437972, 0)
+espMenuButton.Size = UDim2.new(0, 411, 0, 20)
+espMenuButton.Font = Enum.Font.SourceSans
+espMenuButton.Text = ""
+espMenuButton.TextColor3 = Color3.fromRGB(0, 0, 0)
+espMenuButton.TextSize = 14.000
+espMenuButton.TextWrapped = true
+espMenuButton.MouseButton1Down:connect(function()
+	espMenu.Visible = true
+end)
+
+espText.Name = "espText"
+espText.Parent = espMenuButton
+espText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+espText.BackgroundTransparency = 1.000
+espText.BorderSizePixel = 0
+espText.Position = UDim2.new(-0.170316294, 0, 0, 0)
+espText.Size = UDim2.new(0, 200, 0, 20)
+espText.Font = Enum.Font.SourceSans
+espText.Text = "ESP"
+espText.TextColor3 = Color3.fromRGB(255, 255, 255)
+espText.TextSize = 14.000
+espText.TextWrapped = true
+
+dropdownarrow.Name = "dropdownarrow"
+dropdownarrow.Parent = espMenuButton
+dropdownarrow.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+dropdownarrow.BackgroundTransparency = 1.000
+dropdownarrow.BorderSizePixel = 0
+dropdownarrow.Size = UDim2.new(0, 17, 0, 20)
+dropdownarrow.Image = "http://www.roblox.com/asset/?id=302248702"
+
+configMenuButton.Name = "configMenuButton"
+configMenuButton.Parent = MainFrame
+configMenuButton.BackgroundColor3 = Color3.fromRGB(58, 58, 125)
+configMenuButton.BorderSizePixel = 0
+configMenuButton.Position = UDim2.new(0, 0, 0.246350363, 0)
+configMenuButton.Size = UDim2.new(0, 411, 0, 20)
+configMenuButton.Font = Enum.Font.SourceSans
+configMenuButton.Text = ""
+configMenuButton.TextColor3 = Color3.fromRGB(0, 0, 0)
+configMenuButton.TextSize = 14.000
+configMenuButton.TextWrapped = true
+configMenuButton.MouseButton1Down:connect(function()
+	configMenu.Visible = true
+end)
+
+aimbotText.Name = "aimbotText"
+aimbotText.Parent = configMenuButton
+aimbotText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+aimbotText.BackgroundTransparency = 1.000
+aimbotText.BorderSizePixel = 0
+aimbotText.Position = UDim2.new(-0.148418486, 0, 0, 0)
+aimbotText.Size = UDim2.new(0, 200, 0, 20)
+aimbotText.Font = Enum.Font.SourceSans
+aimbotText.Text = "CONFIGS"
+aimbotText.TextColor3 = Color3.fromRGB(255, 255, 255)
+aimbotText.TextSize = 14.000
+aimbotText.TextWrapped = true
+
+dropdownarrowaimbot.Name = "dropdownarrowaimbot"
+dropdownarrowaimbot.Parent = configMenuButton
+dropdownarrowaimbot.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+dropdownarrowaimbot.BackgroundTransparency = 1.000
+dropdownarrowaimbot.BorderSizePixel = 0
+dropdownarrowaimbot.Size = UDim2.new(0, 17, 0, 20)
+dropdownarrowaimbot.Image = "http://www.roblox.com/asset/?id=302248702"
+
+dropdownarrowcustomize.Name = "dropdownarrowcustomize"
+dropdownarrowcustomize.Parent = customizeMenuButton
+dropdownarrowcustomize.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+dropdownarrowcustomize.BackgroundTransparency = 1.000
+dropdownarrowcustomize.BorderSizePixel = 0
+dropdownarrowcustomize.Size = UDim2.new(0, 17, 0, 20)
+dropdownarrowcustomize.Image = "http://www.roblox.com/asset/?id=302248702"
+
+espMenu.Name = "espMenu"
+espMenu.Parent = MainFrame
+espMenu.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+espMenu.BackgroundTransparency = 1.000
+espMenu.BorderSizePixel = 0
+espMenu.Position = UDim2.new(0, 0, 0.0985401496, 0)
+espMenu.Size = UDim2.new(0, 411, 0, 81)
+espMenu.Visible = false
+espMenu.Active = true
+espMenu.Draggable = false
+
+esp.Name = "esp"
+esp.Parent = espMenu
+esp.BackgroundColor3 = Color3.fromRGB(79, 80, 80)
+esp.BorderSizePixel = 0
+esp.Position = UDim2.new(0, 0, 0.111111112, 0)
+esp.Size = UDim2.new(0, 411, 0, 23)
+esp.Font = Enum.Font.SourceSans
+esp.Text = ""
+esp.TextColor3 = Color3.fromRGB(255, 255, 255)
+esp.TextSize = 14.000
+esp.MouseButton1Down:connect(function()
+	loadstring(game:HttpGet(('https://pastebin.com/raw/ypSsQRK6'),true))()
+end)
+
+TextLabel.Parent = esp
+TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel.BackgroundTransparency = 1.000
+TextLabel.BorderSizePixel = 0
+TextLabel.Position = UDim2.new(0.0218978096, 0, 0, 0)
+TextLabel.Size = UDim2.new(0, 59, 0, 23)
+TextLabel.Font = Enum.Font.SourceSans
+TextLabel.Text = "Enable ESP"
+TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel.TextScaled = true
+TextLabel.TextSize = 14.000
+TextLabel.TextWrapped = true
+
+espDispand.Name = "espDispand"
+espDispand.Parent = espMenu
+espDispand.BackgroundColor3 = Color3.fromRGB(79, 80, 80)
+espDispand.BorderSizePixel = 0
+espDispand.Position = UDim2.new(0, 0, 0.54320991, 0)
+espDispand.Size = UDim2.new(0, 411, 0, 23)
+espDispand.Font = Enum.Font.SourceSans
+espDispand.Text = ""
+espDispand.TextColor3 = Color3.fromRGB(255, 255, 255)
+espDispand.TextSize = 14.000
+espDispand.MouseButton1Down:connect(function()
+	espMenu.Visible = false
+end)
+
+TextLabel_2.Parent = espDispand
+TextLabel_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel_2.BackgroundTransparency = 1.000
+TextLabel_2.BorderSizePixel = 0
+TextLabel_2.Size = UDim2.new(0, 59, 0, 23)
+TextLabel_2.Font = Enum.Font.SourceSans
+TextLabel_2.Text = "Dispand"
+TextLabel_2.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel_2.TextSize = 14.000
+TextLabel_2.TextWrapped = true
+
+configMenu.Name = "configMenu"
+configMenu.Parent = MainFrame
+configMenu.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+configMenu.BackgroundTransparency = 1.000
+configMenu.Position = UDim2.new(0, 0, 0.282846719, 0)
+configMenu.Size = UDim2.new(0, 411, 0, 138)
+configMenu.Visible = false
+configMenu.Active = true
+configMenu.Draggable = false
+
+configDispand.Name = "configDispand"
+configDispand.Parent = configMenu
+configDispand.BackgroundColor3 = Color3.fromRGB(79, 80, 80)
+configDispand.BorderSizePixel = 0
+configDispand.Position = UDim2.new(0.00486618001, 0, 0.766018987, 0)
+configDispand.Size = UDim2.new(0, 411, 0, 23)
+configDispand.Font = Enum.Font.SourceSans
+configDispand.Text = ""
+configDispand.TextColor3 = Color3.fromRGB(255, 255, 255)
+configDispand.TextSize = 14.000
+configDispand.MouseButton1Down:connect(function()
+	configMenu.Visible = false
+end)
+
+TextLabel_3.Parent = configDispand
+TextLabel_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel_3.BackgroundTransparency = 1.000
+TextLabel_3.BorderSizePixel = 0
+TextLabel_3.Size = UDim2.new(0, 59, 0, 23)
+TextLabel_3.Font = Enum.Font.SourceSans
+TextLabel_3.Text = "Dispand"
+TextLabel_3.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel_3.TextSize = 14.000
+TextLabel_3.TextWrapped = true
+
+legit.Name = "legit"
+legit.Parent = configMenu
+legit.BackgroundColor3 = Color3.fromRGB(79, 80, 80)
+legit.BorderSizePixel = 0
+legit.Position = UDim2.new(0, 0, 0.111111112, 0)
+legit.Size = UDim2.new(0, 411, 0, 23)
+legit.Font = Enum.Font.SourceSans
+legit.Text = ""
+legit.TextColor3 = Color3.fromRGB(255, 255, 255)
+legit.TextSize = 14.000
+legit.MouseButton1Down:connect(function()
+	wait(5)
+	TextLabel_4.Text = "Please wait. Loading Modules..."
+	wait(2)
+	loadstring(game:HttpGet(('https://pastebin.com/raw/ypSsQRK6'),true))()
+	wait(1)
+	TextLabel_4.Text = "Success! Esp Only Enabled!"
+end)
+
+TextLabel_4.Parent = legit
+TextLabel_4.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel_4.BackgroundTransparency = 1.000
+TextLabel_4.BorderSizePixel = 0
+TextLabel_4.Position = UDim2.new(0.00486618001, 0, 0, 0)
+TextLabel_4.Size = UDim2.new(0, 198, 0, 23)
+TextLabel_4.Font = Enum.Font.SourceSans
+TextLabel_4.Text = "Legit Config (Wont get you banned)"
+TextLabel_4.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel_4.TextSize = 14.000
+TextLabel_4.TextWrapped = true
+
+rage.Name = "rage"
+rage.Parent = configMenu
+rage.BackgroundColor3 = Color3.fromRGB(79, 80, 80)
+rage.BorderSizePixel = 0
+rage.Position = UDim2.new(0, 0, 0.466183543, 0)
+rage.Size = UDim2.new(0, 411, 0, 23)
+rage.Font = Enum.Font.SourceSans
+rage.Text = ""
+rage.TextColor3 = Color3.fromRGB(255, 255, 255)
+rage.TextSize = 14.000
+rage.MouseButton1Down:connect(function()
+	TextLabel_5.Text = "Please wait. Loading Modules..."
+	wait(3)
+	loadstring(game:GetObjects("rbxassetid://4001118261")[1].Source)()
+	TextLabel_5.Text = "Success!"
+end)
+
+TextLabel_5.Parent = rage
+TextLabel_5.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel_5.BackgroundTransparency = 1.000
+TextLabel_5.BorderSizePixel = 0
+TextLabel_5.Position = UDim2.new(0.00486618001, 0, 0, 0)
+TextLabel_5.Size = UDim2.new(0, 233, 0, 23)
+TextLabel_5.Font = Enum.Font.SourceSans
+TextLabel_5.Text = "Rage Config (Probably will get you banned)"
+TextLabel_5.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel_5.TextSize = 14.000
+TextLabel_5.TextWrapped = true
+
+customizeMenu.Name = "customizeMenu"
+customizeMenu.Parent = MainFrame
+customizeMenu.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+customizeMenu.BackgroundTransparency = 1.000
+customizeMenu.BorderSizePixel = 0
+customizeMenu.Position = UDim2.new(0, 0, 0.576642334, 0)
+customizeMenu.Size = UDim2.new(0, 411, 0, 232)
+customizeMenu.Visible = false
+customizeMenu.Active = true
+customizeMenu.Draggable = false

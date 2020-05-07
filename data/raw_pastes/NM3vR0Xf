@@ -1,0 +1,44 @@
+from guizero import App, Text, ButtonGroup, Combo, PushButton, TextBox, CheckBox
+app = App(title="Name a Hero!", width = 360, height = 520)
+
+def make_space():
+    space = Text(app, text = '')
+    return space
+
+def btn_clicked():
+    adjective = bgp_adjective.value
+    colour = txt_colour.value
+    animal = cmb_animal.value
+    hero = "{} {} {}".format( adjective, colour, animal)
+    if ckb_married.value == 1:
+        hero = hero + ckb_married.text
+    lbl_output.value = "You are...\nThe {}\nhero!".format(hero)
+    lbl_output.bg = 'light blue'
+    
+message1 = Text(app, text="Choose an adjective", size = 14)
+bgp_adjective = ButtonGroup(app, options=["Amazing", "Bonny", "Charming", "Delightful"], selected="Amazing")
+
+make_space()
+
+message2 = Text(app, text="Enter a colour?", size = 14)
+txt_colour = TextBox(app, text = 'Green')
+
+make_space()
+
+message3 = Text(app, text="Pick an animal", size = 14)
+cmb_animal = Combo(app, options=["Aardvark", "Badger", "Cat", "Dolphin", "Velociraptor"], selected="Aardvark", width=20)
+
+make_space()
+
+message4 = Text(app, text="Married?", size = 14)
+ckb_married = CheckBox(app, text = " Marreid" )
+
+make_space()
+
+btn_make_name = PushButton(app, text='Name a Hero', command = btn_clicked)
+
+make_space()
+
+lbl_output = Text(app, text="A hero name will appear here", size = 14)
+
+app.display()

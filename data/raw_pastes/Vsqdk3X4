@@ -1,0 +1,28 @@
+constructor( parentContainer ) {
+    this.parentContainer = parentContainer; this.init();
+}
+
+setProperties( props ) {
+    if( !props || props.length <= 0 ) return;
+
+    // Clear table rows
+    const tbody = this.content.firstChild;
+     while( tbody.hasChildNodes() ) {
+         tbody.removeChild( tbody.firstChild );
+    }
+
+    const rowInx = -1;
+    const propNames = Object.keys( props );
+
+    for( let i = 0, len = propNames.length; i < len; i++) {
+        let colInx = 0;
+        const propName = propNames[i];
+        const propValue = props[ propName ];
+        if( !propValue ) continue;
+        const propRow = tbody.insertRow( rowInx );
+        const nameCell = propRow.insertCell( colInx++ );
+        nameCell.innerText = propName;
+        const valueCell = propRow.insertCell( colInx++ );
+        valueCell.innerText= propValue;
+    }
+}

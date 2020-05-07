@@ -1,0 +1,38 @@
+#!/bin/bash
+#Variáveis
+
+COUNT=1
+REF=12
+
+for [[$COUNT < $REF]]; do
+
+n=1
+job="job{$n}.pbs"
+
+mol1=acido_eta
+mol2=acido_but
+mol3=acido_prop
+mol4=acido_pent
+mol5=acido_hepta
+mol6=acido_octa
+mol7=acido_hexa
+mol8=ciclopropano
+mol9=ethoxypropanol
+mol10=tricloroetileno
+mol11=tricloropropano
+
+
+cat > $job << EOF
+#!/bin/bash
+#SBATCH -c 8 --mem-per-cpu=2048M
+#SBATCH -p medium
+##SBATCH --molecula{$n}
+
+cd $SLURM_SUBMIT_DIR
+
+module load gaussian/09d01
+g09 < $mol{$n}.com > $mol{$n}.log
+
+EOF
+
+echo "Done '$n'!"

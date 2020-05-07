@@ -1,0 +1,112 @@
+import argparse
+import random
+
+parser = argparse.ArgumentParser(prog='big_black_cock')
+parser.add_argument('tenFile1', type=str, nargs='?')
+parser.add_argument('tenFile2', type=str, nargs='?')
+parser.add_argument('soTime', type=str, nargs='?')
+parser.add_argument('congHoacTru', nargs='?')
+args = parser.parse_args()
+
+#args.tenFile1 = 'file_dit_tao_lao1.smd' # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#args.tenFile2 = 'file_dit_tao_lao2.smd' # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+f1 = open(args.tenFile1, "r")
+listCuaLineTuFile1 = f1.readlines()
+
+f2 = open(args.tenFile2, "r") 
+listCuaLineTuFile2 = f2.readlines()
+
+tongSoNode = int(listCuaLineTuFile1[listCuaLineTuFile1.index('end\n') - 1][:5]) # mặc dù bình thường là 79 node, 79 là số cuối cùng. thật ra là có 80 node nếu tính 0
+
+#print(tongSoNode)
+
+listCuaNodeFile1 = []
+listCuaNodeFile2 = []
+
+#args.soTime = "60" # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+soLineCuaFile1 = len(listCuaLineTuFile1)
+soLineCuaFile2 = len(listCuaLineTuFile2)
+
+if soLineCuaFile1 != soLineCuaFile2:
+	khongChayDuocViKhongHopSoLine = 1
+	print("Khong the tim tong cua 2 file")
+	print("File 1 co: " + str(soLineCuaFile1))
+	print("File 2 co: " + str(soLineCuaFile2))
+
+elif soLineCuaFile1 == soLineCuaFile2:
+	khongChayDuocViKhongHopSoLine = 0
+
+#args.congHoacTru = '+' # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+if khongChayDuocViKhongHopSoLine == 0:
+	for i in listCuaLineTuFile1:
+		if "time" in i:
+			if args.soTime in i:
+				
+				lineCuaTimeDuocChonFile1 = listCuaLineTuFile1.index(i)
+
+				#print(lineCuaTimeDuocChonFile1)
+	
+				for x in range(tongSoNode + 1): # range(79) có 79 số, từ 0 đến 78
+					listCuaNodeFile1.append(listCuaLineTuFile1[listCuaLineTuFile1.index(i) + (x + 1)]) # x + 1 để bỏ in cái "time xx"
+
+				for x in range(tongSoNode + 1):
+					listCuaNodeFile2.append(listCuaLineTuFile2[listCuaLineTuFile1.index(i) + (x + 1)])
+
+	soNgauNhien = random.randint(0, tongSoNode + 1)
+
+	print(listCuaNodeFile1[soNgauNhien])
+	print(args.congHoacTru, end="\n\r")
+	print(listCuaNodeFile2[soNgauNhien])
+
+
+	for x in range(tongSoNode + 1): # script bắt đầu ngay chỗ này
+	#if args.congHoacTru == '-':
+
+		stringCanDoiFile1 = listCuaNodeFile1[x]
+		stringCanDoiFile2 = listCuaNodeFile2[x]
+
+		stringCanDoiFile1Phan1 = stringCanDoiFile1.split(' ')[:5]
+		stringCanDoiFile1Phan2 = stringCanDoiFile1.split(' ')[5:]
+	
+		stringCanDoiFile2Phan1 = stringCanDoiFile2.split(' ')[:5]
+		stringCanDoiFile2Phan2 = stringCanDoiFile2.split(' ')[5:]
+
+		for b in range(6):
+			if args.congHoacTru == '+':
+				stringCanDoiFile1Phan2[b] = str('{:.6f}'.format(float(stringCanDoiFile1Phan2[b]) + float(stringCanDoiFile2Phan2[b])))
+	
+			if args.congHoacTru == '-':
+				stringCanDoiFile1Phan2[b] = str('{:.6f}'.format(float(stringCanDoiFile1Phan2[b]) - float(stringCanDoiFile2Phan2[b])))
+
+		for i in stringCanDoiFile1Phan2:
+			stringCanDoiFile1Phan1.append(i)
+
+		listStringCanDoiFile1 = stringCanDoiFile1Phan1
+
+		listStringCanDoiFile1[-1] = listStringCanDoiFile1[-1] + "\n"
+
+		stringDuocDoiFile1 = ' '.join(listStringCanDoiFile1)
+
+		listCuaNodeFile1[x] = stringDuocDoiFile1
+
+		stringCanDoiFile1Phan1.clear()
+		stringCanDoiFile1Phan2.clear()
+		stringCanDoiFile2Phan1.clear()
+		stringCanDoiFile2Phan2.clear()
+
+		listCuaLineTuFile1[lineCuaTimeDuocChonFile1 + 1 + x] = listCuaNodeFile1[x]
+
+		#print(listCuaLineTuFile1[lineCuaTimeDuocChonFile1 + x])
+
+	print("=", end="\r\n")
+	print(listCuaNodeFile1[soNgauNhien])
+	
+	f3 = open(args.tenFile1, "w")
+	f3.writelines(listCuaLineTuFile1)
+
+if khongChayDuocViKhongHopSoLine == 1:
+	pass

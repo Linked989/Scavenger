@@ -1,0 +1,23 @@
+        static void BubbleSort()
+        {
+            int backup;
+            List<int> sequencia = new List<int>() { 3, 4, 9, 2, 5, 8, 2 };
+
+            for (int i = 0; i < sequencia.Count; i++)
+            {
+                for (int j = 0; j < sequencia.Count - 1; j++)
+                {
+                    if (sequencia[j] > sequencia[j + 1])
+                    {
+                        backup = sequencia[j + 1];
+                        sequencia[j + 1] = sequencia[j];
+                        sequencia[j] = backup;
+
+                        foreach (int num in sequencia)
+                            Console.Write($"{num} ");
+
+                        Console.WriteLine();
+                    }
+                }
+            }
+        }

@@ -1,0 +1,58 @@
+
+/**
+ * Write a description of class recursion here.
+ *
+ * @author (Nur Ibrahtul Afifah binti Ibrahim  2018801604)
+ * Function: to run recursive that have multiple method
+ * @modified date (7/5/2020)
+ */
+public class recursion
+{
+    int recur(int n)
+    {if(n>1)
+        {System.out.println(n);
+         recur(n-1);
+        }
+     else System.out.println(1);
+     return n;
+    }
+    
+    int recur2(int n)
+    {if(n>1)
+        {recur2(n-1);
+         System.out.println(n);
+        }
+     else System.out.println(1);
+     return n;
+    }
+    
+    int recur3(int n)
+    {if(n>1)
+        {System.out.println(n);
+         recur3(n-1);
+        }
+     System.out.println(1);
+     return n;
+    }
+    
+    int recur4(int n)
+    {if(n>1)
+        {recur4(n-1);
+         System.out.println(n);
+        }
+     System.out.println(1);
+     return n;
+    }
+    
+    public static void main()
+    {recursion r = new recursion();
+        System.out.println("recur1");
+        r.recur(5);
+        System.out.println("\nrecur2");
+        r.recur2(5);
+        System.out.println("\nrecur3");
+        r.recur3(5);
+        System.out.println("\nrecur4");
+        r.recur4(5);} 
+    
+}

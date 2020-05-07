@@ -1,0 +1,54 @@
+import math
+
+def C(n, k):
+    res = math.factorial(n) / (math.factorial(k) * math.factorial(n-k))
+    return res
+
+print(C(25, 1))
+
+def P(k):
+    print("k =", i, C(25, k) , (0.25 ** k), (0.75 ** (25 - k)))
+    res = C(25, k) * (0.25 ** k) * (0.75 ** (25 - k))
+    print(res)
+    return res
+summ = 0
+for i in range(10):
+    summ = summ + P(i)
+print(1 - summ)
+
+n = [1, 0, 5, 10, 22, 26, 18, 12, 4, 2, 0]
+p = []
+for i in range(11):
+    p.append(P(i))
+print(p)
+hi = 0
+for i in range(11):
+    hi = hi + ((n[i] - 100*p[i]) * (n[i] - 100*p[i]) / (100*p[i]))
+print(hi)
+
+print("separator")
+n2 = [40, 129, 140, 126, 91, 45, 31]
+p2 = []
+a = 41.37
+def F(x):
+    res = 1 - math.exp(-1 * (x ** 2) / (2 * (a ** 2)))
+    return res
+p2.append(F(16))
+print(F(1))
+for i in range(1,7):
+    p2.append(F((i+1) * 16) - F(i * 16))
+    print(F((i+1)), F(i * 16))
+p2.append(F(160) - F(7 * 16))
+print(F(i * 160))
+checksum = 0
+for i in range(8):
+    print(i, p2[i])
+    checksum = checksum + p2[i]
+print("ch =",checksum)
+hi2 = 0
+for i in range(7):
+    hi2 = hi + ((n2[i] - 602*p2[i]) * (n2[i] - 602*p2[i]) / (602*p2[i]))
+    print(hi2)
+print(hi2)
+
+print("separator")

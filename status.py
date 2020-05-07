@@ -34,7 +34,7 @@ while True:
         print("|\tNumber of files with passwords: " + str(numfiles_password_files))
         print("|\tNumber of archives: " + str(numfiles_archives))
         print("-----------------------------------------------------\n")
-        print("Note: If you do not have a PRO account, pastebin might ban your IP")
+        print("Note: Pastebin might ban your IP\n      If you do not have a PRO account")
         print(f"      Current IP Address: {get('https://api.ipify.org').text}")
         time.sleep(5)
         os.system("clear")

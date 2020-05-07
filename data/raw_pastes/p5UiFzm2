@@ -1,0 +1,20 @@
+@echo off
+color a
+echo.
+echo Email: samplesex@hotmail.co.uk
+ECHO ...
+echo.
+echo.
+TIMEOUT 40
+echo Decrypting Password....
+echo.
+TIMEOUT 40
+echo.
+echo Logging into Virtual Private Network Proxy
+echo.
+TIMEOUT 100
+echo password: Password not found try again.
+echo.
+echo.
+echo.
+echo.

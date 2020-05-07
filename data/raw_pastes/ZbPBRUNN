@@ -1,0 +1,17 @@
+{
+  "format_version": "1.00",
+  "minecraft:item": {
+    "description": {
+      "identifier": "mc.netherite_sword”
+    },
+
+    "components": {
+	 "minecraft:hand_equipped": true,
+	 "minecraft:max_damage": 2032
+	  "minecraft:max_stack_size": 1,
+	  
+	  "minecraft:fuel": {
+	  }
+	}
+  }
+}

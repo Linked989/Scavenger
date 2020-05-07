@@ -1,0 +1,23 @@
+#ifndef SIMPLECLASS_HPP
+#define SIMPLECLASS_HPP
+
+#include <ostream>
+
+// Эта параша - это просто тупой класс для того, чтобы проверить, как на нем
+// будет работать наш лист. (Спойлер - нормально.) Тут есть такая же хрень
+// как для Индексера - дружественный оператор <<. Даже реально используется
+// эта дружественность, чтобы вывести приватные значения.
+class SimpleClass
+{
+private:
+    int intval;
+    char const *strval;
+
+public:
+    SimpleClass(int, char const *);
+    friend std::ostream &operator<<(std::ostream &out, SimpleClass value);
+};
+
+std::ostream &operator<<(std::ostream &out, SimpleClass value);
+
+#endif // SIMPLECLASS_HPP

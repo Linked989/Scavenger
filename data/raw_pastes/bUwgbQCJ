@@ -1,0 +1,13 @@
+#include "simpleclass.hpp"
+
+SimpleClass::SimpleClass(int val1, char const *val2)
+{
+    intval = val1;
+    strval = val2;
+}
+
+std::ostream &operator<<(std::ostream &out, SimpleClass value)
+{
+    out << value.intval << "," << value.strval;
+    return out;
+}

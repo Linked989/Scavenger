@@ -1,0 +1,88 @@
+/**
+ * Recursion class - Mini Ex1 of Recursion note #2
+ * Recursion class of char data type
+ * Whole program error sentinnel not working and increment of alphabet
+ * @author (Anis Atiqah binti Azali @ Sazali)
+ * @date and time (7/5/2020, 8:50 am)
+ * @status = 5
+ */
+import java.util.Scanner;
+public class Recursion2
+{
+    public static void main(String[]args)
+    {
+        char n = 'k';
+        Scanner s = new Scanner (System.in);
+        System.out.print("Enter N to stop.\n");
+        char ch = s.next().charAt(0);
+        if(ch!='N')
+        {
+            choice(ch);
+        }
+    }
+    
+    public static void choice(char ch)
+    {
+        if(ch!='N')
+        {
+            Recursion2 rc = new Recursion2();
+            rc.recur5('k');
+            rc.recur6('k');
+            rc.recur7('k');
+            rc.recur8('k');
+            choice(ch);
+        }
+    }
+    
+    public void recur5(char n) 
+    {
+        if (n >'k' && !(n<'k')) 
+        {
+            System.out.print(n);
+            recur5(n++);
+        }
+        else 
+        {
+           System.out.print('z');
+        }  
+    }
+    
+    private void recur6(char n) 
+    {
+        if (n <'k' && !(n>'k')) 
+        {
+            recur6(n--);
+            System.out.print(n);
+        }
+        else 
+        {
+           System.out.print ('a');
+        }
+    }
+     
+    private void recur7(int n) 
+    {
+        if (n >'k' && !(n<'k'))
+        {
+            System.out.print(n);
+            recur7(n++);
+        }
+        if (n==1)
+        {
+            System.out.print ('z');
+        }
+    }
+     
+    private void recur8(char n) 
+    {
+        if (n <'k' && !(n>'k'))
+        {
+            recur8(n--);
+            System.out.print(n);
+        }
+        if (n==1)
+        {
+            System.out.print ('a');
+        }
+    }
+}

@@ -1,0 +1,118 @@
+local TinyTanksCheatGuiByLeviTheOtaku = Instance.new("ScreenGui")
+local MainFrame = Instance.new("Frame")
+local FastTankButton = Instance.new("TextButton")
+local InfFireRateButton = Instance.new("TextButton")
+local NoReloadButton = Instance.new("TextButton")
+local InfSpecialAmmoButton = Instance.new("TextButton")
+local NoAbilityCooldown = Instance.new("TextButton")
+
+TinyTanksCheatGuiByLeviTheOtaku.Name = "TinyTanksCheatGuiByLeviTheOtaku"
+TinyTanksCheatGuiByLeviTheOtaku.Parent = game.CoreGui
+
+MainFrame.Name = "MainFrame"
+MainFrame.Parent = TinyTanksCheatGuiByLeviTheOtaku
+MainFrame.BackgroundColor3 = Color3.new(0, 0, 0)
+MainFrame.BorderColor3 = Color3.new(1, 1, 1)
+MainFrame.BorderSizePixel = 3
+MainFrame.Position = UDim2.new(0.699999988, 0, 0.949999988, 0)
+MainFrame.Size = UDim2.new(0.200000003, 0, 0.0500000007, 0)
+
+FastTankButton.Name = "FastTankButton"
+FastTankButton.Parent = MainFrame
+FastTankButton.BackgroundColor3 = Color3.new(1, 1, 1)
+FastTankButton.BackgroundTransparency = 0.5
+FastTankButton.BorderSizePixel = 0
+FastTankButton.Position = UDim2.new(0, 0, 0.100000001, 0)
+FastTankButton.Size = UDim2.new(0.200000003, 0, 0.800000012, 0)
+FastTankButton.Font = Enum.Font.Highway
+FastTankButton.FontSize = Enum.FontSize.Size14
+FastTankButton.Text = "Fast Tank"
+FastTankButton.TextColor3 = Color3.new(1, 1, 1)
+FastTankButton.TextSize = 14
+FastTankButton.TextWrapped = true
+
+InfFireRateButton.Name = "InfFireRateButton"
+InfFireRateButton.Parent = MainFrame
+InfFireRateButton.BackgroundColor3 = Color3.new(1, 1, 1)
+InfFireRateButton.BackgroundTransparency = 0.5
+InfFireRateButton.BorderSizePixel = 0
+InfFireRateButton.Position = UDim2.new(0.200000003, 0, 0.100000001, 0)
+InfFireRateButton.Size = UDim2.new(0.200000003, 0, 0.800000012, 0)
+InfFireRateButton.Font = Enum.Font.Highway
+InfFireRateButton.FontSize = Enum.FontSize.Size14
+InfFireRateButton.Text = "Inf Fire Rate"
+InfFireRateButton.TextColor3 = Color3.new(1, 1, 1)
+InfFireRateButton.TextSize = 14
+InfFireRateButton.TextWrapped = true
+
+NoReloadButton.Name = "NoReloadButton"
+NoReloadButton.Parent = MainFrame
+NoReloadButton.BackgroundColor3 = Color3.new(1, 1, 1)
+NoReloadButton.BackgroundTransparency = 0.5
+NoReloadButton.BorderSizePixel = 0
+NoReloadButton.Position = UDim2.new(0.400000006, 0, 0.100000001, 0)
+NoReloadButton.Size = UDim2.new(0.200000003, 0, 0.800000012, 0)
+NoReloadButton.Font = Enum.Font.Highway
+NoReloadButton.FontSize = Enum.FontSize.Size14
+NoReloadButton.Text = "No Reload"
+NoReloadButton.TextColor3 = Color3.new(1, 1, 1)
+NoReloadButton.TextSize = 14
+NoReloadButton.TextWrapped = true
+
+InfSpecialAmmoButton.Name = "InfSpecialAmmoButton"
+InfSpecialAmmoButton.Parent = MainFrame
+InfSpecialAmmoButton.BackgroundColor3 = Color3.new(1, 1, 1)
+InfSpecialAmmoButton.BackgroundTransparency = 0.5
+InfSpecialAmmoButton.BorderSizePixel = 0
+InfSpecialAmmoButton.Position = UDim2.new(0.600000024, 0, 0.100000001, 0)
+InfSpecialAmmoButton.Size = UDim2.new(0.200000003, 0, 0.800000012, 0)
+InfSpecialAmmoButton.Font = Enum.Font.Highway
+InfSpecialAmmoButton.FontSize = Enum.FontSize.Size14
+InfSpecialAmmoButton.Text = "Inf Special Ammo"
+InfSpecialAmmoButton.TextColor3 = Color3.new(1, 1, 1)
+InfSpecialAmmoButton.TextSize = 14
+InfSpecialAmmoButton.TextWrapped = true
+
+NoAbilityCooldown.Name = "NoAbilityCooldown"
+NoAbilityCooldown.Parent = MainFrame
+NoAbilityCooldown.BackgroundColor3 = Color3.new(1, 1, 1)
+NoAbilityCooldown.BackgroundTransparency = 0.5
+NoAbilityCooldown.BorderSizePixel = 0
+NoAbilityCooldown.Position = UDim2.new(0.800000012, 0, 0.100000001, 0)
+NoAbilityCooldown.Size = UDim2.new(0.200000003, 0, 0.800000012, 0)
+NoAbilityCooldown.Font = Enum.Font.Highway
+NoAbilityCooldown.FontSize = Enum.FontSize.Size14
+NoAbilityCooldown.Text = "No Ability Cooldown"
+NoAbilityCooldown.TextColor3 = Color3.new(1, 1, 1)
+NoAbilityCooldown.TextSize = 14
+NoAbilityCooldown.TextWrapped = true
+
+FastTankButton.MouseButton1Down:connect(function()
+mytank = workspace.Tanks["Tank-" .. game.Players.LocalPlayer.Name .. ""]
+mytank.Settings.MoveSpeed.Value = 50
+mytank.Settings.RotationSpeed.Value = math.huge
+end)
+
+InfFireRateButton.MouseButton1Down:connect(function()
+mytank = workspace.Tanks["Tank-" .. game.Players.LocalPlayer.Name .. ""]
+mytank.Settings.MaxFireRate.Value = 0.1
+end)
+
+NoReloadButton.MouseButton1Down:connect(function()
+mytank = workspace.Tanks["Tank-" .. game.Players.LocalPlayer.Name .. ""]
+mytank.Settings.LoadedShots.Value = 2000000000
+end)
+
+InfSpecialAmmoButton.MouseButton1Down:connect(function()
+mytank = workspace.Tanks["Tank-" .. game.Players.LocalPlayer.Name .. ""]
+local ammos = mytank.AvailableAmmo:GetChildren()
+for i =1, #ammos do
+wait(0.1)
+ammos[i].Value = math.huge
+end
+end)
+
+NoAbilityCooldown.MouseButton1Down:connect(function()
+mytank = workspace.Tanks["Tank-" .. game.Players.LocalPlayer.Name .. ""]
+mytank.Settings.AbilityCooldown.Value = 0.1
+end)

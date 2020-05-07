@@ -1,0 +1,66 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Sistema {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Scanner sc = new Scanner (System.in);
+		System.out.println("Ingrese cantidad de datos:");
+		int dat=sc.nextInt();
+		
+		Libro bk[] = new Libro[dat];
+		
+		
+		String Titulo=""; 
+		String Autor = "";
+		String Editorial = "";
+		String AñoPublicacion ="";
+		float Precio =0;
+		
+		for (int i=0;i<bk.length;i++) {
+			System.out.println("Título:");
+			Titulo = sc.nextLine();
+			System.out.println("Autor:");
+			Autor = sc.nextLine();
+			System.out.println("Editorial:");
+			Editorial = sc.nextLine();
+			System.out.println("Año de publicación:");
+			AñoPublicacion =sc.nextLine();
+			System.out.println("Precio:");
+			Precio = sc.nextFloat();
+			sc.nextLine();
+			
+			bk[i] = new Libro (Titulo,Autor,Editorial,AñoPublicacion,Precio);
+		}
+			
+			for (int i=0;i<bk.length;i++) {
+				System.out.println("TÍTULO: "+bk[i].getTitulo());
+				System.out.println("AUTOR: "+bk[i].getAutor());
+				System.out.println("EDITORIAL: "+bk[i].getEditorial());
+				System.out.println("AÑO: "+bk[i].getAñoPublicacion());
+				System.out.println("Precio: "+bk[i].getPrecio());
+			}
+			
+			System.out.println();
+			System.out.println("******************************");
+			System.out.println("BUSQUEDA:");
+			System.out.println("Entre precio: ");
+			float a1=sc.nextInt();
+			System.out.println("Y precio:");
+			float a2=sc.nextInt();
+			
+			for (int i =0;i<bk.length;i++) {
+				
+				if (bk[i].getPrecio() >=a1 && bk[i].getPrecio() <=a2) {
+					System.out.println("TÍTULO: "+bk[i].getTitulo());
+					System.out.println("AUTOR: "+bk[i].getAutor());
+					System.out.println("EDITORIAL: "+bk[i].getEditorial());
+					System.out.println("AÑO: "+bk[i].getAñoPublicacion());
+					System.out.println("Precio: "+bk[i].getPrecio());
+				}
+			}
+		}
+		
+		
+	}

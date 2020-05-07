@@ -1,0 +1,178 @@
+/*----------------------------------------------------------------------------*/
+/*    Module:       main.cpp                                                  */
+/*    Author:       sagarpatel (saurinpatel and aimeemaredia)                 */
+/*    Created:      Sat Mar 28 2020                                           */
+/*    Description:  Odometry For Precise Autonomous Motion                    */
+/*    Credits:      5225A For Pilons POS Document and QUEENS for odom Algo    */
+/*----------------------------------------------------------------------------*/
+
+// ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// RightFront           motor         18              
+// RightBack            motor         17              
+// LeftFront            motor         20              
+// LeftBack             motor         14              
+// Controller1          controller                    
+// ---- END VEXCODE CONFIGURED DEVICES ----
+
+#include "vex.h"
+#include <math.h>
+using namespace vex;
+vex::competition    Competition;
+/*-------------------------------Variables-----------------------------------*/
+#define Pi 3.14159265358979323846
+#define SL 5.2 //distance from tracking center to middle of left wheel
+#define SR 5.2 //distance from tracking center to middle of right wheel
+#define SS 7.75 //distance from tracking center to middle of the tracking wheel
+#define WheelDiameter 4.125 //diameter of all the wheels being used for tracking
+#define tpr 360  //Degrees per single encoder rotation
+/*----------------------------------------------------------------------------
+'dist = ticks/tpr * wheel Diam * pi'
+tpr = ticks per revolution
+----------------------------------------------------------------------------*/
+double Alpha = 0;
+double Theta = 0;
+double angledegrees = 0;
+
+double MainX = 0;
+double MainY = 0;
+double X = 0;
+double Y = 0;
+double angle = Theta;
+
+double CurrentRightFrontValue = RightFront.position(degrees);
+double CurrentRightBackValue = RightBack.position(degrees);
+double CurrentLeftFrontValue = LeftFront.position(degrees);
+double CurrentLeftBackValue = LeftBack.position(degrees);
+
+double CurrentRightValue = (CurrentRightFrontValue + CurrentRightBackValue) / 2;
+double CurrentLeftValue = (CurrentLeftFrontValue + CurrentLeftBackValue) / 2;
+
+double PreviousRightValue = 0;
+double PreviousLeftValue = 0;
+//double PreviousBackValue = 0;
+
+double XAtReset = 0;
+double YAtReset = 0;
+double ThetaAtReset = 0;
+
+double DeltaLeft = 0;           //Measured in encoder ticks(Must be converted to inches)
+double DeltaRight = 0;          //Measured in encoder ticks(Must be converted to inches)
+//double DeltaBack = 0;         //Measured in encoder ticks(Must be converted to inches)
+
+double DeltaLeftInches = 0;     //This is the variable for converted encoders
+double DeltaRightInches = 0;    //This is the variable for converted encoders
+//double DeltaBackInches = 0;   //This is the variable for converted encoders
+
+double DeltaX = 0;
+double DeltaY = 0;
+//double DeltaX2 = 0;
+//double DeltaY2 = 0;
+
+double Displacement1 = 0;       //This one is for the overall displacement in the 10ms interval using the left or right tracking wheels
+//double Displacement2 = 0;     //This one is for the overall displacement in the 10ms interval using the back tracking wheel
+/*---------------------------------------------------------------------------*/
+/*                            Odometry Functions                             */
+/*---------------------------------------------------------------------------*/
+void TrackPOS() {
+  CurrentRightFrontValue = RightFront.position(degrees);
+  CurrentRightBackValue = RightBack.position(degrees);
+  CurrentLeftFrontValue = LeftFront.position(degrees);
+  CurrentLeftBackValue = LeftBack.position(degrees);
+
+  double CurrentRightValue = (CurrentRightFrontValue + CurrentRightBackValue) / 2;
+  double CurrentLeftValue = (CurrentLeftFrontValue + CurrentLeftBackValue) / 2;
+
+  DeltaLeft = CurrentLeftValue - PreviousLeftValue;
+  DeltaRight = CurrentRightValue - PreviousRightValue;
+  //DeltaBack = CurrentBackValue - PreviousBackValue;
+
+  DeltaLeftInches = DeltaLeft/tpr * WheelDiameter * Pi;
+  DeltaRightInches = DeltaRight/tpr * WheelDiameter * Pi;
+
+  //DeltaBackInches = DeltaBack/TicksPerRevolution * WheelDiameter * Pi;
+
+  Alpha = (DeltaLeftInches - DeltaRightInches) / (SL + SR);
+
+  Displacement1 = 2 * (DeltaLeftInches / Alpha + SL) * sin (Alpha / 2);
+ // Displacement2 = 2 * (DeltaBackInches / Alpha + SS) * sin(Alpha / 2);
+ 
+
+  DeltaX = Displacement1 * cos (Theta + (Alpha / 2));
+  DeltaY = Displacement1 * sin (Theta + (Alpha / 2));
+ // DeltaX2 = Displacement2 * cos(Theta + Alpha / 2);
+ // DeltaY2 = Displacement2 * sin(Theta + Alpha / 2);
+  Theta = Theta + Alpha;
+  X = X + DeltaX;
+  Y = Y + DeltaY;
+
+  //double X1 = MainX; // + DeltaX2;
+  //double Y1 = MainY; //+ DeltaY2;
+  angle = Theta;
+  angledegrees = Theta * (180 / Pi);
+
+  //This is for printing to the terminal and brain for problem-solving
+  /*
+  int Xprint = X;
+  int Yprint = Y;
+  int angleprint = angledegrees;
+  printf("X: %i\n", Xprint);
+  printf("Y: %i\n", Yprint);
+  printf("Angle: %i\n", angleprint);
+  */
+
+  Brain.Screen.printAt(100,20, "X: %f",X);
+  Brain.Screen.printAt(100,40, "Y: %f",Y);
+  Brain.Screen.printAt(100,60, "Theta: %f",Theta);
+  Brain.Screen.printAt(100,80, "Angle: %f",angledegrees);
+  Brain.Screen.printAt(100,100, "Displacement1: %f",Displacement1);
+  Brain.Screen.printAt(100,120, "DeltaLeftInches: %f",DeltaLeftInches);
+  Brain.Screen.printAt(100,140, "DeltaRightInches: %f",DeltaRightInches);
+  Brain.Screen.printAt(100,160, "DeltaX: %f",DeltaX);
+  Brain.Screen.printAt(100,180, "DeltaY: %f",DeltaY);
+
+  DeltaX = 0.000000000000;
+  DeltaY = 0.000000000000;
+  PreviousRightValue = CurrentRightValue;
+  PreviousLeftValue = CurrentLeftValue;
+  Alpha = 0;
+}
+/*---------------------------------------------------------------------------*/
+/*                          Pre-Autonomous Functions                         */
+/*---------------------------------------------------------------------------*/
+void pre_auton( void ) {
+    vexcodeInit();
+    Brain.resetTimer();
+    RightFront.resetRotation();
+    RightBack.resetRotation();
+    LeftFront.resetRotation();
+    LeftBack.resetRotation();
+}
+/*---------------------------------------------------------------------------*/
+/*                              Autonomous Task                              */
+/*---------------------------------------------------------------------------*/
+void autonomous( void ) {
+
+}
+/*----------------------------------------------------------------------------*/
+/*                              User Control Task                             */
+/*----------------------------------------------------------------------------*/
+void usercontrol( void ) {
+  while (1){
+    LeftBack.spin(vex::directionType::fwd, ((Controller1.Axis3.value() + (Controller1.Axis1.value())*0.1)), vex::velocityUnits::pct);
+    LeftFront.spin(vex::directionType::fwd, ((Controller1.Axis3.value() + (Controller1.Axis1.value())*0.1)), vex::velocityUnits::pct);
+    RightBack.spin(vex::directionType::fwd, ((Controller1.Axis3.value() - (Controller1.Axis1.value())*0.1)), vex::velocityUnits::pct);
+    RightFront.spin(vex::directionType::fwd, ((Controller1.Axis3.value() - (Controller1.Axis1.value())*0.1)), vex::velocityUnits::pct);
+    TrackPOS();
+    vex::task::sleep(10); //Slight delay so the Brain doesn't overprocess
+  }
+}
+int main() {
+    pre_auton();
+    Competition.autonomous( autonomous ); //Calls the autonomous function
+    Competition.drivercontrol( usercontrol ); //Calls the driver control function
+    while(1) {
+      vex::task::sleep(10); //Slight delay so the Brain doesn't overprocess
+    }
+}

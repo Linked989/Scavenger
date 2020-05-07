@@ -1,0 +1,50 @@
+
+
+class MyStack:
+    '''my implementation of stack'''
+    def __init__(self):
+        stack = []
+        self.stack = stack
+        self.count = 0
+
+    def is_empty(self):
+        return not self.count
+
+    def size(self):
+        return self.count
+
+    def pop(self):
+        self.count -= 1
+        return self.stack.pop()
+
+    def peek(self):
+        return self.stack[self.count]
+
+    def push(self, element):
+        self.stack.append(element)
+        self.count += 1
+
+
+
+class MyQueue:
+    def __init__(self):
+        queue = []
+        self.queue = queue
+        self.size = 0
+
+    def enqueue(self):
+        self.queue.append()
+        self.size += 1
+
+    def dequeue(self):
+        self.size -= 1
+        return self.queue.popleft()
+
+
+    def join(self, queue2):
+        self.queue.append(queue2)
+        self.size += queue2.size()
+
+
+    def is_empty(self):
+        return not self.size

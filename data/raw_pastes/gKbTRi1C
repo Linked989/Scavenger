@@ -1,0 +1,55 @@
+import java.util.Scanner;
+
+public class Arev {
+	public static void main(String[] arg) {
+		Scanner sn = new Scanner(System.in);
+		
+		System.out.println("Ingrese longitud del vector: ");
+		
+		int n=sn.nextInt();
+		int[]Vect = new int[n];
+		int[]Rev = new int[n];
+		
+		for (int i=0; i<n;i++) {
+			
+			System.out.print("Introduce un número entero MÚLTIPLO DE 7 Y NO DE 3: ");
+			
+			 Vect[i] = sn.nextInt();
+			 
+			 if(i % 7 == 0 && i%3 ==0 )
+			 System.out.print(Vect[i]+" , ");
+			 
+		}
+		
+		System.out.println("VECTOR ORIGINAL ");
+		Show(Vect,n);
+		
+		AuxMod(Vect,Rev,n);
+		System.out.println();
+		System.out.println("REVERSE ");
+		ShowRev(Rev,n);
+		
+	}
+	
+	public static void Show(int[]Vect, int n) {
+		for (int i=0; i<n;i++) {
+			System.out.print(" "+Vect[i]);
+		}
+	}
+	
+	public static void AuxMod(int[]Vect,int[]Rev,int n) {
+		int j=0;
+		for (int i=n-1;i>-1;i--) {
+			Rev[j]=Vect[i];
+			j=j+1;
+		}
+	}
+	
+	public static void ShowRev(int[]Rev,int n) {
+		
+		for (int j=0; j<n;j++) {
+			System.out.print(" "+Rev[j]);
+		}
+	}
+
+}

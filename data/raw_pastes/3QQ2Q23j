@@ -1,0 +1,126 @@
+#ifndef DOUBLYLINKEDLIST_HPP
+#define DOUBLYLINKEDLIST_HPP
+
+#include "list_node.hpp"
+#include <ostream>
+#include <stdexcept>
+
+// Вот это уже более хитрая херня - класс самого листа. Подробнее ниже.
+template<typename T>
+class DoublyLinkedList
+{
+private:
+    ListNode<T> *head;
+    ListNode<T> *tail;
+    std::size_t size_inner;
+
+    // Метод, который возвращает ноду за индексом. Приватный, потому что юзер
+    // взаимодействует только с самими значениями, а не с нодами. Ему про них
+    // знать не надо.
+    ListNode<T> *at(std::size_t index)
+    {
+        if (index >= size_inner) {
+            throw std::out_of_range("List size is less than the index you provided");
+        }
+        ListNode<T> *tmp = head;
+        for (std::size_t i = 0; i < index; i++) {
+            tmp = tmp->getNext();
+        }
+        return tmp;
+    }
+
+    // Вот эта херня ОЧЕНЬ хитрая. Специальный приватный подкласс в листе, нужен
+    // для разрешения проблем с индексацией через [index].
+    // Создается экземпляр такого каждый раз, когда мы пытаемся получить доступ к
+    // элементу листа через квадратные скобки. Прелесть сей гадости в том,
+    // что плюсы не поддерживают get и set в операторе [], в отличие от шарпов.
+    // И этот класс, если его пытаются привести к типу T, возвращает значение,
+    // а если ему пытаются что-то присвоить, то он присваивает в нужное место листа.
+    class Indexer
+    {
+    private:
+        DoublyLinkedList &list;
+        std::size_t index;
+
+    public:
+        Indexer(DoublyLinkedList &list, std::size_t index)
+            : list(list)
+            , index(index)
+        {}
+
+        operator T() { return list.at(index)->getValue(); }
+        void operator=(T value) { list.at(index)->setValue(value); }
+        // Это сделано специально для случая, когда юзер пытается присвоить один
+        // Индексер в другой - тогда не происходит автоматического приведения
+        // типов, и мы преобразовываем его явно через T(value). Ну или (T)value можно
+        // было, это одно и то же, но в функциональном стиле моднее.
+        void operator=(Indexer value) { list.at(index)->setValue(T(value)); }
+    };
+
+public:
+    DoublyLinkedList()
+    {
+        head = nullptr;
+        tail = nullptr;
+        size_inner = 0;
+    }
+
+    // Простое добавление, как во всех листах.
+    void add(T value)
+    {
+        ListNode<T> *node = new ListNode<T>(value);
+        if (head == nullptr) {
+            head = node;
+            tail = node;
+        } else {
+            tail->setNext(node);
+            node->setPrev(tail);
+            tail = node;
+        }
+        size_inner++;
+    }
+    // Точно такое же простое удаление. Кстати, с двусвязным списком проще,
+    // не надо запоминать ноду tmp - 1.
+    void removeAt(std::size_t index)
+    {
+        if (head == tail) {
+            delete head;
+            head = nullptr;
+            tail = nullptr;
+        }
+        ListNode<T> *tmp = at(index);
+        if (head == tmp) {
+            tmp = head->getNext();
+            delete head;
+            head = tmp;
+        } else if (tail == tmp) {
+            tmp = tail->getPrev();
+            delete tail;
+            tail = tmp;
+        } else {
+            tmp->getPrev()->setNext(tmp->getNext());
+            tmp->getNext()->setPrev(tmp->getPrev());
+            delete tmp;
+        }
+        size_inner--;
+    }
+    std::size_t size() const { return size_inner; }
+
+    // Собственно, вот оно - переопределение оператора индексации. Как видишь -
+    // возвращается Indexer. Но юзер об этом не знает, он с ним взаимодействует
+    // как с обычным T.
+    Indexer operator[](std::size_t index) { return Indexer(*this, index); }
+
+    // На самом деле, это относится не к листу, а к Индексеру. Ну так плюсы требуют, чтобы
+    // оно было за пределами класса. Короче, это позволяет использовать Индексеры
+    // для вывода в потоки типа того же out. Friend он тут потому, что может
+    // иметь доступ к приватным полям всяким и т.д. В общем, если шо - ты нашел
+    // это в интернетах. Как и сам Индексер.
+    friend std::ostream &operator<<(std::ostream &out, Indexer indexer)
+    {
+        out << T(indexer);
+        return out;
+    }
+};
+
+#endif // DOUBLYLINKEDLIST_HPP

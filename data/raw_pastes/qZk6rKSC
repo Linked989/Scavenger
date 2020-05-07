@@ -1,0 +1,25 @@
+      stage('Build docker image') {
+        agent{ 
+          label 'Build'
+        }
+        steps {
+            sh "docker build -t rest-client-test:${env.BUILD_NUMBER} ."
+          }
+      }
+      
+    stage('Push docker image') {
+        agent{ 
+          label 'Build'
+        }
+        environment {
+          DOCKERHUB = credentials('dockerhub-credencial')
+        }
+        steps {
+          sh "docker login -u $DOCKERHUB_USR -p $DOCKERHUB_PSW"
+          //sh "docker images"
+
+            // TAG and PUSH
+            sh "docker tag rest-client-test:${env.BUILD_NUMBER} richardlopez/rest-client-test:${env.BUILD_NUMBER}"
+            sh "docker push richardlopez/rest-client-test:${env.BUILD_NUMBER}"
+        }
+    }

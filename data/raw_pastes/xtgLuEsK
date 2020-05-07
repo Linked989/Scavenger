@@ -1,0 +1,32 @@
+onMouseClicked( event ) {
+    while( this.selectionScene.children.length > 0 ) {
+        let mesh = this.selectionScene.children.pop(); 
+        mesh.material.dispose();
+        mesh.geometry.dispose();
+        mesh.material = null;
+        mesh.geometry = null;
+        mesh = null;
+    }
+
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2();
+    mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+    mouse.y = -( event.clientY / window.innerHeight ) * 2 + 1;
+    raycaster.setFromCamera( mouse.clone(), this.camera );
+
+    const intersects = raycaster.intersectObjects( this.models, true ); 
+    console.log( intersects );
+
+    const result = intersects[0];
+    if( !result ) return;
+
+    console.log( result );
+    const mesh = result.object;
+    const geometry = mesh.geometry.clone();
+    const selectionOverly = new THREE.Mesh( geometry, this.selectionMaterial );
+    selectionOverly.matrix.copy( mesh.matrixWorld );
+    selectionOverly.matrixAutoUpdate = false;
+    selectionOverly.matrixWorldNeedsUpdate = true;
+    selectionOverly.frustumCulled = false;
+    this.selectionScene.add( selectionOverly );
+}

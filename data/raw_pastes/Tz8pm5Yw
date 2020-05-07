@@ -1,0 +1,29 @@
+setTitle( title ) {
+    this.titlebar.innerHTML = '<div><p>' + title + '</p></div>’;    
+    this.titlebar.title = title;
+}
+
+init() {
+    const container = document.createElement( 'div’ );
+    container.classList.add( 'property-panel' );     
+    this.parentContainer.appendChild( container );
+    this.container = container;
+
+    const titlebar = document.createElement( 'div’ );
+    titlebar.classList.add( 'property-panel-titlebar’ );
+    container.appendChild( titlebar );
+    this.titlebar = titlebar;
+
+    const scrollContainer = document.createElement( 'div’ );
+    scrollContainer.classList.add( 'property-panel-scroll-container’ );
+    container.appendChild( scrollContainer );
+    this.scrollContainer = scrollContainer;
+
+    const table = document.createElement( 'table’ );
+    table.classList.add( 'property-panel-content-table’ );
+    scrollContainer.appendChild( table );
+    this.content = table;
+
+    const tbody = document.createElement( 'tbody’ );
+    table.appendChild( tbody );
+}

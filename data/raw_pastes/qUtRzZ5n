@@ -1,0 +1,20 @@
+init() {
+  // ... other code snippet
+
+  this.propertyPanel = new PropertyPanel( this.container );
+
+  // ... other code snippet
+}
+
+// ... other code snippet
+
+onMouseClicked( event ) {
+  // ... other code snippet
+
+  const props = mesh.parent.userData;
+  const objectName = mesh.parent.name;
+  this.propertyPanel.setTitle( objectName );
+  this.propertyPanel.setProperties( props );
+}
+
+// ... other code snippet
